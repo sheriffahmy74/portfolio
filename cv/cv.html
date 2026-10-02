@@ -66,60 +66,41 @@
 
 <header>
   <h1>Sherif Fahmy Mohamed</h1>
-  <div class="role">Flutter Developer · Founder of Lamma</div>
+  <div class="role">Flutter Developer</div>
   <div class="contact">
-    <span>Mansoura, Egypt (Relocation Available)</span>
+    <span>Mansoura, Egypt (Open to Relocation)</span>
     <span>+20 100 409 3899</span>
     <span><a href="mailto:sfhmy7124@gmail.com">sfhmy7124@gmail.com</a></span>
+    <span>Military Status: Exempted</span>
   </div>
   <div class="contact">
+    <span><a href="https://sheriffahmy74.github.io/portfolio/">Portfolio: sheriffahmy74.github.io/portfolio</a></span>
     <span><a href="https://www.linkedin.com/in/sheriffahmy0/">linkedin.com/in/sheriffahmy0</a></span>
     <span><a href="https://github.com/sheriffahmy74">github.com/sheriffahmy74</a></span>
-    <span>Military Status: Exempted</span>
   </div>
 </header>
 
 <section>
   <h2>Profile</h2>
-  <p>Flutter Developer with strong hands-on experience building scalable applications with Flutter &amp; Dart. Skilled in Clean Architecture, Bloc/Cubit, REST APIs, Firebase and Supabase. Founder of <b>Lamma</b>, a bilingual group-outings app built end to end. Graduated with Excellent Honors (Ranked 1st), with a solid academic foundation in Computer Science and Problem Solving.</p>
+  <p>Flutter Developer who builds and ships production apps end to end, from architecture and UI to backend integration and store release. Works with feature-first Clean Architecture, Bloc/Cubit, REST and Supabase/Firebase backends, and automated testing. Took a healthcare app through App Store and Google Play release, and built Lamma, a bilingual app with 12 features and 746+ tests. Ranked 1st in my Computer Science department.</p>
 </section>
 
 <section>
-  <h2>Work Experience</h2>
+  <h2>Experience</h2>
   <div class="item">
     <div class="item-head">
       <span class="item-title">Flutter Developer — INETWORK Middle East</span>
-      <span class="item-meta">Hybrid | New Cairo, Cairo</span>
+      <span class="item-meta">Hybrid, New Cairo</span>
     </div>
+    <div class="item-sub">Nabdy, a healthcare super-app (doctors, pharmacy, medical centers, orders) · <a class="stack" href="https://play.google.com/store/apps/details?id=com.flutter.nabdi">Google Play</a></div>
     <ul>
-      <li>Engineering scalable, high-performance mobile solutions and contributing to system architecture using Clean Architecture and SOLID principles.</li>
-      <li>Conducting comprehensive production-readiness and security audits to ensure full compliance with App Store and Play Store standards.</li>
+      <li>Drove iOS release readiness: resolved iOS Privacy Manifest compliance issues and Google Maps SDK authorization conflicts that blocked App Store review.</li>
+      <li>Reduced APK/AAB size and improved performance through asset compression, dependency cleanup and build configuration tuning.</li>
+      <li>Ran security, dependency-health and architecture audits on a 570+ file codebase, documenting risks such as committed API keys and exported Android activities with prioritized fixes.</li>
+      <li>Upgraded and refactored outdated packages for compatibility with current Flutter, Android and iOS SDKs.</li>
+      <li>Set up Google Play Console and Apple Developer accounts and handled the release and publishing workflow.</li>
     </ul>
   </div>
-</section>
-
-<section>
-  <h2>Education</h2>
-  <div class="item">
-    <div class="item-head">
-      <span class="item-title">Bachelor of Specific Education — Computer Science Department, Mansoura University</span>
-      <span class="item-meta">2021 – 2025</span>
-    </div>
-    <ul class="compact"><li>Grade: Excellent with Honors | Class Rank: <b>1st in Department</b>.</li></ul>
-  </div>
-</section>
-
-<section>
-  <h2>Technical Skills</h2>
-  <dl class="skills">
-    <dt>Frameworks &amp; Logic</dt><dd>Flutter, Dart, SOLID Principles, Clean Architecture (MVVM), Problem Solving</dd>
-    <dt>State Management</dt><dd>Bloc, Cubit</dd>
-    <dt>Data &amp; APIs</dt><dd>REST APIs (Dio/Http), Supabase (Postgres, RLS, Realtime, Edge Functions), Firebase (Auth, Firestore, FCM), SQLite, SharedPreferences</dd>
-    <dt>Architecture &amp; Testing</dt><dd>get_it, go_router, fpdart (Either), bloc_test, mocktail, Localization &amp; RTL</dd>
-    <dt>AI Tools</dt><dd>Prompt Engineering, AI-Assisted Development (Cursor AI, GitHub Copilot)</dd>
-    <dt>General Tools</dt><dd>Git, GitHub, Google Maps, Paymob</dd>
-    <dt>Languages</dt><dd>Arabic: Native | English: Very Good (Technical) / Good (Communication)</dd>
-  </dl>
 </section>
 
 <section>
@@ -127,46 +108,62 @@
 
   <div class="item">
     <div class="item-head">
-      <span class="item-title">Lamma <span class="ar">لمّة</span> — Group-Outings App (Founder &amp; Flutter Developer)</span>
+      <span class="item-title">Lamma <span class="ar">لمّة</span> — Group-Outings App</span>
       <span class="item-meta"><a href="https://github.com/sheriffahmy74/lamma-showcase">github.com/sheriffahmy74/lamma-showcase</a></span>
     </div>
     <div class="item-sub"><span class="stack">Flutter · Cubit · Clean Architecture · Supabase · Paymob · FCM</span></div>
     <ul>
-      <li>Built an Arabic-first (RTL) bilingual app for Egypt: users discover outings, book a seat in an audience-specific group, pay, and join the group chat.</li>
-      <li>Structured 12 features with feature-first Clean Architecture (Cubit, get_it, go_router, fpdart) across 432 Dart files, covered by 746+ automated tests running in CI.</li>
-      <li>Designed the Supabase backend: Postgres with Row-Level Security, 75 migrations, RPCs, Realtime group chat, Edge Functions and localized push notifications.</li>
-      <li>Kept money and capacity logic server-side: atomic bookings under a row lock prevent overbooking, and payments are confirmed only by the HMAC-verified Paymob webhook.</li>
+      <li>Designed and built, as sole developer, an Arabic-first (RTL) bilingual app where users discover outings, book a seat in an audience-specific group, pay, and join the group chat.</li>
+      <li>Structured 12 features with feature-first Clean Architecture (Cubit, get_it, go_router, fpdart Either) and covered them with 746+ unit and bloc tests (bloc_test, mocktail) running in CI.</li>
+      <li>Built the Supabase backend: Postgres with Row-Level Security, 75 migrations, RPCs, Realtime group chat, Edge Functions and server-localized push notifications.</li>
+      <li>Kept money and capacity logic on the server: atomic bookings under a row lock prevent overbooking, and payments are confirmed only by the HMAC-verified Paymob webhook.</li>
     </ul>
   </div>
 
   <div class="item">
     <div class="item-head">
-      <span class="item-title">Nabdy — Healthcare Super-App (INETWORK)</span>
+      <span class="item-title">E-Commerce App — NTI Graduation Project</span>
+      <span class="item-meta"><a href="https://lnkd.in/p/e7sqh8fZ">Demo on LinkedIn</a></span>
     </div>
-    <ul>
-      <li>Conducted a comprehensive technical audit to resolve critical iOS Privacy Manifest compliance issues and Google Maps SDK authorization conflicts, ensuring full App Store readiness.</li>
-      <li>Optimized performance and significantly reduced APK/AAB size through asset compression, dependency optimization and efficient build configurations; upgraded and refactored packages for stability and compatibility.</li>
-      <li>Prepared and configured Google Play Console and Apple Developer accounts for deployment, publishing workflows and production release.</li>
-    </ul>
-  </div>
-
-  <div class="item">
-    <ul class="compact">
-      <li><b>E-Commerce App (NTI Graduation):</b> Full UI development and REST API integration.</li>
-      <li><b>Gym App:</b> Workout schedule generator with PDF output (built with AI support).</li>
-    </ul>
+    <ul class="compact"><li>Built the full UI and integrated the REST API.</li></ul>
   </div>
 </section>
 
 <section>
-  <h2>Courses &amp; Certifications</h2>
+  <h2>Technical Skills</h2>
+  <dl class="skills">
+    <dt>Mobile</dt><dd>Flutter, Dart, Bloc / Cubit, Material &amp; Cupertino, Animations, Localization &amp; RTL</dd>
+    <dt>Architecture</dt><dd>Clean Architecture (feature-first), MVVM, SOLID, Dependency Injection (get_it), go_router, fpdart</dd>
+    <dt>Backend &amp; Data</dt><dd>REST APIs (Dio), Supabase (Postgres, RLS, Realtime, Edge Functions), Firebase (Auth, Firestore, FCM, Remote Config), SQLite, Secure Storage</dd>
+    <dt>Quality &amp; Release</dt><dd>Unit &amp; bloc tests (bloc_test, mocktail), CI with GitHub Actions, App Store Connect, Google Play Console</dd>
+    <dt>Integrations</dt><dd>Google Maps, Paymob payments, Push notifications</dd>
+    <dt>Tools</dt><dd>Git, GitHub, Postman, Figma, AI-assisted development (Cursor, GitHub Copilot)</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="item">
+    <div class="item-head">
+      <span class="item-title">Bachelor of Specific Education, Computer Science Dept. — Mansoura University</span>
+      <span class="item-meta">2021 – 2025</span>
+    </div>
+    <ul class="compact"><li>Excellent with Honors · <b>Ranked 1st in Department</b>.</li></ul>
+  </div>
+</section>
+
+<section>
+  <h2>Certifications</h2>
   <ul class="compact">
-    <li><b>NVIDIA DLI Generative AI</b>, ITI (Jan 2026): Python, LLMs and RAG.</li>
-    <li><b>Certified Mobile App Developer</b>, NTI: intensive track completed with a 94% score.</li>
-    <li>Various advanced mobile development courses on Udemy and YouTube.</li>
+    <li><b>Certified Mobile App Developer</b> — NTI: intensive Flutter track, final score 94%.</li>
+    <li><b>NVIDIA DLI Generative AI</b> — ITI (Jan 2026): Python, LLMs and RAG.</li>
   </ul>
 </section>
 
+<section>
+  <h2>Languages</h2>
+  <p>Arabic: Native · English: Very Good (technical), Good (conversational)</p>
+</section>
 
 </body>
 </html>
