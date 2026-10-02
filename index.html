@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sherif Fahmy · Flutter Developer</title>
+<meta name="description" content="Sherif Fahmy — Flutter developer from Egypt and founder of Lamma. Clean Architecture, Bloc/Cubit, Supabase, Firebase, shipping to Google Play and the App Store.">
+<meta name="theme-color" content="#0B0A14">
+<meta property="og:title" content="Sherif Fahmy · Flutter Developer">
+<meta property="og:description" content="Flutter developer and founder of Lamma. I build mobile apps end to end, from architecture to store release.">
+<meta property="og:image" content="assets/img/lamma/home.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0A14'/%3E%3Cpath d='M38 10 14 34l8 8 32-32z' fill='%238B7BFF'/%3E%3Cpath d='M38 34 26 46l12 12h16L42 46l12-12z' fill='%2354C5F8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Alexandria:wght@300;400;600;800&display=swap">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <pre class="loader__log"><span>$ flutter build web --release</span>
+<span class="dim">Compiling lib/main.dart for the Web…</span>
+<span class="dim">✓ Clean Architecture · Bloc · Supabase</span></pre>
+    <div class="loader__count"><span id="loaderCount">00</span><small>%</small></div>
+    <div class="loader__bar"><i id="loaderBar"></i></div>
+  </div>
+</div>
+
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+<div class="cursor" aria-hidden="true"><i class="cursor__dot"></i><i class="cursor__ring"></i></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#top" aria-label="Sherif Fahmy, home">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10 14 34l8 8 32-32z" fill="var(--violet)"/><path d="M38 34 26 46l12 12h16L42 46l12-12z" fill="var(--sky)"/></svg>
+    <span>Sherif<b>.</b></span>
+  </a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#work" data-i18n="nav.work">Work</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#journey" data-i18n="nav.journey">Journey</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div class="nav__actions">
+    <button class="lang" id="langToggle" type="button" aria-label="Switch language"><span class="lang__en">EN</span><span class="lang__ar">ع</span></button>
+    <a class="btn btn--small magnetic" href="#contact" data-i18n="nav.hire">Hire me</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <i class="orb orb--violet"></i><i class="orb orb--sky"></i><i class="orb orb--deep"></i>
+    <div class="grid-lines"></div>
+  </div>
+
+  <div class="wrap hero__wrap">
+    <div class="hero__copy">
+      <p class="eyebrow reveal-up"><span class="pulse"></span><span data-i18n="hero.status">Available for Flutter roles · Relocation ready</span></p>
+      <h1 class="hero__title" aria-label="Sherif Fahmy">
+        <span class="line"><span class="split" data-split>Sherif</span></span>
+        <span class="line line--outline"><span class="split" data-split>Fahmy</span></span>
+      </h1>
+      <p class="hero__role reveal-up">
+        <span data-i18n="hero.role">Flutter Developer &amp; Founder of</span>
+        <span class="lamma-word">Lamma <span class="ar">لمّة</span></span>
+      </p>
+      <p class="hero__typed reveal-up mono" aria-live="polite"><span class="dim">&gt;</span> <span id="typed">Clean Architecture · Bloc / Cubit</span><i class="caret"></i></p>
+      <div class="hero__cta reveal-up">
+        <a class="btn magnetic" href="#work"><span data-i18n="hero.cta1">See my work</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn--ghost magnetic" href="assets/Sherif-Fahmy-CV.pdf" target="_blank" rel="noopener"><span data-i18n="hero.cta2">Download CV</span></a>
+      </div>
+    </div>
+
+    <div class="hero__device" aria-hidden="true">
+      <div class="tilt" id="heroTilt">
+        <div class="phone phone--hero">
+          <div class="phone__screen"><img src="assets/img/lamma/home-english.webp" alt="" width="540" height="1200"></div>
+        </div>
+        <span class="chip chip--a mono">BlocBuilder&lt;HomeCubit&gt;</span>
+        <span class="chip chip--b mono">supabase.realtime</span>
+        <span class="chip chip--c mono">Hero(tag: 'outing')</span>
+        <span class="chip chip--d mono">Either&lt;Failure, T&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap hero__foot">
+    <div class="scroll-hint"><i></i><span data-i18n="hero.scroll">Scroll</span></div>
+    <p class="mono dim hero__loc" data-i18n="hero.loc">Mansoura, Egypt · 31.04° N</p>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section class="marquee" aria-label="Tech stack">
+  <div class="marquee__row" data-dir="1">
+    <div class="marquee__track">
+      <span>Flutter</span><i>✦</i><span>Dart</span><i>✦</i><span>Bloc / Cubit</span><i>✦</i><span>Clean Architecture</span><i>✦</i><span>Supabase</span><i>✦</i><span>Firebase</span><i>✦</i><span>REST · Dio</span><i>✦</i><span>Google Maps</span><i>✦</i><span>Paymob</span><i>✦</i>
+    </div>
+  </div>
+  <div class="marquee__row marquee__row--alt" data-dir="-1">
+    <div class="marquee__track">
+      <span>go_router</span><i>/</i><span>get_it</span><i>/</i><span>fpdart</span><i>/</i><span>bloc_test</span><i>/</i><span>mocktail</span><i>/</i><span>SQLite</span><i>/</i><span>Realtime</span><i>/</i><span>RLS</span><i>/</i><span>Edge Functions</span><i>/</i><span>gen-l10n · RTL</span><i>/</i>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about wrap" id="about">
+  <div class="section-head">
+    <span class="tag mono">class About extends StatelessWidget</span>
+  </div>
+  <p class="about__lead" data-words data-i18n="about.lead">I build mobile apps end to end. I design the architecture, build the UI, wire the backend and take the app through App Store and Google Play review. I care about code that stays easy to change and screens that feel smooth to use.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <b><span data-count="1">1</span><sup>st</sup></b>
+      <span data-i18n="stats.rank">Ranked in my department, Mansoura University</span>
+    </div>
+    <div class="stat">
+      <b><span data-count="94">94</span>%</b>
+      <span data-i18n="stats.nti">NTI Mobile App Developer track</span>
+    </div>
+    <div class="stat">
+      <b><span data-count="746">746</span>+</b>
+      <span data-i18n="stats.tests">Automated tests in Lamma</span>
+    </div>
+    <div class="stat">
+      <b><span data-count="12">12</span></b>
+      <span data-i18n="stats.features">Production features in Lamma</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LAMMA (FEATURED) ============ -->
+<section class="lamma" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag mono">// featured · founder project</span>
+      <h2 class="h2"><span data-i18n="lamma.title1">Lamma</span> <span class="ar-title">لمّة</span></h2>
+      <p class="section-sub" data-i18n="lamma.sub">A group-outings app for Egypt. Pick an outing, book a seat in the group that fits you, pay, then meet your group in a chat before you meet them in person.</p>
+    </div>
+  </div>
+
+  <div class="story wrap" id="story">
+    <div class="story__steps">
+      <article class="step is-active" data-screen="0">
+        <span class="step__k mono">Discovery</span>
+        <h3 data-i18n="lamma.s1.t">Find an outing that fits you</h3>
+        <p data-i18n="lamma.s1.p">Categories, personal suggestions and search filters for city, group size, all-in price, date and time of day.</p>
+      </article>
+      <article class="step" data-screen="1">
+        <span class="step__k mono">Groups &amp; booking</span>
+        <h3 data-i18n="lamma.s2.t">One outing, many groups</h3>
+        <p data-i18n="lamma.s2.p">Each outing has groups for different audiences. Seat capacity is enforced on the server inside a row lock, so two people can never take the last seat.</p>
+      </article>
+      <article class="step" data-screen="2">
+        <span class="step__k mono">Payments &amp; wallet</span>
+        <h3 data-i18n="lamma.s3.t">Cards, wallets and InstaPay</h3>
+        <p data-i18n="lamma.s3.p">Payments go through Paymob. A booking is confirmed only by the HMAC-verified webhook, never by the app reporting its own success.</p>
+      </article>
+      <article class="step" data-screen="3">
+        <span class="step__k mono">Realtime chat</span>
+        <h3 data-i18n="lamma.s4.t">Meet the group first</h3>
+        <p data-i18n="lamma.s4.p">Group chat on Supabase Realtime with reactions, mentions and deleted messages. Membership follows the booking.</p>
+      </article>
+      <article class="step" data-screen="4">
+        <span class="step__k mono">Arabic-first · RTL</span>
+        <h3 data-i18n="lamma.s5.t">Built for Arabic, works in English</h3>
+        <p data-i18n="lamma.s5.p">Every string exists in both languages and the whole layout mirrors for RTL. Notifications are composed and localized on the server.</p>
+      </article>
+    </div>
+
+    <div class="story__device">
+      <div class="phone phone--story">
+        <div class="phone__screen" id="storyScreens">
+          <img class="is-active" src="assets/img/lamma/search-results.webp" alt="Lamma search results with group discount badges" width="540" height="1200" loading="lazy">
+          <img src="assets/img/lamma/outing-details.webp" alt="Lamma outing details showing audience groups" width="540" height="1200" loading="lazy">
+          <img src="assets/img/lamma/wallet-top-up.webp" alt="Lamma wallet top-up with card, mobile wallet and InstaPay" width="540" height="1200" loading="lazy">
+          <img src="assets/img/lamma/group-chat.webp" alt="Lamma group chat with reactions" width="540" height="1200" loading="lazy">
+          <img src="assets/img/lamma/home.webp" alt="Lamma home screen in Arabic" width="540" height="1200" loading="lazy">
+        </div>
+      </div>
+      <div class="story__dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="eng">
+      <div class="eng__col">
+        <span class="tag mono">stack</span>
+        <ul class="pills">
+          <li>Flutter</li><li>Cubit</li><li>Clean Architecture</li><li>Supabase · Postgres</li><li>RLS</li><li>RPCs</li><li>Realtime</li><li>Edge Functions</li><li>Paymob</li><li>FCM</li><li>go_router</li><li>get_it</li><li>fpdart</li>
+        </ul>
+      </div>
+      <div class="eng__col eng__nums">
+        <div><b data-count="432">432</b><span data-i18n="lamma.n1">Dart files</span></div>
+        <div><b data-count="75">75</b><span data-i18n="lamma.n2">DB migrations</span></div>
+        <div><b data-count="169">169</b><span data-i18n="lamma.n3">Strings × 2 languages</span></div>
+      </div>
+    </div>
+
+    <div class="gallery" aria-label="More Lamma screens">
+      <div class="gallery__track" id="galleryTrack">
+        <figure><img src="assets/img/lamma/search-filters.webp" alt="Search filters" loading="lazy" width="540" height="1200"><figcaption>Search filters</figcaption></figure>
+        <figure><img src="assets/img/lamma/booking-summary.webp" alt="Booking summary" loading="lazy" width="540" height="1200"><figcaption>Booking summary</figcaption></figure>
+        <figure><img src="assets/img/lamma/my-bookings.webp" alt="My bookings" loading="lazy" width="540" height="1200"><figcaption>Loyalty points</figcaption></figure>
+        <figure><img src="assets/img/lamma/booking-details.webp" alt="Booking details" loading="lazy" width="540" height="1200"><figcaption>Booking details</figcaption></figure>
+        <figure><img src="assets/img/lamma/padel-publish.webp" alt="Padel match publishing" loading="lazy" width="540" height="1200"><figcaption>Padel matches</figcaption></figure>
+        <figure><img src="assets/img/lamma/notifications.webp" alt="Notifications" loading="lazy" width="540" height="1200"><figcaption>Notifications</figcaption></figure>
+        <figure><img src="assets/img/lamma/wallet.webp" alt="Lamma wallet" loading="lazy" width="540" height="1200"><figcaption>Wallet</figcaption></figure>
+        <figure><img src="assets/img/lamma/profile.webp" alt="Profile" loading="lazy" width="540" height="1200"><figcaption>Profile</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="lamma__links">
+      <a class="btn magnetic" href="https://github.com/sheriffahmy74/lamma-showcase" target="_blank" rel="noopener"><span data-i18n="lamma.repo">View the showcase</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <a class="btn btn--ghost magnetic" href="https://sheriffahmy74.github.io/lamma-links" target="_blank" rel="noopener"><span data-i18n="lamma.links">Lamma links page</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NABDY CASE STUDY ============ -->
+<section class="case wrap" id="nabdy">
+  <div class="case__card">
+    <div class="case__head">
+      <span class="tag mono">// client work · INETWORK Middle East</span>
+      <h2 class="h2">Nabdy <span class="ar-title">نبضي</span></h2>
+      <p class="section-sub" data-i18n="nabdy.sub">A healthcare super-app. I took it through a full production audit so it could pass App Store and Google Play review.</p>
+    </div>
+    <ol class="audit" aria-label="Audit checklist">
+      <li><span class="tick" aria-hidden="true"></span><div><b data-i18n="nabdy.a1.t">iOS Privacy Manifest</b><p data-i18n="nabdy.a1.p">Fixed the compliance issues that were blocking App Store review.</p></div><code class="mono">PrivacyInfo.xcprivacy</code></li>
+      <li><span class="tick" aria-hidden="true"></span><div><b data-i18n="nabdy.a2.t">Google Maps SDK conflicts</b><p data-i18n="nabdy.a2.p">Resolved the authorization conflicts between the Maps SDK and the app's keys.</p></div><code class="mono">google_maps_flutter</code></li>
+      <li><span class="tick" aria-hidden="true"></span><div><b data-i18n="nabdy.a3.t">Smaller APK / AAB</b><p data-i18n="nabdy.a3.p">Compressed assets, removed unused dependencies and tuned the build configuration.</p></div><code class="mono">--split-per-abi</code></li>
+      <li><span class="tick" aria-hidden="true"></span><div><b data-i18n="nabdy.a4.t">Dependency upgrades</b><p data-i18n="nabdy.a4.p">Updated and refactored packages for stability and compatibility.</p></div><code class="mono">pubspec.yaml</code></li>
+      <li><span class="tick" aria-hidden="true"></span><div><b data-i18n="nabdy.a5.t">Store accounts and release</b><p data-i18n="nabdy.a5.p">Set up Google Play Console and Apple Developer for publishing.</p></div><code class="mono">release ✓</code></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ MORE WORK ============ -->
+<section class="more wrap" id="more">
+  <div class="section-head">
+    <span class="tag mono">// more projects</span>
+    <h2 class="h2" data-i18n="more.title">More things I've built</h2>
+  </div>
+
+  <div class="bento">
+    <article class="card card--tasks">
+      <div class="card__text">
+        <span class="card__k mono">Electro Pi · technical assessment</span>
+        <h3>Task Manager</h3>
+        <p data-i18n="tasks.p">Projects and tasks on a Supabase REST backend, with JWT auth, auto-login, dark mode and a full English/Arabic switch. Try the buttons.</p>
+        <div class="seg" role="group" aria-label="Preview mode">
+          <button type="button" class="is-active" data-mode="light">Light</button>
+          <button type="button" data-mode="dark">Dark</button>
+          <button type="button" data-mode="ar">عربي</button>
+        </div>
+        <ul class="pills pills--sm"><li>Clean Architecture</li><li>Cubit</li><li>Dio</li><li>go_router</li><li>fpdart</li><li>Supabase</li></ul>
+        <a class="link-arrow" href="https://github.com/sheriffahmy74/task_manager" target="_blank" rel="noopener">github.com/sheriffahmy74/task_manager</a>
+      </div>
+      <div class="card__device">
+        <div class="phone phone--sm">
+          <div class="phone__screen" id="taskScreens">
+            <img class="is-active" data-mode="light" src="assets/img/tasks/projects.webp" alt="Task Manager projects in light mode" loading="lazy" width="540" height="1200">
+            <img data-mode="dark" src="assets/img/tasks/projects-dark.webp" alt="Task Manager projects in dark mode" loading="lazy" width="540" height="1200">
+            <img data-mode="ar" src="assets/img/tasks/projects-arabic.webp" alt="Task Manager projects in Arabic" loading="lazy" width="540" height="1200">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card card--rick">
+      <span class="card__k mono">Bloc · REST API</span>
+      <h3>Rick &amp; Morty Characters</h3>
+      <p data-i18n="rick.p">A character browser with live search, Hero animations, offline detection and a layered Cubit → Repository → Web service flow.</p>
+      <div class="flow mono" aria-label="Data flow">
+        <span>UI</span><i></i><span>Cubit</span><i></i><span>Repository</span><i></i><span>Dio</span>
+      </div>
+      <a class="link-arrow" href="https://github.com/sheriffahmy74/-Bloc-" target="_blank" rel="noopener">github.com/sheriffahmy74/-Bloc-</a>
+    </article>
+
+    <article class="card card--links">
+      <span class="card__k mono">Web · GitHub Pages</span>
+      <h3>Lamma Links + QR</h3>
+      <p data-i18n="links.p">A zero-dependency links page opened from a printed QR code. The QR stays the same forever while the links behind it can change.</p>
+      <a class="link-arrow" href="https://sheriffahmy74.github.io/lamma-links" target="_blank" rel="noopener">sheriffahmy74.github.io/lamma-links</a>
+    </article>
+
+    <article class="card card--list">
+      <span class="card__k mono" data-i18n="also.k">Also built</span>
+      <ul class="also">
+        <li><b>E-Commerce App</b><span data-i18n="also.1">NTI graduation project. Full UI and REST API integration.</span></li>
+        <li><b>Malaz</b><span data-i18n="also.2">Role-based system on Firebase with Google Maps.</span></li>
+        <li><b>Anti-Cheating Exam</b><span data-i18n="also.3">Screenshot detection with a Firebase backend.</span></li>
+        <li><b>Gym App</b><span data-i18n="also.4">Workout schedule generator with PDF export.</span></li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ============ JOURNEY ============ -->
+<section class="journey wrap" id="journey">
+  <div class="section-head">
+    <span class="tag mono">// journey</span>
+    <h2 class="h2" data-i18n="journey.title">Where I've been</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline__line" aria-hidden="true"><i id="timelineFill"></i></div>
+    <article class="tl">
+      <span class="tl__when mono" data-i18n="tl.now">Now</span>
+      <h3 data-i18n="tl.1.t">Flutter Developer · INETWORK Middle East</h3>
+      <p data-i18n="tl.1.p">Hybrid, New Cairo. Building scalable mobile apps with Clean Architecture and SOLID, and running production and security audits for store releases.</p>
+    </article>
+    <article class="tl">
+      <span class="tl__when mono" data-i18n="tl.now">Now</span>
+      <h3 data-i18n="tl.2.t">Founder · Lamma</h3>
+      <p data-i18n="tl.2.p">Designing and building an outings platform for Egypt, launching first in Cairo and Mansoura.</p>
+    </article>
+    <article class="tl">
+      <span class="tl__when mono">2026</span>
+      <h3 data-i18n="tl.3.t">NVIDIA DLI Generative AI · ITI</h3>
+      <p data-i18n="tl.3.p">Python, LLMs and RAG.</p>
+    </article>
+    <article class="tl">
+      <span class="tl__when mono">NTI</span>
+      <h3 data-i18n="tl.4.t">Certified Mobile App Developer</h3>
+      <p data-i18n="tl.4.p">Intensive Flutter track, completed with a 94% score.</p>
+    </article>
+    <article class="tl">
+      <span class="tl__when mono">2021 – 2025</span>
+      <h3 data-i18n="tl.5.t">B.Sc. Computer Science · Mansoura University</h3>
+      <p data-i18n="tl.5.p">Specific Education, Computer Science department. Excellent with Honors, ranked 1st.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="skills wrap" id="skills">
+  <div class="section-head">
+    <span class="tag mono">// toolbox</span>
+    <h2 class="h2" data-i18n="skills.title">What I work with</h2>
+  </div>
+  <div class="skills__grid">
+    <div class="sk"><h3 data-i18n="sk.1">Core</h3><p>Flutter · Dart · OOP · SOLID · Problem solving</p></div>
+    <div class="sk"><h3 data-i18n="sk.2">Architecture &amp; state</h3><p>Clean Architecture · MVVM · Bloc · Cubit · get_it · go_router</p></div>
+    <div class="sk"><h3 data-i18n="sk.3">Backend &amp; data</h3><p>Supabase · Firebase (Auth, Firestore, FCM) · REST with Dio · SQLite · SharedPreferences</p></div>
+    <div class="sk"><h3 data-i18n="sk.4">Shipping</h3><p>App Store &amp; Play Console · iOS Privacy Manifest · App size tuning · Testing with bloc_test &amp; mocktail</p></div>
+    <div class="sk"><h3 data-i18n="sk.5">Integrations</h3><p>Google Maps · Paymob · Push notifications · Localization &amp; RTL</p></div>
+    <div class="sk"><h3 data-i18n="sk.6">AI-assisted dev</h3><p>Prompt engineering · Cursor · GitHub Copilot · Claude</p></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="hero__bg" aria-hidden="true"><i class="orb orb--violet"></i><i class="orb orb--sky"></i></div>
+  <div class="wrap contact__wrap">
+    <span class="tag mono">// runApp(YourIdea())</span>
+    <h2 class="contact__title"><span class="line"><span class="split" data-split data-i18n="contact.l1">Let's build</span></span><span class="line"><span class="split grad" data-split data-i18n="contact.l2">your next app.</span></span></h2>
+    <div class="contact__mail">
+      <a class="mail magnetic" href="mailto:sfhmy7124@gmail.com" id="mailLink">sfhmy7124@gmail.com</a>
+      <button class="copy" type="button" id="copyMail"><span data-i18n="contact.copy">Copy</span></button>
+    </div>
+    <ul class="socials">
+      <li><a class="magnetic" href="https://www.linkedin.com/in/sheriffahmy0/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a class="magnetic" href="https://github.com/sheriffahmy74" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a class="magnetic" href="assets/Sherif-Fahmy-CV.pdf" target="_blank" rel="noopener" data-i18n="contact.cv">CV (PDF)</a></li>
+    </ul>
+  </div>
+  <footer class="wrap foot mono">
+    <span>© 2026 Sherif Fahmy</span>
+    <span data-i18n="foot.made">Designed and built by me, animated with GSAP.</span>
+  </footer>
+</section>
+
+</main>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
