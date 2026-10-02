@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sherif Fahmy — Flutter Developer CV</title>
+<style>
+  @font-face { font-family: "Manrope"; font-weight: 400; src: url("fonts/manrope-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Manrope"; font-weight: 500; src: url("fonts/manrope-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Manrope"; font-weight: 600; src: url("fonts/manrope-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Manrope"; font-weight: 700; src: url("fonts/manrope-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Manrope"; font-weight: 800; src: url("fonts/manrope-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Alexandria"; font-weight: 600; src: url("fonts/alexandria-arabic-600-normal.woff2") format("woff2"); }
+
+  :root {
+    --ink: #16141F;
+    --text: #2B2838;
+    --muted: #615C78;
+    --accent: #5B45E0;   /* portfolio violet, darkened for print */
+    --rule: #DCD8EC;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 210mm;
+    padding: 10mm 14mm 7mm;
+    font: 400 9.1pt/1.34 "Manrope", "Liberation Sans", Arial, sans-serif;
+    color: var(--text); background: #fff;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+  .ar { font-family: "Alexandria", "DejaVu Sans", sans-serif; font-weight: 600; }
+
+  header { display: grid; gap: 3pt; padding-bottom: 9pt; border-bottom: 1.5pt solid var(--ink); }
+  h1 { margin: 0; font: 800 23pt/1.05 "Manrope", sans-serif; letter-spacing: -.02em; color: var(--ink); }
+  .role { font: 600 11pt/1.3 "Manrope", sans-serif; color: var(--accent); }
+  .contact { display: flex; flex-wrap: wrap; gap: 2pt 0; font-size: 8.6pt; color: var(--muted); margin-top: 2pt; }
+  .contact span + span::before { content: "|"; margin: 0 6pt; color: var(--rule); }
+
+  section { margin-top: 7pt; }
+  h2 {
+    margin: 0 0 5pt; padding-bottom: 2.5pt;
+    font: 800 9pt/1 "Manrope", sans-serif; text-transform: uppercase;
+    color: var(--ink); border-bottom: .75pt solid var(--rule);
+  }
+  p { margin: 0; }
+  ul { margin: 3pt 0 0; padding-left: 12pt; }
+  li { margin: 1.2pt 0; padding-left: 1pt; }
+  li::marker { color: var(--accent); }
+  b, strong { font-weight: 700; color: var(--ink); }
+
+  .item + .item { margin-top: 5pt; }
+  .item-head { display: flex; justify-content: space-between; gap: 10pt; align-items: baseline; }
+  .item-title { font-weight: 700; font-size: 10pt; color: var(--ink); }
+  .item-meta { font-size: 8.6pt; color: var(--muted); white-space: nowrap; }
+  .item-sub { font-size: 8.6pt; color: var(--muted); margin-top: 1pt; }
+  .stack { color: var(--accent); font-weight: 600; }
+
+  .skills { display: grid; grid-template-columns: 42mm 1fr; gap: 2pt 8pt; }
+  .skills dt { font-weight: 700; color: var(--ink); }
+  .skills dd { margin: 0; }
+  .compact li { margin: 1pt 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sherif Fahmy Mohamed</h1>
+  <div class="role">Flutter Developer · Founder of Lamma</div>
+  <div class="contact">
+    <span>Mansoura, Egypt (Relocation Available)</span>
+    <span>+20 100 409 3899</span>
+    <span><a href="mailto:sfhmy7124@gmail.com">sfhmy7124@gmail.com</a></span>
+  </div>
+  <div class="contact">
+    <span><a href="https://www.linkedin.com/in/sheriffahmy0/">linkedin.com/in/sheriffahmy0</a></span>
+    <span><a href="https://github.com/sheriffahmy74">github.com/sheriffahmy74</a></span>
+    <span>Military Status: Exempted</span>
+  </div>
+</header>
+
+<section>
+  <h2>Profile</h2>
+  <p>Flutter Developer with strong hands-on experience building scalable applications with Flutter &amp; Dart. Skilled in Clean Architecture, Bloc/Cubit, REST APIs, Firebase and Supabase. Founder of <b>Lamma</b>, a bilingual group-outings app built end to end. Graduated with Excellent Honors (Ranked 1st), with a solid academic foundation in Computer Science and Problem Solving.</p>
+</section>
+
+<section>
+  <h2>Work Experience</h2>
+  <div class="item">
+    <div class="item-head">
+      <span class="item-title">Flutter Developer — INETWORK Middle East</span>
+      <span class="item-meta">Hybrid | New Cairo, Cairo</span>
+    </div>
+    <ul>
+      <li>Engineering scalable, high-performance mobile solutions and contributing to system architecture using Clean Architecture and SOLID principles.</li>
+      <li>Conducting comprehensive production-readiness and security audits to ensure full compliance with App Store and Play Store standards.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="item">
+    <div class="item-head">
+      <span class="item-title">Bachelor of Specific Education — Computer Science Department, Mansoura University</span>
+      <span class="item-meta">2021 – 2025</span>
+    </div>
+    <ul class="compact"><li>Grade: Excellent with Honors | Class Rank: <b>1st in Department</b>.</li></ul>
+  </div>
+</section>
+
+<section>
+  <h2>Technical Skills</h2>
+  <dl class="skills">
+    <dt>Frameworks &amp; Logic</dt><dd>Flutter, Dart, SOLID Principles, Clean Architecture (MVVM), Problem Solving</dd>
+    <dt>State Management</dt><dd>Bloc, Cubit</dd>
+    <dt>Data &amp; APIs</dt><dd>REST APIs (Dio/Http), Supabase (Postgres, RLS, Realtime, Edge Functions), Firebase (Auth, Firestore, FCM), SQLite, SharedPreferences</dd>
+    <dt>Architecture &amp; Testing</dt><dd>get_it, go_router, fpdart (Either), bloc_test, mocktail, Localization &amp; RTL</dd>
+    <dt>AI Tools</dt><dd>Prompt Engineering, AI-Assisted Development (Cursor AI, GitHub Copilot)</dd>
+    <dt>General Tools</dt><dd>Git, GitHub, Google Maps, Paymob</dd>
+    <dt>Languages</dt><dd>Arabic: Native | English: Very Good (Technical) / Good (Communication)</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Projects</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <span class="item-title">Lamma <span class="ar">لمّة</span> — Group-Outings App (Founder &amp; Flutter Developer)</span>
+      <span class="item-meta"><a href="https://github.com/sheriffahmy74/lamma-showcase">github.com/sheriffahmy74/lamma-showcase</a></span>
+    </div>
+    <div class="item-sub"><span class="stack">Flutter · Cubit · Clean Architecture · Supabase · Paymob · FCM</span></div>
+    <ul>
+      <li>Built an Arabic-first (RTL) bilingual app for Egypt: users discover outings, book a seat in an audience-specific group, pay, and join the group chat.</li>
+      <li>Structured 12 features with feature-first Clean Architecture (Cubit, get_it, go_router, fpdart) across 432 Dart files, covered by 746+ automated tests running in CI.</li>
+      <li>Designed the Supabase backend: Postgres with Row-Level Security, 75 migrations, RPCs, Realtime group chat, Edge Functions and localized push notifications.</li>
+      <li>Kept money and capacity logic server-side: atomic bookings under a row lock prevent overbooking, and payments are confirmed only by the HMAC-verified Paymob webhook.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-head">
+      <span class="item-title">Nabdy — Healthcare Super-App (INETWORK)</span>
+    </div>
+    <ul>
+      <li>Conducted a comprehensive technical audit to resolve critical iOS Privacy Manifest compliance issues and Google Maps SDK authorization conflicts, ensuring full App Store readiness.</li>
+      <li>Optimized performance and significantly reduced APK/AAB size through asset compression, dependency optimization and efficient build configurations; upgraded and refactored packages for stability and compatibility.</li>
+      <li>Prepared and configured Google Play Console and Apple Developer accounts for deployment, publishing workflows and production release.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <ul class="compact">
+      <li><b>E-Commerce App (NTI Graduation):</b> Full UI development and REST API integration.</li>
+      <li><b>Gym App:</b> Workout schedule generator with PDF output (built with AI support).</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Courses &amp; Certifications</h2>
+  <ul class="compact">
+    <li><b>NVIDIA DLI Generative AI</b>, ITI (Jan 2026): Python, LLMs and RAG.</li>
+    <li><b>Certified Mobile App Developer</b>, NTI: intensive track completed with a 94% score.</li>
+    <li>Various advanced mobile development courses on Udemy and YouTube.</li>
+  </ul>
+</section>
+
+
+</body>
+</html>

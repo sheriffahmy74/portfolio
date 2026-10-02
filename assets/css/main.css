@@ -353,14 +353,13 @@ section { position: relative; }
 .flow i { position: relative; width: 26px; height: 1px; background: var(--line); overflow: hidden; }
 .flow i::after { content: ""; position: absolute; inset: 0; width: 40%; background: var(--sky); animation: flow 1.6s linear infinite; }
 @keyframes flow { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
-.also { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.also { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .also li { display: grid; gap: 6px; align-content: start; padding-top: 16px; border-top: 1px solid var(--line); }
 .also b { font: 700 1.05rem var(--f-display); }
 .also span { color: var(--muted); font-size: .9rem; }
 @media (max-width: 900px) {
   .card--tasks { grid-template-columns: 1fr; }
   .card--rick, .card--links { grid-column: span 6; }
-  .also { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 480px) { .also { grid-template-columns: 1fr; } .phone--sm { width: 190px; } }
 
