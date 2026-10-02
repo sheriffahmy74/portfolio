@@ -28,7 +28,8 @@ assets/Sherif-Fahmy-CV.pdf
 - **Text:** English is in `index.html`; every element with `data-i18n="key"` has its Arabic in `assets/js/i18n.js` under the same key.
 - **Colors:** the tokens at the top of `assets/css/main.css` (`--violet`, `--sky`, `--ink`, …).
 - **Screenshots:** drop a 540px-wide `.webp` into `assets/img/…` and point the `<img>` at it.
-- **CV:** replace `assets/Sherif-Fahmy-CV.pdf`.
+- **CV:** edit `cv/cv.html`, run `node cv/build.mjs` to rebuild `assets/Sherif-Fahmy-CV.pdf`, then refresh the on-page preview image:
+  `pdftoppm -r 150 -png -singlefile assets/Sherif-Fahmy-CV.pdf /tmp/cv && convert /tmp/cv.png -quality 85 assets/img/cv-preview.webp`
 
 ## Deploy
 

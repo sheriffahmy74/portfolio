@@ -83,6 +83,7 @@ window.I18N_AR = {
   "contact.copy": "انسخ",
   "contact.copied": "اتنسخ ✓",
   "contact.cv": "السي في (PDF)",
+  "cv.download": "حمّل PDF",
   "foot.made": "تصميم وتنفيذ شريف، والأنيميشن بـ GSAP."
 };
 

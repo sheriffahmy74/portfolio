@@ -69,6 +69,7 @@
   let lenis = null;
   if (typeof window.Lenis !== "undefined") {
     lenis = new window.Lenis({ duration: 1.15, smoothWheel: true });
+    window.__lenis = lenis;
     lenis.on("scroll", ST.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -326,6 +327,24 @@
       seg.forEach((x) => x.classList.toggle("is-active", x === b));
       shots.forEach((s) => s.classList.toggle("is-active", s.dataset.mode === b.dataset.mode));
     }));
+
+    // CV viewer: show the CV in-page, with a download button inside
+    const modal = $("#cvModal");
+    let lastFocus = null;
+    const closeCv = () => {
+      modal.hidden = true;
+      if (window.__lenis) window.__lenis.start();
+      if (lastFocus) lastFocus.focus();
+    };
+    $$("[data-cv]").forEach((a) => a.addEventListener("click", (e) => {
+      e.preventDefault();
+      lastFocus = a;
+      modal.hidden = false;
+      if (window.__lenis) window.__lenis.stop();
+      $(".cv-modal__close", modal).focus();
+    }));
+    $$("[data-close]", modal).forEach((el) => el.addEventListener("click", closeCv));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.hidden) closeCv(); });
 
     // copy email
     const copyBtn = $("#copyMail");

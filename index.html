@@ -73,7 +73,7 @@
       <div class="hero__cta reveal-up">
         <a class="btn magnetic" href="#work"><span data-i18n="hero.cta1">See my work</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn--ghost magnetic" href="assets/Sherif-Fahmy-CV.pdf" target="_blank" rel="noopener"><span data-i18n="hero.cta2">Download CV</span></a>
+        <a class="btn btn--ghost magnetic" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv><span data-i18n="hero.cta2">Download CV</span></a>
       </div>
     </div>
 
@@ -368,7 +368,7 @@
     <ul class="socials">
       <li><a class="magnetic" href="https://www.linkedin.com/in/sheriffahmy0/" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a class="magnetic" href="https://github.com/sheriffahmy74" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a class="magnetic" href="assets/Sherif-Fahmy-CV.pdf" target="_blank" rel="noopener" data-i18n="contact.cv">CV (PDF)</a></li>
+      <li><a class="magnetic" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv data-i18n="contact.cv">CV (PDF)</a></li>
     </ul>
   </div>
   <footer class="wrap foot mono">
@@ -378,6 +378,23 @@
 </section>
 
 </main>
+
+<!-- ============ CV VIEWER ============ -->
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" hidden>
+  <div class="cv-modal__backdrop" data-close></div>
+  <div class="cv-modal__panel">
+    <div class="cv-modal__bar">
+      <span class="mono" id="cvTitle">Sherif-Fahmy-CV.pdf</span>
+      <div class="cv-modal__actions">
+        <a class="btn btn--small" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf"><span data-i18n="cv.download">Download PDF</span></a>
+        <button class="cv-modal__close" type="button" data-close aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="cv-modal__body" data-lenis-prevent>
+      <img src="assets/img/cv-preview.webp" alt="Sherif Fahmy CV, page 1" width="1240" height="1754" loading="lazy">
+    </div>
+  </div>
+</div>
 
 <script src="assets/vendor/gsap.min.js"></script>
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
