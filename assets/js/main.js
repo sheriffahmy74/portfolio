@@ -344,6 +344,21 @@
       $(".cv-modal__close", modal).focus();
     }));
     $$("[data-close]", modal).forEach((el) => el.addEventListener("click", closeCv));
+
+    // Inside the claude.ai preview, plain download links are blocked; save through the viewer instead.
+    let saver = null;
+    if (window.claude && typeof window.claude.use === "function") {
+      window.claude.use("downloads").then((ns) => { saver = ns; }, () => {});
+    }
+    const dlLink = $(".cv-modal__actions a", modal);
+    dlLink.addEventListener("click", (e) => {
+      if (!saver) return; // normal hosting: let the download attribute work
+      e.preventDefault();
+      fetch(dlLink.getAttribute("href"))
+        .then((r) => r.blob())
+        .then((blob) => saver.save({ filename: "Sherif-Fahmy-CV.pdf", data: blob }))
+        .catch(() => { /* declined or unavailable: the preview stays visible */ });
+    });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.hidden) closeCv(); });
 
     // copy email
