@@ -12,7 +12,7 @@ window.I18N_AR = {
   "hero.t1": "ببني تطبيقات Flutter",
   "hero.t2": "من أول commit",
   "hero.t3": "لحد App Store.",
-  "hero.sub": "مطوّر Flutter مركّز على Clean Architecture وBloc/Cubit وSupabase وFirebase. حاليًا في INETWORK Middle East، وببني لمّة، تطبيق خروجات جماعية لمصر.",
+  "hero.sub": "مطوّر Flutter مركّز على Clean Architecture وBloc/Cubit وSupabase وFirebase. اشتغلت على نبضي في INETWORK Middle East، وببني لمّة، تطبيق خروجات جماعية لمصر.",
   "hero.cta1": "شوف المشاريع",
   "hero.cta2": "تواصل معايا",
   "facts.1": "على قسم علوم الحاسب",
@@ -53,6 +53,8 @@ window.I18N_AR = {
   "sk.2": "المعمارية",
   "sk.3": "الباك إند والداتا",
   "sk.4": "الجودة والنشر",
+  "sk.5": "التكاملات",
+  "sk.6": "الأدوات",
 
   "about.k": "عني",
   "about.title": "بهتم إن الكود يفضل سهل التعديل.",
@@ -69,8 +71,8 @@ window.I18N_AR = {
   "contact.copy": "انسخ الإيميل",
   "contact.copied": "اتنسخ ✓",
   "contact.cv": "حمّل السي في",
-  "foot.made": "تصميم وتنفيذ شريف. الصورة المتكوّنة من الذرات شغالة مباشرة بـ WebGL.",
-  "hero.hint": "حرّك الماوس على الصورة",
-  "hero.hintTouch": "المس الصورة واسحب صباعك عليها",
+  "foot.made": "تصميم وتنفيذ شريف. تأثير الدهان شغال مباشرة بـ WebGL.",
+  "hero.hint": "حرّك الماوس على الدهان",
+  "hero.hintTouch": "المس الدهان",
   "cv.download": "حمّل PDF"
 };

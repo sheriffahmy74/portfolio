@@ -41,7 +41,13 @@
   };
   function renderProjects() {
     $("#projectList").innerHTML = window.PROJECTS.map((p) => {
-      const devices = p.screens.slice(0, 3).map((k) => `<div class="device"><img src="${esc(window.SCREENS[k])}" alt="${esc(p.name.en)} screen" loading="lazy" width="540" height="1200"></div>`).join("");
+      const img = (k, on) => `<img class="${on ? "is-on" : ""}" src="${esc(window.SCREENS[k])}" alt="${esc(p.name.en)} screen" loading="lazy" width="540" height="1200">`;
+      const sc = p.screens;
+      const devices = sc.length === 1
+        ? `<div class="device" data-depth="1"><div class="device__screens">${img(sc[0], true)}</div></div>`
+        : `<div class="device" data-depth=".6"><div class="device__screens">${img(sc[0], true)}</div></div>`
+          + `<div class="device device--live" data-depth="1.2"><div class="device__screens">${sc.map((k, i) => img(k, i === 1)).join("")}</div></div>`
+          + `<div class="device" data-depth=".6"><div class="device__screens">${img(sc[sc.length - 1], true)}</div></div>`;
       const metrics = p.metrics.length ? `<div class="metrics">${p.metrics.map((m) => `<div><b>${esc(m.v)}</b><span>${esc(m.l[lang])}</span></div>`).join("")}</div>` : "";
       return `<article class="project">
         <div class="project__visual" style="background:${p.bg}">${devices}</div>
@@ -72,24 +78,36 @@
     } });
   });
 
-  /* ------------------------------------------- hero: particle portrait */
+  /* ------------------------------------------ hero + about: liquid paint images */
   const hero = $("#hero");
-  let portrait = null;
-  if (!reduced && window.ParticlePortrait && window.ParticlePortrait.supported()) {
+  let heroPaint = null, aboutPaint = null;
+  if (!reduced && window.LiquidImage && window.LiquidImage.supported()) {
     try {
-      portrait = window.ParticlePortrait.create($("#particleStage"), { src: "assets/img/me/hero.webp" });
-      root.classList.add("has-particles");
+      heroPaint = window.LiquidImage.create($("#liquidStage"), { src: "assets/img/me/hero.webp", c1: "#2547C9", c2: "#54C5F8", c3: "#F5A524", height: .9 });
+      aboutPaint = window.LiquidImage.create($("#aboutStage"), { src: "assets/img/me/work-16.webp", c1: "#8B6FE8", c2: "#F5A524", c3: "#2F5BEA", fit: "splash", mask: true });
+      root.classList.add("has-liquid");
       if (matchMedia("(pointer: coarse)").matches) {
         const hint = $(".hero__hint");
         hint.dataset.i18n = "hero.hintTouch";
-        hint.textContent = lang === "ar" ? window.I18N_AR["hero.hintTouch"] : "Touch and drag over me";
-        EN["hero.hintTouch"] = "Touch and drag over me";
+        EN["hero.hintTouch"] = "Touch the paint";
+        hint.textContent = lang === "ar" ? window.I18N_AR["hero.hintTouch"] : EN["hero.hintTouch"];
       }
-    } catch (e) { portrait = null; }
+    } catch (e) { heroPaint = aboutPaint = null; }
   }
 
+  // live screen inside the middle phone of each project
+  setInterval(() => {
+    if (document.hidden) return;
+    $$(".device--live .device__screens").forEach((box) => {
+      const imgs = $$("img", box);
+      const i = imgs.findIndex((x) => x.classList.contains("is-on"));
+      imgs[i].classList.remove("is-on");
+      imgs[(i + 1) % imgs.length].classList.add("is-on");
+    });
+  }, 2600);
+
   if (!canAnimate) {
-    if (portrait) portrait.ready.then(() => { portrait.assemble = 1; });
+    [heroPaint, aboutPaint].forEach((x) => x && x.ready.then(() => { x.reveal = 1; }));
     return;
   }
 
@@ -111,26 +129,25 @@
     }));
   }
 
-  // hero entrance: the particles fly in and assemble into the portrait
+  // hero entrance: paint pours in, then the photo fills from the top with drips
   gsap.timeline({ defaults: { ease: "power3.out" } })
     .from(".hero__copy > *", { y: 26, opacity: 0, duration: .8, stagger: .08 }, .1)
-    .from(".float-chip", { scale: .6, opacity: 0, duration: .6, stagger: .12, ease: "back.out(2)" }, 2.2)
-    .from(".hero__hint", { opacity: 0, duration: .6 }, 2.8);
-  if (portrait) {
-    const a = { v: 0 };
-    portrait.ready.then(() => gsap.to(a, { v: 1, duration: 2.8, ease: "power2.inOut", onUpdate: () => { portrait.assemble = a.v; } }));
+    .from(".float-chip", { scale: .6, opacity: 0, duration: .6, stagger: .12, ease: "back.out(2)" }, 2)
+    .from(".hero__hint", { opacity: 0, duration: .6 }, 2.6);
+  if (heroPaint) {
+    const r = { v: 0 };
+    heroPaint.ready.then(() => gsap.to(r, { v: 1, duration: 3, ease: "power1.inOut", delay: .2, onUpdate: () => { heroPaint.reveal = r.v; } }));
+    // scrolling away makes the paint and the photo melt down
+    ScrollTrigger.create({ trigger: hero, start: "top top", end: "bottom top", scrub: .4, onUpdate: (s) => { heroPaint.melt = s.progress; } });
   } else {
     gsap.from(".hero__photo", { y: 60, opacity: 0, duration: 1.1, ease: "expo.out", delay: .3 });
   }
-  $$(".float-chip").forEach((c, i) => gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.6 + i * .4, repeat: -1, yoyo: true, ease: "sine.inOut" }));
-
-  // scrolling past the hero morphs the portrait into the Flutter mark (same on every screen size)
-  if (portrait) {
-    ScrollTrigger.create({
-      trigger: hero, pin: true, start: "top top", end: () => "+=" + Math.round(innerHeight * .7), scrub: .4,
-      onUpdate: (s) => { portrait.morph = s.progress; }
-    });
+  if (aboutPaint) {
+    const r = { v: 0 };
+    ScrollTrigger.create({ trigger: ".about__photo", start: "top 75%", once: true,
+      onEnter: () => aboutPaint.ready.then(() => gsap.to(r, { v: 1, duration: 2.6, ease: "power1.inOut", onUpdate: () => { aboutPaint.reveal = r.v; } })) });
   }
+  $$(".float-chip").forEach((c, i) => gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.6 + i * .4, repeat: -1, yoyo: true, ease: "sine.inOut" }));
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -145,14 +162,26 @@
   gsap.fromTo(strip, { xPercent: 0 }, { xPercent: -50, duration: 36, ease: "none", repeat: -1 });
 
   // reveals
-  $$(".sec-head, .minor-title, .about__copy, .about__photos, .contact__inner > *").forEach((el) =>
+  $$(".sec-head, .minor-title, .about__copy, .contact__inner > *").forEach((el) =>
     gsap.from(el, { y: 36, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } }));
   ScrollTrigger.batch(".other, .tl, .skill", { start: "top 90%", once: true, onEnter: (els) => gsap.from(els, { y: 30, opacity: 0, duration: .7, ease: "power3.out", stagger: .08 }) });
   function revealProjects() {
     $$(".project").forEach((card) => {
       gsap.from(card, { y: 60, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", once: true } });
       const devs = $$(".device", card);
-      gsap.from(devs, { y: 120, duration: 1.2, ease: "expo.out", stagger: .1, scrollTrigger: { trigger: card, start: "top 80%", once: true } });
+      // phones fan out from a stack
+      gsap.from(devs, { x: (i) => (1 - i) * 90, rotationY: (i) => (i - 1) * 35, scale: .7, opacity: 0, duration: 1.3, ease: "expo.out", stagger: .08,
+        scrollTrigger: { trigger: card, start: "top 78%", once: true } });
+      // idle float
+      devs.forEach((d, i) => gsap.to(d, { y: i % 2 ? -10 : 10, duration: 2.8 + i * .5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * .3 }));
+      // 3D tilt toward the pointer
+      const vis = $(".project__visual", card);
+      vis.addEventListener("pointermove", (e) => {
+        const r = vis.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+        devs.forEach((d) => { const k = +d.dataset.depth || 1; gsap.to(d, { rotationY: nx * 26 * k, rotationX: -ny * 18 * k, z: 40 * k, duration: .6, ease: "power3.out", overwrite: "auto" }); });
+      });
+      vis.addEventListener("pointerleave", () => devs.forEach((d) => gsap.to(d, { rotationY: 0, rotationX: 0, z: 0, duration: .8, ease: "power3.out", overwrite: "auto" })));
     });
   }
   revealProjects();
