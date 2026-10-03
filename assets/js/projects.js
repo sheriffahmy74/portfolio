@@ -9,9 +9,7 @@ window.SCREENS = {
   "tasks-light": "assets/img/tasks/projects.webp",
   "tasks-detail": "assets/img/tasks/tasks.webp",
   "tasks-dark": "assets/img/tasks/projects-dark.webp",
-  "tasks-ar": "assets/img/tasks/projects-arabic.webp",
-  "links-welcome": "assets/img/links/welcome.webp",
-  "links-list": "assets/img/links/links.webp"
+  "tasks-ar": "assets/img/tasks/projects-arabic.webp"
 };
 
 window.PROJECTS = [
@@ -35,7 +33,11 @@ window.PROJECTS = [
       { v: "75", l: { en: "migrations", ar: "migration" } }
     ],
     stack: ["Flutter", "Cubit", "Clean Architecture", "Supabase", "Realtime", "Paymob", "FCM"],
-    links: [{ label: { en: "Showcase on GitHub", ar: "الـ Showcase على GitHub" }, href: "https://github.com/sheriffahmy74/lamma-showcase" }]
+    links: [{ label: { en: "Showcase on GitHub", ar: "الـ Showcase على GitHub" }, href: "https://github.com/sheriffahmy74/lamma-showcase" }],
+    social: [
+      { label: "Instagram", href: "https://www.instagram.com/lamma_experiences" },
+      { label: "TikTok", href: "https://www.tiktok.com/@experiences.eg" }
+    ]
   },
   {
     id: "nabdy",
@@ -72,23 +74,5 @@ window.PROJECTS = [
     metrics: [],
     stack: ["Flutter", "Cubit", "Dio", "go_router", "get_it", "fpdart", "Supabase"],
     links: [{ label: { en: "Code on GitHub", ar: "الكود على GitHub" }, href: "https://github.com/sheriffahmy74/task_manager" }]
-  },
-  {
-    id: "links",
-    name: { en: "Lamma Links", ar: "لينكات لمّة" },
-    tag: { en: "Web · GitHub Pages", ar: "ويب · GitHub Pages" },
-    bg: "linear-gradient(160deg, #FDF3DF 0%, #F8E2B8 100%)",
-    screens: ["links-welcome", "links-list"],
-    desc: {
-      en: "The page behind Lamma's printed QR code. Zero runtime dependencies. The QR stays the same forever while the links behind it can change.",
-      ar: "الصفحة اللي ورا QR لمّة المطبوع. من غير أي dependencies. الكود ثابت للأبد، واللينكات اللي وراه تتغير في أي وقت."
-    },
-    points: {
-      en: ["One config file drives the page and the QR", "Tests decode the generated QR to check it", "Deployed automatically on every push"],
-      ar: ["ملف config واحد بيتحكم في الصفحة والـ QR", "التستات بتفك الـ QR الناتج وتتأكد منه", "بيتنشر تلقائي مع كل push"]
-    },
-    metrics: [],
-    stack: ["HTML", "CSS", "JavaScript", "Node", "GitHub Actions"],
-    links: [{ label: { en: "Open the live page", ar: "افتح الصفحة" }, href: "https://sheriffahmy74.github.io/lamma-links" }]
   }
 ];

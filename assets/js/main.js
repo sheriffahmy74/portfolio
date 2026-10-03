@@ -17,6 +17,7 @@
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   /* --------------------------------------------------------------- i18n */
+  let redrawHero = null;
   const EN = {};
   $$("[data-i18n]").forEach((el) => { EN[el.dataset.i18n] = el.textContent; });
   let lang = store.get("lang") === "ar" ? "ar" : "en";
@@ -31,12 +32,14 @@
       if (v != null) el.textContent = v;
     });
     renderProjects();
+    if (redrawHero) redrawHero();
     store.set("lang", lang);
   }
 
   /* ----------------------------------------------------------- projects */
   const L = {
-    did: { en: "What I did", ar: "اللي عملته" }
+    did: { en: "What I did", ar: "اللي عملته" },
+    follow: { en: "Follow Lamma", ar: "تابع لمّة" }
   };
   function renderProjects() {
     $("#projectList").innerHTML = window.PROJECTS.map((p) => {
@@ -53,6 +56,7 @@
           ${metrics}
           <ul class="tags">${p.stack.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>
           <div class="project__links">${p.links.map((l, i) => `<a class="btn ${i ? "btn--ghost" : "btn--primary"} btn--sm" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label[lang])} ↗</a>`).join("")}</div>
+          ${p.social ? `<div class="socials"><span>${L.follow[lang]}</span>${p.social.map((x) => `<a href="${esc(x.href)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a>`).join("")}</div>` : ""}
         </div>
       </article>`;
     }).join("");
@@ -70,15 +74,18 @@
     } });
   });
 
-  /* ------------------------------------------- finale: frame sequence */
-  const canvas = $("#finaleCanvas");
+  /* ------------------------------------- hero: falling Flutter mark (frames) */
+  const hero = $("#hero");
+  const canvas = $("#dropCanvas");
   const ctx = canvas.getContext("2d");
-  const FRAMES = 120;
-  const portrait = () => innerWidth / innerHeight < .9;
-  const set = portrait() ? "sm" : "lg";
+  const FRAMES = 110;
+  const AUTO = 39;                 // frames 0..AUTO play on load (the drop), the rest follow the scroll
+  const mobile = () => matchMedia("(max-width: 900px)").matches;
+  const set = mobile() ? "sm" : "lg";
+  const LOGO_X = set === "lg" ? .677 : .5;   // where the mark sits in the rendered frame
   const frames = new Array(FRAMES);
-  let current = 0, started = false;
-  const src = (i) => `assets/fin/${set}/${String(i).padStart(3, "0")}.jpg`;
+  let current = 0;
+  const src = (i) => `assets/drop/${set}/${String(i).padStart(3, "0")}.webp`;
 
   function sizeCanvas() {
     const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -98,48 +105,34 @@
   function draw(i) {
     current = i;
     const img = pick(i);
-    if (!img) return;
     const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    if (!img) return;
     const s = Math.max(W / img.naturalWidth, H / img.naturalHeight); // cover
-    const w = img.naturalWidth * s, h = img.naturalHeight * s;
-    ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+    const w = img.naturalWidth * s, h = img.naturalHeight * s, x = (W - w) / 2;
+    ctx.drawImage(img, x, (H - h) / 2, w, h);
+    // keep the cut-out photo standing right in front of the mark
+    if (!mobile()) {
+      const fx = root.dir === "rtl" ? 1 - LOGO_X : LOGO_X;
+      hero.style.setProperty("--lx", ((x + w * fx) / W * canvas.clientWidth) + "px");
+    }
   }
-  function load(i) {
-    if (frames[i]) return;
-    const img = new Image();
-    img.decoding = "async";
-    img.onload = () => { if (Math.abs(i - current) < 4) draw(current); };
-    img.src = src(i);
-    frames[i] = img;
+  const loaded = [];
+  for (let i = 0; i < FRAMES; i++) {
+    loaded.push(new Promise((res) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = img.onerror = () => { if (Math.abs(i - current) < 3) draw(current); res(); };
+      img.src = src(i);
+      frames[i] = img;
+    }));
   }
-  // only start downloading when the visitor gets close to the end of the page
-  function startLoading() {
-    if (started) return; started = true;
-    const order = [];
-    [12, 4, 1].forEach((step) => { for (let i = 0; i < FRAMES; i += step) if (!order.includes(i)) order.push(i); });
-    let q = 0;
-    (function pump() { let n = 0; while (q < order.length && n < 6) { load(order[q++]); n++; } if (q < order.length) setTimeout(pump, 80); })();
-  }
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((ents) => { if (ents.some((e) => e.isIntersecting)) { startLoading(); io.disconnect(); } }, { rootMargin: "1600px 0px" });
-    io.observe($(".finale"));
-  } else startLoading();
   window.addEventListener("resize", sizeCanvas);
   sizeCanvas();
-
-  const lines = $$(".finale__line");
-  const flash = $("#finaleFlash");
-  function setFinale(p) {
-    const i = Math.round(clamp(p) * (FRAMES - 1));
-    if (i !== current || !pick(i)) draw(i);
-    lines.forEach((l) => l.classList.toggle("is-on", p >= +l.dataset.from && p < +l.dataset.to));
-    flash.style.opacity = clamp((p - .9) / .1);
-  }
+  redrawHero = () => draw(current);
 
   if (!canAnimate) {
-    startLoading();
-    const still = () => { if (frames[70] && frames[70].complete) draw(70); else setTimeout(still, 200); };
-    load(70); still();
+    Promise.all(loaded.slice(0, AUTO + 1)).then(() => draw(AUTO));
     return;
   }
 
@@ -161,15 +154,29 @@
     }));
   }
 
-  // hero entrance
+  // hero entrance: the mark drops in (frames 0 → AUTO), then the photo and copy arrive
+  const drop = { f: 0 };
+  let dropDone = false;
+  Promise.all(loaded.slice(0, AUTO + 1)).then(() => {
+    gsap.to(drop, { f: AUTO, duration: 2.1, ease: "none", onUpdate: () => draw(Math.round(drop.f)), onComplete: () => { dropDone = true; } });
+  });
   gsap.timeline({ defaults: { ease: "power3.out" } })
-    .from(".hero__copy > *", { y: 26, opacity: 0, duration: .8, stagger: .08 })
-    .from(".hero__panel", { scale: .9, opacity: 0, duration: 1, ease: "expo.out" }, .1)
-    .from(".hero__photo", { y: 60, opacity: 0, duration: 1.1, ease: "expo.out" }, .25)
-    .from(".device--hero", { y: 80, rotate: 14, opacity: 0, duration: 1.1, ease: "expo.out" }, .45)
-    .from(".float-chip", { scale: .6, opacity: 0, duration: .6, stagger: .1, ease: "back.out(2)" }, .8);
+    .from(".hero__copy > *", { y: 26, opacity: 0, duration: .8, stagger: .08 }, .2)
+    .from(".hero__photo", { y: 80, opacity: 0, duration: 1.2, ease: "expo.out" }, 1.1)
+    .from(".float-chip", { scale: .6, opacity: 0, duration: .6, stagger: .1, ease: "back.out(2)" }, 1.6);
   $$(".float-chip").forEach((c, i) => gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.6 + i * .4, repeat: -1, yoyo: true, ease: "sine.inOut" }));
-  gsap.to(".device--hero", { y: -10, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+  // after the drop, scrolling spins the mark and bursts it
+  function onHeroScroll(p) {
+    if (!dropDone) return;
+    draw(Math.round(AUTO + clamp(p) * (FRAMES - 1 - AUTO)));
+  }
+  if (mobile()) {
+    ScrollTrigger.create({ trigger: ".hero__visual", start: "top top", end: "bottom top", scrub: .3, onUpdate: (s) => onHeroScroll(s.progress) });
+  } else {
+    ScrollTrigger.create({ trigger: hero, pin: true, start: "top top", end: () => "+=" + innerHeight * 1.1, scrub: .3, onUpdate: (s) => onHeroScroll(s.progress) });
+    gsap.to(".hero__copy", { y: -60, opacity: 0, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.1, scrub: true } });
+  }
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -184,7 +191,7 @@
   gsap.fromTo(strip, { xPercent: 0 }, { xPercent: -50, duration: 36, ease: "none", repeat: -1 });
 
   // reveals
-  $$(".sec-head, .minor-title, .about__copy, .about__photo, .contact__inner > *").forEach((el) =>
+  $$(".sec-head, .minor-title, .about__copy, .about__photos, .contact__inner > *").forEach((el) =>
     gsap.from(el, { y: 36, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } }));
   ScrollTrigger.batch(".other, .tl, .skill", { start: "top 90%", once: true, onEnter: (els) => gsap.from(els, { y: 30, opacity: 0, duration: .7, ease: "power3.out", stagger: .08 }) });
   function revealProjects() {
@@ -196,12 +203,6 @@
     });
   }
   revealProjects();
-
-  // finale: pinned, scroll-scrubbed dream flight
-  ScrollTrigger.create({
-    trigger: ".finale", pin: ".finale__pin", start: "top top", end: () => "+=" + innerHeight * 3.4, scrub: .35,
-    onEnter: startLoading, onUpdate: (s) => setFinale(s.progress)
-  });
 
   // nav + progress
   const nav = $("#nav");

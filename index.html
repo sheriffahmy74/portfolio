@@ -40,7 +40,7 @@
 <main id="top">
 
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="container hero__grid">
     <div class="hero__copy">
       <span class="status"><i></i><span data-i18n="hero.status">Available for Flutter roles · open to relocation</span></span>
@@ -59,9 +59,8 @@
     </div>
 
     <div class="hero__visual" aria-hidden="true">
-      <div class="hero__panel"></div>
-      <img class="hero__photo" src="assets/img/me/hero.webp" alt="" width="424" height="708" fetchpriority="high">
-      <div class="device device--hero"><img src="assets/img/lamma/home-english.webp" alt="" width="540" height="1200"></div>
+      <canvas class="hero__canvas" id="dropCanvas"></canvas>
+      <img class="hero__photo" id="heroPhoto" src="assets/img/me/hero.webp" alt="" width="424" height="708" fetchpriority="high">
       <span class="float-chip chip-a">Flutter</span>
       <span class="float-chip chip-b">Clean Architecture</span>
       <span class="float-chip chip-c">Supabase</span>
@@ -164,7 +163,12 @@
 <!-- ============ ABOUT ============ -->
 <section class="section section--tint" id="about">
   <div class="container about">
-    <figure class="about__photo"><img src="assets/img/me/presenting.webp" alt="Sherif presenting Lamma" loading="lazy" width="1100" height="1467"><figcaption data-i18n="about.cap">Presenting Lamma with a live demo</figcaption></figure>
+    <div class="about__photos" aria-label="Sherif at work">
+      <img class="ph ph--a" src="assets/img/me/work-19.webp" alt="Sherif coding on his laptop" loading="lazy" width="675" height="900">
+      <img class="ph ph--b" src="assets/img/me/work-16.webp" alt="Sherif working in a café" loading="lazy" width="675" height="900">
+      <img class="ph ph--c" src="assets/img/me/work-12.webp" alt="Sherif at ITIDA" loading="lazy" width="900" height="644">
+      <img class="ph ph--d" src="assets/img/me/work-01.webp" alt="Sherif planning at his desk" loading="lazy" width="675" height="900">
+    </div>
     <div class="about__copy">
       <span class="eyebrow" data-i18n="about.k">About me</span>
       <h2 class="sec-title" data-i18n="about.title">I care about code that stays easy to change.</h2>
@@ -172,19 +176,6 @@
       <p data-i18n="about.p2">I like owning the whole path of an app: architecture, UI, backend integration, testing and the store release. My personal project, Lamma, is where I push that the furthest.</p>
       <div class="about__langs"><span data-i18n="about.lang1">Arabic · native</span><span data-i18n="about.lang2">English · very good</span></div>
     </div>
-  </div>
-</section>
-
-<!-- ============ FINALE: dream flight (scroll-driven sequence) ============ -->
-<section class="finale" id="finale">
-  <div class="finale__pin">
-    <canvas class="finale__canvas" id="finaleCanvas" aria-label="A phone floats above a sunset sea of clouds, a portal of light opens, and the camera dives into the screen"></canvas>
-    <div class="finale__lines">
-      <p class="finale__line is-on" data-from="0" data-to=".3" data-i18n="fin.1">Every app starts as an idea.</p>
-      <p class="finale__line" data-from=".3" data-to=".62" data-i18n="fin.2">Somewhere between a sketch and a store listing…</p>
-      <p class="finale__line" data-from=".62" data-to=".86" data-i18n="fin.3">…it becomes something people hold every day.</p>
-    </div>
-    <div class="finale__flash" id="finaleFlash"></div>
   </div>
 </section>
 
@@ -198,6 +189,10 @@
       <a class="mailcard__mail" href="mailto:sfhmy7124@gmail.com" id="mailLink">sfhmy7124@gmail.com</a>
       <button class="btn btn--primary" type="button" id="copyMail"><span data-i18n="contact.copy">Copy email</span></button>
     </div>
+    <a class="whatsapp" href="https://wa.me/201004093899" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.6 8.4c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .6.5l.7 1.7c.1.2 0 .5-.1.6l-.5.6c-.1.2-.1.4 0 .5a6.4 6.4 0 0 0 2.9 2.6c.2.1.4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .6-.3 1.4-1 1.8-.7.4-1.6.5-3.4-.3a9.2 9.2 0 0 1-4-3.7c-.8-1.3-.9-2.4-.2-3.6Z"/></svg>
+      <span><b>WhatsApp</b><span class="whatsapp__num">+20 100 409 3899</span></span>
+    </a>
     <div class="contact__links">
       <a class="btn btn--ghost" href="https://www.linkedin.com/in/sheriffahmy0/" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a class="btn btn--ghost" href="https://github.com/sheriffahmy74" target="_blank" rel="noopener">GitHub ↗</a>
@@ -206,7 +201,7 @@
   </div>
   <footer class="container foot">
     <span>© 2026 Sherif Fahmy</span>
-    <span data-i18n="foot.made">Designed and built by me. The closing scene is rendered with Three.js.</span>
+    <span data-i18n="foot.made">Designed and built by me. The falling Flutter scene is rendered with Three.js.</span>
   </footer>
 </section>
 
