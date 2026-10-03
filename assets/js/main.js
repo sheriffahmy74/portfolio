@@ -273,11 +273,11 @@
   function wireHotReload() {
     const box = $("#hotReload"), btn = $("#hrBtn"), reset = $("#hrReset"), term = $("#hrTerm"), scan = $(".hr-scan");
     const THEMES = [
-      { id: "midnight", name: "Midnight" },
-      { id: "editorial", name: "Editorial", font: "Fraunces:opsz,wght@9..144,600;9..144,800" },
-      { id: "brutal", name: "Neo-brutal", font: "Space+Grotesk:wght@500;700" },
-      { id: "mint", name: "Material mint" },
-      { id: "neon", name: "Synthwave", font: "Space+Grotesk:wght@500;700" }
+      { id: "olive", name: "Olive & sand", font: "Fraunces:opsz,wght@9..144,600;9..144,700" },
+      { id: "bordeaux", name: "Bordeaux", font: "DM+Serif+Display:ital@0;1" },
+      { id: "amethyst", name: "Amethyst night", font: "Sora:wght@600;700;800" },
+      { id: "terracotta", name: "Terracotta", font: "Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800" },
+      { id: "charcoal", name: "Charcoal & mustard", font: "Space+Grotesk:wght@500;700" }
     ];
     const loaded = new Set();
     let n = 0, busy = false, hideT = 0;

@@ -220,12 +220,14 @@ a.other:hover { border-color: var(--primary); transform: translateY(-2px); }
 
 /* ---------- about ---------- */
 .about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-.about__photo { position: relative; isolation: isolate; margin: 0; width: min(100%, 400px); margin-inline: auto; }
-.about__pic { position: relative; isolation: isolate; }
-.about__pic::before { content: ""; position: absolute; z-index: -1; inset-block: 18px -18px; inset-inline: 18px -18px; border-radius: 26px; background: var(--soft); transition: inset .6s var(--ease); }
-.about__photo:hover .about__pic::before { inset-block: 10px -10px; inset-inline: 10px -10px; }
-.about__img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 45%; border-radius: 24px; box-shadow: var(--shadow); }
-.about__cap { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; color: var(--muted); font-weight: 600; font-size: .92rem; }
+.about__photo { position: relative; margin: 0; width: min(100%, 380px); margin-inline: auto; display: grid; justify-items: center; }
+.about__pic { position: relative; width: 100%; }
+/* a calm arch, with a fine outline that sits a little outside it */
+.about__img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 55%; border-radius: 999px 999px 26px 26px;
+  box-shadow: 0 30px 60px -34px rgba(14, 27, 44, .45); transition: transform 1.2s var(--ease); }
+.about__pic::after { content: ""; position: absolute; inset: -12px; border-radius: 999px 999px 34px 34px; border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--line)); pointer-events: none; transition: inset .8s var(--ease); }
+.about__photo:hover .about__pic::after { inset: -6px; }
+.about__cap { display: inline-flex; align-items: center; gap: 8px; margin-top: 26px; color: var(--muted); font-weight: 600; font-size: .92rem; }
 .about__cap svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
 .about__copy { display: grid; gap: 16px; }
 .about__copy p { margin: 0; font-size: 1.08rem; color: var(--muted); max-width: 58ch; }
@@ -322,46 +324,42 @@ main { overflow-x: clip; }
 html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after { transition: background-color .5s, color .5s, border-color .5s, box-shadow .5s, border-radius .5s !important; }
 h1, h2, h3, .brand, .project__name, .contact__title { font-family: var(--f-display); }
 
-/* 1. Midnight: a calm dark product site */
-html[data-theme="midnight"] { --bg: #0B1020; --surface: #121A33; --tint: #0E1530; --ink: #EAF0FF; --muted: #A3AECB; --line: rgba(255, 255, 255, .1);
-  --primary: #7AA2FF; --primary-dark: #9BB8FF; --soft: rgba(122, 162, 255, .14); --on-primary: #0B1020; --on-ink: #0B1020; --amber: #FFB547; color-scheme: dark;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -14px rgba(0, 0, 0, .6); }
-html[data-theme="midnight"] .project__visual { background: linear-gradient(160deg, #18224A, #0F1631) !important; }
-html[data-theme="midnight"] .hero__glow { opacity: 1.6; filter: blur(20px) saturate(1.6); }
+/* Every mood is a two-colour pairing on a matching neutral, checked for WCAG AA (text ≥ 4.9:1).
+   Shared rules: project panels and the hero glow are tinted from the mood's own primary. */
+html[data-theme] .project__visual { background: linear-gradient(160deg, color-mix(in oklab, var(--primary) 10%, var(--bg)), color-mix(in oklab, var(--primary) 24%, var(--bg))) !important; }
+html[data-theme] .hero__glow { background: radial-gradient(closest-side at 40% 40%, color-mix(in oklab, var(--primary) 32%, transparent), transparent 70%), radial-gradient(closest-side at 70% 70%, color-mix(in oklab, var(--amber) 38%, transparent), transparent 70%); }
+html[data-theme] .metrics div { background: color-mix(in oklab, var(--primary) 9%, var(--surface)); }
 
-/* 2. Editorial: paper, serif headlines, hairlines, square corners */
-html[data-theme="editorial"] { --bg: #F3EEE4; --surface: #FBF8F2; --tint: #ECE5D8; --ink: #1D1A16; --muted: #5E574D; --line: #CFC5B4;
-  --primary: #A63D24; --primary-dark: #8A3019; --soft: #F2DED6; --amber: #E9C46A; --f-display: "Fraunces", "IBM Plex Sans Arabic", Georgia, serif; --shadow: none; }
-html[data-theme="editorial"] :is(.project, .skill, .facts > div, .mailcard, .tl__card, .btn, .tags li, .project__tag, .status, .about__img, .lang, .metrics > div) { border-radius: 2px !important; }
-html[data-theme="editorial"] .about__pic::before { border-radius: 2px; background: var(--tint); }
-html[data-theme="editorial"] :is(.project, .skill, .facts > div, .mailcard, .tl__card) { border: 1px solid var(--ink); box-shadow: none; }
-html[data-theme="editorial"] .project__visual { background: #E7DFD0 !important; }
-html[data-theme="editorial"] :is(h1, h2) { font-weight: 800; letter-spacing: -.02em; }
-html[data-theme="editorial"] .hl { background: none; font-style: italic; color: var(--primary); }
+/* 1. Olive & sand: olive green on warm beige, wheat highlight, serif headlines */
+html[data-theme="olive"] { --bg: #EFE8D8; --surface: #F8F4EA; --tint: #E6DDC8; --ink: #2B2E1F; --muted: #5D5F48; --line: #D7CDB5;
+  --primary: #56682B; --primary-dark: #45541F; --soft: #E3E3C9; --on-primary: #F8F4EA; --on-ink: #F8F4EA; --amber: #D9BF77;
+  --f-display: "Fraunces", "IBM Plex Sans Arabic", Georgia, serif; }
+html[data-theme="olive"] :is(h1, h2) { font-weight: 700; letter-spacing: -.015em; }
 
-/* 3. Neo-brutal: loud yellow, thick borders, hard shadows */
-html[data-theme="brutal"] { --bg: #FFF1BF; --surface: #FFFFFF; --tint: #FFE58A; --ink: #000000; --muted: #2B2B2B; --line: #000;
-  --primary: #FF5A36; --primary-dark: #E64321; --soft: #FFD6CC; --on-primary: #000; --amber: #7CF0C5; --f-display: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif; --shadow: 6px 6px 0 #000; }
-html[data-theme="brutal"] :is(.project, .skill, .facts > div, .mailcard, .tl__card, .btn, .tags li, .lang, .about__img, .status, .metrics > div) { border: 2px solid #000 !important; box-shadow: 4px 4px 0 #000 !important; border-radius: 12px !important; }
-html[data-theme="brutal"] .project { box-shadow: 8px 8px 0 #000 !important; }
-html[data-theme="brutal"] .project__visual { background: #8EC5FF !important; border-inline-end: 2px solid #000; }
-html[data-theme="brutal"] .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #000 !important; }
-html[data-theme="brutal"] :is(h1, h2) { text-transform: uppercase; letter-spacing: -.01em; }
-html[data-theme="brutal"] .about__pic::before { background: #000; }
+/* 2. Bordeaux: wine and deep maroon on parchment, hairlines and tight corners */
+html[data-theme="bordeaux"] { --bg: #F3EADF; --surface: #FBF6EF; --tint: #EBDDCC; --ink: #2A1215; --muted: #6B4F4F; --line: #DCC8B4;
+  --primary: #7A1F2B; --primary-dark: #5E1620; --soft: #F0DAD5; --on-primary: #FBF6EF; --on-ink: #FBF6EF; --amber: #E2B8A3;
+  --f-display: "DM Serif Display", "IBM Plex Sans Arabic", Georgia, serif; --shadow: 0 1px 0 rgba(42, 18, 21, .06); }
+html[data-theme="bordeaux"] :is(.project, .skill, .facts > div, .mailcard, .tl__card, .btn, .tags li, .project__tag, .status, .lang, .metrics div) { border-radius: 6px !important; }
+html[data-theme="bordeaux"] :is(.project, .skill, .facts > div, .mailcard, .tl__card) { border-color: color-mix(in oklab, var(--primary) 30%, var(--line)); }
+html[data-theme="bordeaux"] :is(h1, h2) { font-weight: 400; letter-spacing: -.01em; }
+html[data-theme="bordeaux"] .hl { background: none; color: var(--primary); font-style: italic; }
 
-/* 4. Material mint: soft tonal surfaces and very round shapes */
-html[data-theme="mint"] { --bg: #EEF7F3; --surface: #FFFFFF; --tint: #E0F1EA; --ink: #0F2A24; --muted: #4A635C; --line: #CFE5DC;
-  --primary: #006B5E; --primary-dark: #00574C; --soft: #CDEFE5; --amber: #9AE6B4; }
-html[data-theme="mint"] :is(.project, .about__img) { border-radius: 40px !important; }
-html[data-theme="mint"] :is(.skill, .facts > div, .mailcard, .tl__card) { border-radius: 28px !important; border-color: transparent; background: var(--tint); }
-html[data-theme="mint"] :is(.btn, .tags li, .project__tag) { border-radius: 99px !important; }
-html[data-theme="mint"] .project__visual { background: linear-gradient(160deg, #D5F2E8, #BFE9DA) !important; }
+/* 3. Amethyst night: soft violet on near-black */
+html[data-theme="amethyst"] { --bg: #0E0B14; --surface: #17121F; --tint: #120E19; --ink: #EDE7F6; --muted: #A99BBF; --line: rgba(237, 231, 246, .09);
+  --primary: #A68BFF; --primary-dark: #BBA6FF; --soft: rgba(166, 139, 255, .13); --on-primary: #0E0B14; --on-ink: #0E0B14; --amber: #6F52D9;
+  --f-display: "Sora", "IBM Plex Sans Arabic", system-ui, sans-serif; color-scheme: dark; --shadow: 0 0 0 1px rgba(166, 139, 255, .1), 0 20px 50px -20px rgba(0, 0, 0, .8); }
+html[data-theme="amethyst"] .btn--primary { box-shadow: 0 10px 30px -10px rgba(166, 139, 255, .6); }
 
-/* 5. Synthwave: night purple, neon pink and cyan */
-html[data-theme="neon"] { --bg: #140C2C; --surface: #1F1546; --tint: #190F38; --ink: #FBEFFF; --muted: #BBA9DD; --line: rgba(255, 79, 216, .25);
-  --primary: #FF4FD8; --primary-dark: #FF7BE3; --soft: rgba(255, 79, 216, .14); --on-primary: #140C2C; --on-ink: #140C2C; --amber: #2DE2E6;
-  --f-display: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif; color-scheme: dark; --shadow: 0 0 0 1px rgba(255, 79, 216, .25), 0 18px 50px -18px rgba(255, 79, 216, .45); }
-html[data-theme="neon"] body { background: radial-gradient(1200px 600px at 80% -10%, rgba(45, 226, 230, .15), transparent 60%), radial-gradient(900px 500px at 0% 10%, rgba(255, 79, 216, .16), transparent 60%), var(--bg); }
-html[data-theme="neon"] .project__visual { background: linear-gradient(160deg, #2A1760, #120A2A) !important; }
-html[data-theme="neon"] :is(h1, h2) { text-shadow: 0 0 24px rgba(255, 79, 216, .45); }
-html[data-theme="neon"] .btn--primary { box-shadow: 0 0 24px rgba(255, 79, 216, .6); }
+/* 4. Terracotta: baked clay on cream with a sage highlight, round and friendly */
+html[data-theme="terracotta"] { --bg: #F5EDE3; --surface: #FFF8F0; --tint: #EEE1D2; --ink: #2B1D16; --muted: #6B5446; --line: #E2D2C0;
+  --primary: #A84A32; --primary-dark: #8C3B26; --soft: #F4DDD3; --on-primary: #FFF8F0; --on-ink: #FFF8F0; --amber: #B7C3A6;
+  --f-display: "Bricolage Grotesque", "IBM Plex Sans Arabic", system-ui, sans-serif; }
+html[data-theme="terracotta"] .project { border-radius: 34px !important; }
+html[data-theme="terracotta"] :is(.btn, .tags li, .project__tag) { border-radius: 99px !important; }
+
+/* 5. Charcoal & mustard: graphite with one warm accent, crisp borders */
+html[data-theme="charcoal"] { --bg: #1C1C1E; --surface: #242426; --tint: #202022; --ink: #F2EFEA; --muted: #A8A39A; --line: rgba(242, 239, 234, .1);
+  --primary: #E1B12C; --primary-dark: #EEC24A; --soft: rgba(225, 177, 44, .12); --on-primary: #1C1C1E; --on-ink: #1C1C1E; --amber: #B88A12;
+  --f-display: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif; color-scheme: dark; --shadow: 0 18px 40px -18px rgba(0, 0, 0, .7); }
+html[data-theme="charcoal"] :is(.project, .skill, .facts > div, .mailcard, .tl__card, .btn, .tags li, .lang, .metrics div) { border-radius: 10px !important; }
