@@ -20,11 +20,6 @@
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 
 <!-- ============ NAV ============ -->
-<div class="bgfx" aria-hidden="true">
-  <i class="bgfx__blob bgfx__blob--a"></i><i class="bgfx__blob bgfx__blob--b"></i><i class="bgfx__blob bgfx__blob--c"></i>
-  <i class="bgfx__dots"></i><i class="bgfx__glow"></i>
-  <i class="bgfx__shape s1"></i><i class="bgfx__shape s2"></i><i class="bgfx__shape s3"></i><i class="bgfx__shape s4"></i><i class="bgfx__shape s5"></i><i class="bgfx__shape s6"></i>
-</div>
 <header class="nav" id="nav">
   <div class="container nav__inner">
     <a class="brand" href="#top" aria-label="Sherif Fahmy, home"><span class="brand__mark">SF</span><span class="brand__name">Sherif Fahmy</span></a>
@@ -51,7 +46,7 @@
       <span class="status"><i></i><span data-i18n="hero.status">Available for Flutter roles · open to relocation</span></span>
       <p class="hero__hi" data-i18n="hero.hi">Hi, I'm Sherif Fahmy</p>
       <h1 class="hero__title"><span data-i18n="hero.t1">I build Flutter apps</span> <span class="hl" data-i18n="hero.t2">from the first commit</span> <span data-i18n="hero.t3">to the App Store.</span></h1>
-      <p class="hero__sub" data-i18n="hero.sub">Flutter developer focused on Clean Architecture, Bloc/Cubit, Supabase and Firebase. Shipped Nabdy at INETWORK Middle East and building Lamma, a group-outings app for Egypt.</p>
+      <p class="hero__sub" data-i18n="hero.sub">Flutter developer focused on Clean Architecture, Bloc/Cubit, Supabase and Firebase. Shipped Nabdy at INETWORK Middle East, and built Lamma, a group-outings app for Egypt, on my own: the Flutter app and the whole Supabase backend.</p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="#projects"><span data-i18n="hero.cta1">View projects</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
         <a class="btn btn--ghost" href="#contact" data-i18n="hero.cta2">Get in touch</a>
@@ -59,7 +54,7 @@
       <dl class="facts">
         <div><dt><span data-count="1">1</span><sup>st</sup></dt><dd data-i18n="facts.1">in my CS department</dd></div>
         <div><dt><span data-count="94">94</span>%</dt><dd data-i18n="facts.2">NTI Flutter track</dd></div>
-        <div><dt><span data-count="746">746</span>+</dt><dd data-i18n="facts.3">tests in Lamma</dd></div>
+        <div><dt><span data-count="1302">1302</span></dt><dd data-i18n="facts.3">tests in Lamma</dd></div>
       </dl>
     </div>
 
@@ -123,8 +118,8 @@
         <div class="tl__card">
           <h3 data-i18n="tl.2.t">Building Lamma</h3>
           <ul>
-            <li data-i18n="tl.2.a">Designed and built the whole app: 12 features, Clean Architecture, 746+ tests in CI.</li>
-            <li data-i18n="tl.2.b">Supabase backend with RLS, Realtime chat, Edge Functions and Paymob payments.</li>
+            <li data-i18n="tl.2.a">Sole developer: built the whole Flutter app from the UX designer's Figma, 14 features in Clean Architecture, 1,302 tests in CI.</li>
+            <li data-i18n="tl.2.b">Built the entire Supabase backend: Postgres + RLS, 177 migrations, 7 Edge Functions, Realtime chat and Paymob payments.</li>
           </ul>
         </div>
       </li>
@@ -164,17 +159,6 @@
       <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21Z"/><circle cx="12" cy="10" r="2.4"/></svg></span><h3 data-i18n="sk.5">Integrations</h3><ul class="tags"><li>Google Maps</li><li>Geolocation</li><li>Paymob payments</li><li>Push notifications (FCM)</li><li>Remote Config</li><li>Realtime chat</li><li>Image picker &amp; cropper</li></ul></div>
       <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m14.7 6.3 3 3-8.4 8.4H6.3v-3z"/><path d="m13.3 7.7 3 3"/></svg></span><h3 data-i18n="sk.6">Tools</h3><ul class="tags"><li>Git &amp; GitHub</li><li>Postman</li><li>Figma</li><li>Android Studio</li><li>Xcode</li><li>AI-assisted development</li></ul></div>
     </div>
-  </div>
-</section>
-
-<!-- ============ BUILD STORY ============ -->
-<section class="build" id="build" aria-label="From code to app">
-  <div class="build__stage" id="buildStage"><span class="scene-tip" id="buildTip" role="status" aria-live="polite"></span></div>
-  <div class="container build__copy">
-    <p class="build__step is-on"><b data-i18n="build.1t">It starts with a line of code.</b><span data-i18n="build.1s">Dart, Bloc and a clean structure, typed one widget at a time.</span></p>
-    <p class="build__step"><b data-i18n="build.2t">Flutter turns it into a real app.</b><span data-i18n="build.2s">One codebase, shipped to iOS and Android.</span></p>
-    <p class="build__step"><b data-i18n="build.3t">And it all lands in your pocket.</b><span data-i18n="build.3s">My apps and the tools behind them. Drag to tilt the phone, click a tile to flick it.</span></p>
-    <div class="build__bar" aria-hidden="true"><i></i></div>
   </div>
 </section>
 
@@ -229,6 +213,13 @@
 
 </main>
 
+<!-- ============ HOT RELOAD (press r) ============ -->
+<div class="hr" id="hotReload">
+  <div class="hr__term" id="hrTerm" role="status" aria-live="polite"></div>
+  <button class="hr__btn" id="hrBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span data-i18n="hr.btn">Hot reload</span><kbd>r</kbd></button>
+</div>
+<div class="hr-scan" aria-hidden="true"></div>
+
 <!-- ============ CV VIEWER ============ -->
 <div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" hidden>
   <div class="cv-modal__backdrop" data-close></div>
@@ -252,9 +243,7 @@
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/projects.js"></script>
 <script src="assets/vendor/three.min.js"></script>
-<script src="assets/vendor/cannon.min.js"></script>
 <script src="assets/js/scene.js"></script>
-<script src="assets/js/build.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

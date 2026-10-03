@@ -23,8 +23,8 @@
   html, body { margin: 0; }
   body {
     width: 210mm;
-    padding: 10mm 14mm 7mm;
-    font: 400 9.1pt/1.34 "Manrope", "Liberation Sans", Arial, sans-serif;
+    padding: 9mm 14mm 6mm;
+    font: 400 9.1pt/1.3 "Manrope", "Liberation Sans", Arial, sans-serif;
     color: var(--text); background: #fff;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
@@ -37,7 +37,7 @@
   .contact { display: flex; flex-wrap: wrap; gap: 2pt 0; font-size: 8.6pt; color: var(--muted); margin-top: 2pt; }
   .contact span + span::before { content: "|"; margin: 0 6pt; color: var(--rule); }
 
-  section { margin-top: 7pt; }
+  section { margin-top: 6pt; }
   h2 {
     margin: 0 0 5pt; padding-bottom: 2.5pt;
     font: 800 9pt/1 "Manrope", sans-serif; text-transform: uppercase;
@@ -82,7 +82,7 @@
 
 <section>
   <h2>Profile</h2>
-  <p>Flutter Developer who builds and ships production apps end to end, from architecture and UI to backend integration and store release. Works with feature-first Clean Architecture, Bloc/Cubit, REST and Supabase/Firebase backends, and automated testing. Took a healthcare app through App Store and Google Play release, and built Lamma, a bilingual app with 12 features and 746+ tests. Ranked 1st in my Computer Science department.</p>
+  <p>Flutter Developer who builds and ships production apps end to end, from architecture and UI to backend integration and store release. Works with feature-first Clean Architecture, Bloc/Cubit, REST and Supabase/Firebase backends, and automated testing. Took a healthcare app through App Store and Google Play release, and built Lamma solo: Flutter app and full Supabase backend. Ranked 1st in my Computer Science department.</p>
 </section>
 
 <section>
@@ -111,12 +111,13 @@
       <span class="item-title">Lamma — Group-Outings App</span>
       <span class="item-meta"><a href="https://github.com/sheriffahmy74/lamma-showcase">github.com/sheriffahmy74/lamma-showcase</a></span>
     </div>
-    <div class="item-sub"><span class="stack">Flutter · Cubit · Clean Architecture · Supabase · Paymob · FCM</span></div>
+    <div class="item-sub"><span class="stack">Flutter · Cubit · Clean Architecture · Supabase (Postgres, RLS, Edge Functions, Realtime) · Paymob · FCM</span></div>
     <ul>
-      <li>Designed and built, as sole developer, an Arabic-first (RTL) bilingual app where users discover outings, book a seat in an audience-specific group, pay, and join the group chat.</li>
-      <li>Structured 12 features with feature-first Clean Architecture (Cubit, get_it, go_router, fpdart Either) and covered them with 746+ unit and bloc tests (bloc_test, mocktail) running in CI.</li>
-      <li>Built the Supabase backend: Postgres with Row-Level Security, 75 migrations, RPCs, Realtime group chat, Edge Functions and server-localized push notifications.</li>
-      <li>Kept money and capacity logic on the server: atomic bookings under a row lock prevent overbooking, and payments are confirmed only by the HMAC-verified Paymob webhook.</li>
+      <li>Sole developer of an Arabic-first (RTL) bilingual app, built from the UX designer's Figma designs.</li>
+      <li>Built the entire backend: Postgres with Row-Level Security and RPCs, 177 SQL migrations, and 7 Edge Functions for payments, webhooks and push.</li>
+      <li>Kept money and capacity logic on the server: an atomic booking function locks the outing row so the last seat is never oversold; refunds, waiting lists and cancellation limits are enforced server-side; bookings confirm only via the HMAC-verified Paymob webhook.</li>
+      <li>Integrated Paymob (cards, wallets, InstaPay) with an in-app wallet; built realtime group chat with voice notes and images.</li>
+      <li>Structured 14 feature modules with Clean Architecture (Cubit, get_it, go_router, fpdart) and ~1,300 localized strings; 1,302 tests across 144 files run in CI on every PR.</li>
     </ul>
   </div>
 

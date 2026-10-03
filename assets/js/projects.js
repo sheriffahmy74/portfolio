@@ -16,23 +16,38 @@ window.PROJECTS = [
   {
     id: "lamma",
     name: { en: "Lamma", ar: "لمّة" },
-    tag: { en: "Personal product · Flutter + Supabase", ar: "منتج شخصي · Flutter + Supabase" },
+    tag: { en: "Personal product · Sole developer, app + backend", ar: "منتج شخصي · المطوّر الوحيد، تطبيق + باك إند" },
     bg: "linear-gradient(160deg, #FDE9E4 0%, #F6D7CF 100%)",
     screens: ["lamma-search", "lamma-en", "lamma-chat"],
     desc: {
-      en: "A group-outings app for Egypt. Pick an outing, book a seat in the group that fits you, pay, and meet your group in a chat before you meet them in person.",
-      ar: "تطبيق خروجات جماعية في مصر. بتختار خروجة، وتحجز مكانك في المجموعة اللي تناسبك، وتدفع، وتتعرف على مجموعتك في الشات قبل ما تقابلهم."
+      en: "A group-outings app for Egypt. I own it end to end: I took the UX designer's Figma and built the whole Flutter app and the entire Supabase backend behind it, from bookings and payments to realtime chat.",
+      ar: "تطبيق خروجات جماعية في مصر. أنا ماسكه من أوله لآخره: أخدت تصميم الـ UX designer على Figma، وبنيت تطبيق Flutter كله والباك إند كله على Supabase، من الحجز والدفع لحد الشات اللحظي."
     },
     points: {
-      en: ["Arabic-first with full RTL, every string in two languages", "Atomic bookings under a row lock, so the last seat is never sold twice", "Payments confirmed only by an HMAC-verified Paymob webhook"],
-      ar: ["عربي أولًا مع RTL كامل، وكل نص باللغتين", "الحجز ذرّي جوه row lock، فآخر مكان مستحيل يتباع مرتين", "الدفع مبيتأكدش غير من webhook موثّق بـ HMAC من Paymob"]
+      en: [
+        "Built the whole Supabase backend: Postgres schema, Row-Level Security, RPCs and 177 versioned SQL migrations",
+        "Wrote 7 Edge Functions for payments, webhooks and push; a booking is confirmed only by the HMAC-verified Paymob webhook",
+        "Atomic booking under a row lock, so the last seat is never sold twice; refunds, waiting lists and cancellation rules run on the server",
+        "Paymob cards, mobile wallets and InstaPay, plus an in-app wallet with refunds and withdrawals",
+        "Realtime group chat with voice notes, images, replies, mentions and reactions",
+        "14 feature modules in Clean Architecture, Arabic-first RTL, 1,302 tests with CI on every PR"
+      ],
+      ar: [
+        "بنيت الباك إند كله على Supabase: سكيما Postgres وRow-Level Security وRPCs و177 SQL migration متتبّعين",
+        "كتبت 7 Edge Functions للدفع والـ webhooks والإشعارات، والحجز مبيتأكدش غير من webhook Paymob موثّق بـ HMAC",
+        "الحجز ذرّي جوه row lock فآخر مكان مستحيل يتباع مرتين، والاسترداد وقوائم الانتظار وقواعد الإلغاء كلها على السيرفر",
+        "دفع بكروت Paymob والمحافظ الإلكترونية وInstaPay، ومحفظة جوه التطبيق فيها استرداد وسحب",
+        "شات جماعي لحظي فيه رسايل صوتية وصور وردود ومنشن وريأكشنز",
+        "14 موديول بـ Clean Architecture، عربي أولًا RTL، و1,302 تست مع CI على كل PR"
+      ]
     },
     metrics: [
-      { v: "12", l: { en: "features", ar: "فيتشر" } },
-      { v: "746+", l: { en: "tests", ar: "تست" } },
-      { v: "75", l: { en: "migrations", ar: "migration" } }
+      { v: "14", l: { en: "features", ar: "فيتشر" } },
+      { v: "1,302", l: { en: "tests", ar: "تست" } },
+      { v: "177", l: { en: "migrations", ar: "migration" } },
+      { v: "7", l: { en: "edge functions", ar: "Edge Function" } }
     ],
-    stack: ["Flutter", "Cubit", "Clean Architecture", "Supabase", "Realtime", "Paymob", "FCM"],
+    stack: ["Flutter", "Cubit", "Clean Architecture", "Supabase", "Postgres + RLS", "Edge Functions", "Realtime", "Paymob", "FCM", "Figma"],
     links: [{ label: { en: "Showcase on GitHub", ar: "الـ Showcase على GitHub" }, href: "https://github.com/sheriffahmy74/lamma-showcase" }],
     social: [
       { label: "Instagram", href: "https://www.instagram.com/lamma_experiences" },

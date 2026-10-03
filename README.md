@@ -2,7 +2,7 @@
 
 Personal portfolio for Sherif Fahmy, Flutter developer and founder of Lamma.
 
-Static, readable portfolio (warm white, navy, cobalt, amber). The hero is a live, interactive 3D scene (Three.js): a sharp cut-out photo stands in real 3D space among glossy objects that each stand for a skill (the Flutter logo, a phone running Lamma, a map pin, a chat bubble, a store star, a tests badge, a code tag). The camera follows the pointer, objects dodge the cursor and spring back, hovering explains each one, and clicking spins it with a confetti pop (the phone switches screens, the Flutter logo breaks apart and snaps back). Further down (after Skills), a pinned scroll story (`build.js`, Three.js + cannon-es physics): a laptop types real Flutter code, a phone flies out of the screen, its top opens and my apps and tools rain into it and pile up; drag to tilt the phone, click a tile to flick it. Projects stack like a deck on wide screens (each card sticks and the next slides over it), with letter-by-letter titles, phones that fly in and flip between screens, and a giant outlined name drifting behind them. The page background is alive: colour blobs drift and change with each section or project, a dot grid lights up under the cursor, and shapes float with the scroll. The About photo sits in an animated gradient frame with a spinning Flutter stamp. Cards, tags and buttons react to the pointer too. It renders live, so it stays sharp at every screen size. Project screenshots fan out in 3D, float, tilt with the pointer and cycle through screens. Motion with GSAP + ScrollTrigger, smooth scrolling with Lenis, all vendored in `assets/vendor/`; no build step.
+Static, readable portfolio (warm white, navy, cobalt, amber). The hero is a live, interactive 3D scene (Three.js): a sharp cut-out photo stands in real 3D space among glossy objects that each stand for a skill (the Flutter logo, a phone running Lamma, a map pin, a chat bubble, a store star, a tests badge, a code tag). The camera follows the pointer, objects dodge the cursor and spring back, hovering explains each one, and clicking spins it with a confetti pop (the phone switches screens, the Flutter logo breaks apart and snaps back). Projects stack like a deck on wide screens (each card sticks and the next slides over it), with letter-by-letter titles, phones that fly in and flip between screens, and a giant outlined name drifting behind them. The About photo sits in an animated gradient frame with a spinning Flutter stamp. Cards, tags and buttons react to the pointer too. Press `r` (or the Hot reload button) and the page hot-reloads like a Flutter app: a terminal reports the reload, a scan line re-renders what's on screen, and the accent colour changes with state kept. It renders live, so it stays sharp at every screen size. Project screenshots fan out in 3D, float, tilt with the pointer and cycle through screens. Motion with GSAP + ScrollTrigger, smooth scrolling with Lenis, all vendored in `assets/vendor/`; no build step.
 
 ## Run locally
 
@@ -19,10 +19,9 @@ assets/css/main.css     design tokens + styles
 assets/js/i18n.js       Arabic strings
 assets/js/projects.js   project cards (text, panel colour, screens, links)
 assets/js/scene.js      the interactive 3D hero (WebGL)
-assets/js/build.js      the code → phone → apps physics story (WebGL)
 assets/js/main.js       hero motion, project cards, reveals, language toggle, CV viewer
 assets/img/             app screenshots (webp, 540px wide)
-assets/vendor/          gsap, ScrollTrigger, lenis, three, cannon-es (physics)
+assets/vendor/          gsap, ScrollTrigger, lenis, three
 assets/Sherif-Fahmy-CV.pdf
 ```
 

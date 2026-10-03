@@ -74,6 +74,7 @@
   wireCv();
   wireCopy();
   if (!reduced && matchMedia("(pointer: fine)").matches) wireTouches();
+  wireHotReload();
   $("#langToggle").addEventListener("click", () => {
     const next = lang === "ar" ? "en" : "ar";
     if (scene3d) scene3d.relabel();
@@ -88,7 +89,7 @@
   const hero = $("#hero");
   Object.assign(EN, {
     "tip.flutter": "Flutter & Dart", "tip.phone": "Lamma · click to switch screens", "tip.maps": "Google Maps & geolocation",
-    "tip.chat": "Realtime chat with Supabase", "tip.store": "Shipped to App Store & Google Play", "tip.tests": "746+ automated tests",
+    "tip.chat": "Realtime chat with Supabase", "tip.store": "Shipped to App Store & Google Play", "tip.tests": "1,302 automated tests",
     "tip.code": "Clean Architecture", "hero.hintTouch": "Tap the 3D objects"
   });
   let scene3d = null;
@@ -110,20 +111,6 @@
     } catch (e) { scene3d = null; }
   }
 
-  /* ------------------------------------------- build story: code → phone → apps */
-  let build3d = null;
-  if (window.BuildScene && window.BuildScene.supported()) {
-    try { build3d = window.BuildScene.create($("#buildStage"), { tip: $("#buildTip") }); root.classList.add("has-build"); }
-    catch (e) { build3d = null; }
-  }
-  const steps = $$(".build__step");
-  function setBuild(p) {
-    if (build3d) build3d.progress = p;
-    const k = p < .3 ? 0 : p < .5 ? 1 : 2;
-    steps.forEach((s, i) => s.classList.toggle("is-on", i === k));
-    $(".build").style.setProperty("--p", p.toFixed(3));
-  }
-
   // live screen inside the middle phone of each project
   setInterval(() => {
     if (document.hidden) return;
@@ -139,7 +126,6 @@
 
   if (!canAnimate) {
     if (scene3d) scene3d.start();
-    setBuild(1);
     return;
   }
 
@@ -173,11 +159,7 @@
     gsap.from(".hero__photo", { y: 60, opacity: 0, duration: 1.1, ease: "expo.out", delay: .3 });
   }
 
-  // build story: pinned while you scroll through it
-  ScrollTrigger.create({ trigger: ".build", start: "top top", end: () => "+=" + innerHeight * 2.2, pin: true, scrub: .6, anticipatePin: 1,
-    onUpdate: (s) => setBuild(s.progress) });
-  setBuild(0);
-  // pinning adds scroll length; let Lenis know whenever ScrollTrigger re-measures
+  // keep Lenis in step whenever ScrollTrigger re-measures the page
   if (lenis) { ScrollTrigger.addEventListener("refresh", () => lenis.resize()); ScrollTrigger.refresh(); }
 
   // about: the framed portrait swings in, the stamp and caption pop on after it
@@ -187,24 +169,11 @@
     .from(".about__stamp", { scale: 0, rotation: -180, duration: .9, ease: "back.out(1.8)" }, .45)
     .from(".about__cap", { x: -30, opacity: 0, duration: .7, ease: "back.out(2)" }, .6);
 
-  // the living background: colour follows the section, dots light up under the cursor, shapes drift with scroll
-  ["hero", "experience", "skills", "build", "about", "contact"].forEach((id) => {
-    const el = document.getElementById(id); if (!el) return;
-    ScrollTrigger.create({ trigger: el, start: "top 55%", end: "bottom 45%", onEnter: () => mood(id), onEnterBack: () => mood(id) });
-  });
-  const bg = $(".bgfx"), shapes = $$(".bgfx__shape");
-  window.addEventListener("pointermove", (e) => { bg.style.setProperty("--cx", e.clientX + 40 + "px"); bg.style.setProperty("--cy", e.clientY + 40 + "px"); }, { passive: true });
-  gsap.ticker.add(() => {
-    const y = scrollY;
-    bg.style.setProperty("--sy", -(y * .15 % 26) + "px");
-    shapes.forEach((sh, i) => { const k = [.25, -.18, .4, -.3, .55, -.12][i]; sh.style.setProperty("--py", Math.sin(y / 700 + i * 1.3) * 160 + "px"); sh.style.setProperty("--rot", y * k * .3 + "deg"); });
-  });
-
   // counters
   $$("[data-count]").forEach((el) => {
     const end = +el.dataset.count, o = { v: 0 };
     el.textContent = "0";
-    gsap.to(o, { v: end, duration: end > 50 ? 1.8 : 1, delay: .6, ease: "power3.out", onUpdate: () => { el.textContent = Math.round(o.v); } });
+    gsap.to(o, { v: end, duration: end > 50 ? 1.8 : 1, delay: .6, ease: "power3.out", onUpdate: () => { el.textContent = Math.round(o.v).toLocaleString("en-US"); } });
   });
 
   // stack strip
@@ -216,14 +185,6 @@
   $$(".sec-head, .minor-title, .about__copy, .contact__inner > *").forEach((el) =>
     gsap.from(el, { y: 36, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } }));
   ScrollTrigger.batch(".other, .tl, .skill", { start: "top 90%", once: true, onEnter: (els) => gsap.from(els, { y: 30, opacity: 0, duration: .7, ease: "power3.out", stagger: .08 }) });
-  // background colours for each part of the page (and each project)
-  const MOODS = {
-    hero: ["#54C5F8", "#F5A524", "#8B6FE8"], lamma: ["#E46A86", "#F5A524", "#8E2A3A"], nabdy: ["#8B6FE8", "#54C5F8", "#C084FC"],
-    tasks: ["#54C5F8", "#2F5BEA", "#22C55E"], experience: ["#2F5BEA", "#54C5F8", "#F5A524"], skills: ["#8B6FE8", "#54C5F8", "#22C55E"],
-    build: ["#54C5F8", "#2F5BEA", "#F5A524"], about: ["#8B6FE8", "#F5A524", "#E46A86"], contact: ["#22C55E", "#F5A524", "#2F5BEA"]
-  };
-  function mood(k) { const m = MOODS[k]; if (m) gsap.to(".bgfx", { "--c1": m[0], "--c2": m[1], "--c3": m[2], duration: 1.2, ease: "sine.inOut", overwrite: "auto" }); }
-
   let projectCtx = null;
   function revealProjects() {
     if (projectCtx) projectCtx.revert();
@@ -248,9 +209,9 @@
           .from(devs, { x: (i) => (1 - i) * 120, y: 80, rotationY: (i) => (i - 1) * 60, rotationZ: (i) => (i - 1) * 14, scale: .6, opacity: 0, duration: 1.4, ease: "expo.out", stagger: .1 }, .1);
         // metrics count up
         $$(".metrics b", card).forEach((b) => {
-          const m = b.textContent.match(/^(\d+)(.*)$/); if (!m) return;
+          const m = b.textContent.replace(/,/g, "").match(/^(\d+)(.*)$/); if (!m) return;
           const o = { v: 0 }, end = +m[1];
-          tl.to(o, { v: end, duration: 1.4, ease: "power3.out", onUpdate: () => { b.textContent = Math.round(o.v) + m[2]; } }, .6);
+          tl.to(o, { v: end, duration: 1.4, ease: "power3.out", onUpdate: () => { b.textContent = Math.round(o.v).toLocaleString("en-US") + m[2]; } }, .6);
         });
         // idle float
         devs.forEach((d, i) => gsap.to(d, { y: i % 2 ? -12 : 12, duration: 2.8 + i * .5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.4 + i * .3 }));
@@ -261,7 +222,6 @@
         if (stack && idx < cards.length - 1) {
           gsap.to(card, { scale: .9, "--dim": .35, ease: "none", scrollTrigger: { trigger: cards[idx + 1], start: "top bottom", end: () => "top " + (92 + (idx + 1) * 14) + "px", scrub: true } });
         }
-        ScrollTrigger.create({ trigger: card, start: "top 60%", end: "bottom 40%", onEnter: () => mood(card.dataset.id), onEnterBack: () => mood(card.dataset.id) });
         // 3D tilt toward the pointer + a spotlight that follows it
         vis.addEventListener("pointermove", (e) => {
           const r = vis.getBoundingClientRect();
@@ -318,6 +278,59 @@
       });
       b.addEventListener("pointerleave", () => { b.style.transform = ""; });
     });
+  }
+
+  /* hot reload: press r and the page re-renders like a Flutter app, with a new accent colour each time */
+  function wireHotReload() {
+    const box = $("#hotReload"), btn = $("#hrBtn"), term = $("#hrTerm"), scan = $(".hr-scan");
+    const ACCENTS = [
+      { name: "cobalt", c: "#2F5BEA", d: "#2547C9", s: "#EEF2FE" },
+      { name: "violet", c: "#6D3FE0", d: "#5A2FC4", s: "#F1ECFE" },
+      { name: "teal", c: "#0E7C74", d: "#0A665F", s: "#E6F5F3" },
+      { name: "berry", c: "#C0265A", d: "#A21E4B", s: "#FCE8EF" }
+    ];
+    let n = 0, busy = false, hideT = 0;
+    const ln = (cls, t) => `<span class="${cls}">${esc(t)}</span>`;
+    function run() {
+      if (busy) return; busy = true; n++;
+      box.classList.add("is-busy");
+      const acc = ACCENTS[n % ACCENTS.length];
+      const libs = 3 + Math.floor(Math.random() * 9), ms = 180 + Math.floor(Math.random() * 240);
+      clearTimeout(hideT);
+      term.innerHTML = ln("dim", "$ flutter run  ·  r") + "\n" + "Performing hot reload...";
+      term.classList.add("is-on");
+      // the page re-renders top to bottom behind a scan line
+      const els = $$("main h1, main h2, main h3, main p, main li, main .btn, main .device, main .skill, main .facts > div, main .about__frame, .nav__inner > *")
+        .filter((el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; });
+      const done = () => {
+        root.style.setProperty("--primary", acc.c); root.style.setProperty("--primary-dark", acc.d); root.style.setProperty("--soft", acc.s);
+        term.innerHTML = ln("dim", "$ flutter run  ·  r") + "\n" + "Performing hot reload...\n" +
+          ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms.") + "\n" + ln("acc", "  accentColor → " + acc.name) + ln("dim", "  (state kept)");
+        box.classList.remove("is-busy"); busy = false;
+        hideT = setTimeout(() => term.classList.remove("is-on"), 3200);
+      };
+      if (!canAnimate) { done(); return; }
+      gsap.timeline({ onComplete: done })
+        .fromTo(scan, { opacity: 1, backgroundPosition: "0 100%" }, { backgroundPosition: "0 -100%", duration: .75, ease: "power2.inOut" }, 0)
+        .to(scan, { opacity: 0, duration: .15 }, .65)
+        .fromTo(els, { opacity: .15, filter: "blur(6px)", y: 6 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: .45, ease: "power3.out", clearProps: "filter",
+          stagger: (i, el) => Math.max(0, el.getBoundingClientRect().top / innerHeight) * .6 }, .05);
+    }
+    btn.addEventListener("click", run);
+    window.addEventListener("keydown", (e) => {
+      if (e.key !== "r" || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable) return;
+      if (!$("#cvModal").hidden) return;
+      run();
+    });
+    // a little nudge the first time, so people find it
+    setTimeout(() => {
+      if (n) return;
+      const tip = document.createElement("span"); tip.className = "hr__hint"; tip.textContent = lang === "ar" ? "جرّبني ⚡" : "Try me ⚡";
+      box.appendChild(tip);
+      if (canAnimate) { gsap.from(tip, { y: 8, opacity: 0, duration: .4, ease: "back.out(2)" }); gsap.fromTo(btn, { rotation: -6 }, { rotation: 6, duration: .09, repeat: 7, yoyo: true, clearProps: "rotation" }); }
+      setTimeout(() => tip.remove(), 4000);
+    }, 7000);
   }
 
   function wireCv() {
