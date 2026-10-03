@@ -72,7 +72,7 @@
     const head = [ln("dim", "$ flutter run  ·  r"), "Performing hot reload..."];
     say(head);
     fonts(m.fonts);
-    await Promise.all([load("link", { rel: "stylesheet", href: "moods/" + m.id + ".css?v=20261003a" }), load("script", { src: "moods/" + m.id + ".js?v=20261003a" })]);
+    await Promise.all([load("link", { rel: "stylesheet", href: "moods/" + m.id + ".css?v=20261003b" }), load("script", { src: "moods/" + m.id + ".js?v=20261003b" })]);
     if (!window.MOOD_SITES[m.id]) { say(head.concat([ln("err", "✗ Could not load " + m.name)]), 3000); box.classList.remove("is-busy"); busy = false; return; }
     await wipe(() => { mount(i, true); current = i; reset.hidden = false; });
     say(head.concat([ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms."), ln("acc", "  site → " + m.name) + ln("dim", "  (content kept)")]), 3400);

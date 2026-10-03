@@ -26,7 +26,6 @@ window.CONTENT = {
     items: [
       { date: "INETWORK", place: "tl.1.place", t: "tl.1.t", points: ["tl.1.a", "tl.1.b", "tl.1.c"] },
       { dateKey: "tl.now", place: "tl.2.place", t: "tl.2.t", points: ["tl.2.a", "tl.2.b"] },
-      { date: "2026 · 2025", placeText: "ITI · NTI", t: "tl.3.t", points: ["tl.3.a", "tl.3.b"] },
       { date: "2021 – 2025", place: "tl.4.place", t: "tl.4.t", points: ["tl.4.a"] }
     ]
   },
