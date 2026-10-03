@@ -59,11 +59,12 @@
     </div>
 
     <div class="hero__visual" aria-hidden="true">
-      <canvas class="hero__canvas" id="dropCanvas"></canvas>
+      <div class="hero__stage" id="particleStage"></div>
       <img class="hero__photo" id="heroPhoto" src="assets/img/me/hero.webp" alt="" width="424" height="708" fetchpriority="high">
       <span class="float-chip chip-a">Flutter</span>
       <span class="float-chip chip-b">Clean Architecture</span>
       <span class="float-chip chip-c">Supabase</span>
+      <span class="hero__hint" data-i18n="hero.hint">Move your cursor over me</span>
     </div>
   </div>
 </section>
@@ -201,7 +202,7 @@
   </div>
   <footer class="container foot">
     <span>© 2026 Sherif Fahmy</span>
-    <span data-i18n="foot.made">Designed and built by me. The falling Flutter scene is rendered with Three.js.</span>
+    <span data-i18n="foot.made">Designed and built by me. The particle portrait runs live in WebGL.</span>
   </footer>
 </section>
 
@@ -229,6 +230,8 @@
 <script src="assets/vendor/lenis.min.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/projects.js"></script>
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/js/particles.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

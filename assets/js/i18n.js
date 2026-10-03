@@ -69,6 +69,8 @@ window.I18N_AR = {
   "contact.copy": "انسخ الإيميل",
   "contact.copied": "اتنسخ ✓",
   "contact.cv": "حمّل السي في",
-  "foot.made": "تصميم وتنفيذ شريف. مشهد Flutter اللي بيقع متصوّر بـ Three.js.",
+  "foot.made": "تصميم وتنفيذ شريف. الصورة المتكوّنة من الذرات شغالة مباشرة بـ WebGL.",
+  "hero.hint": "حرّك الماوس على الصورة",
+  "hero.hintTouch": "المس الصورة واسحب صباعك عليها",
   "cv.download": "حمّل PDF"
 };
