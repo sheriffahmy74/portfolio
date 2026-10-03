@@ -268,19 +268,82 @@
     });
   }
 
-  /* hot reload: press r and the portfolio re-renders as a different site (a new theme each time);
-     hot restart (R or the restart button) brings back the original */
+  /* hot reload: press r and the portfolio re-renders as a different site. Each mood changes the look,
+     the type, the 3D materials, how things enter, how they react to hover and how the switch itself plays.
+     Content and order never change. Hot restart (R or the button) brings back the original. */
   function wireHotReload() {
-    const box = $("#hotReload"), btn = $("#hrBtn"), reset = $("#hrReset"), term = $("#hrTerm"), scan = $(".hr-scan");
-    const THEMES = [
-      { id: "olive", name: "Scrapbook · olive & sand", font: ["Fraunces:opsz,wght@9..144,600;9..144,700", "Caveat:wght@700"] },
-      { id: "bordeaux", name: "Editorial poster · bordeaux", font: ["DM+Serif+Display:ital@0;1", "Caveat:wght@700"] },
-      { id: "amethyst", name: "Duotone · amethyst night", font: ["Sora:wght@600;700;800"] },
-      { id: "terracotta", name: "Orbit · terracotta", font: ["Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800", "Caveat:wght@700"] },
-      { id: "charcoal", name: "Bold poster · charcoal & mustard", font: ["Anton", "Space+Grotesk:wght@500;700"] }
+    const box = $("#hotReload"), btn = $("#hrBtn"), reset = $("#hrReset"), term = $("#hrTerm"), scan = $(".hr-scan"), fx = $(".hr-fx");
+    const SEL = ".sec-head, .skill, .tl__card, .facts > div, .about__photo, .mailcard, .project__body > *";
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const inView = (els) => els.filter((el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; });
+    const node = (cls, css, html) => { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, css || {}); if (html) d.innerHTML = html; fx.appendChild(d); return d; };
+    const clear = () => { fx.innerHTML = ""; };
+    const typeOut = (els) => els.forEach((el, k) => {
+      const full = el.textContent, o = { n: 0 };
+      gsap.to(o, { n: full.length, duration: Math.min(1.4, full.length * .03), delay: k * .15, ease: "none", onUpdate: () => { el.textContent = full.slice(0, Math.round(o.n)); }, onComplete: () => { el.textContent = full; } });
+    });
+    const MOODS = [
+      { id: "olive", name: "Scrapbook", scene: "normal", font: ["Fraunces:opsz,wght@9..144,600;9..144,700", "Caveat:wght@700"],
+        // a sheet of grid paper with a torn edge slides over the page and away
+        go(mid, done) {
+          const sheet = node("", { inset: "-20px 0 auto 0", height: "calc(100% + 40px)", background: "linear-gradient(rgba(43,46,31,.07) 1px,transparent 1px) 0 0/26px 26px, linear-gradient(90deg,rgba(43,46,31,.07) 1px,transparent 1px) 0 0/26px 26px, #F4EEDF", boxShadow: "0 20px 40px rgba(0,0,0,.25)" });
+          gsap.timeline({ onComplete: done }).fromTo(sheet, { yPercent: -105, rotation: -2 }, { yPercent: 0, rotation: 0, duration: .55, ease: "power3.in" })
+            .add(mid).to(sheet, { yPercent: 105, rotation: 3, duration: .6, ease: "power3.out" });
+        },
+        // things drop in like pinned paper, a little crooked, then settle
+        enter: (els) => gsap.from(els, { y: -70, rotation: () => rnd(-8, 8), opacity: 0, duration: .9, ease: "back.out(1.7)", stagger: .05, clearProps: "transform,opacity" })
+      },
+      { id: "cartoon", name: "Cartoon", scene: "toon", font: ["Luckiest+Guy", "Nunito:wght@400;600;700;800"],
+        // a comic BOOM bursts out of the button and fills the screen
+        go(mid, done) {
+          const r = btn.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, R = Math.hypot(innerWidth, innerHeight) * 1.1;
+          const c = node("", { left: cx - R + "px", top: cy - R + "px", width: R * 2 + "px", height: R * 2 + "px", borderRadius: "50%", background: "radial-gradient(rgba(30,27,24,.18) 2px, transparent 2.5px) 0 0/16px 16px, #FFC93C", display: "grid", placeItems: "center" },
+            '<span style="font:400 clamp(4rem,12vw,9rem)/1 \'Luckiest Guy\',Impact,sans-serif;color:#C2412A;text-shadow:5px 5px 0 #1E1B18;transform:rotate(-8deg)">BOOM!</span>');
+          gsap.timeline({ onComplete: done }).fromTo(c, { scale: 0 }, { scale: 1, duration: .5, ease: "back.in(1.2)" })
+            .add(mid).to(c, { scale: 0, duration: .5, ease: "back.out(1.4)", delay: .15 });
+        },
+        // everything pops in with squash and stretch
+        enter: (els) => gsap.from(els, { scale: .2, rotation: () => rnd(-14, 14), opacity: 0, duration: 1.1, ease: "elastic.out(1, .45)", stagger: .04, clearProps: "transform,opacity" })
+      },
+      { id: "bordeaux", name: "Editorial", scene: "normal", font: ["DM+Serif+Display:ital@0;1", "Caveat:wght@700"],
+        // two wine curtains close and open
+        go(mid, done) {
+          const l = node("", { left: 0, top: 0, bottom: 0, width: "50.5%", background: "#7A1F2B" }), rr = node("", { right: 0, top: 0, bottom: 0, width: "50.5%", background: "#5E1620" });
+          gsap.timeline({ onComplete: done }).fromTo(l, { xPercent: -100 }, { xPercent: 0, duration: .6, ease: "power4.inOut" }).fromTo(rr, { xPercent: 100 }, { xPercent: 0, duration: .6, ease: "power4.inOut" }, 0)
+            .add(mid).to(l, { xPercent: -100, duration: .8, ease: "power4.inOut" }, "+=.1").to(rr, { xPercent: 100, duration: .8, ease: "power4.inOut" }, "<");
+        },
+        // slow, elegant line reveals from below a mask
+        enter: (els) => gsap.from(els, { clipPath: "inset(100% 0 0 0)", y: 40, duration: 1.3, ease: "power4.out", stagger: .09, clearProps: "clipPath,transform" })
+      },
+      { id: "terminal", name: "Terminal", scene: "wire", font: ["JetBrains+Mono:wght@400;500;700"],
+        // the screen breaks into glitching slices like an old CRT
+        go(mid, done) {
+          const bars = Array.from({ length: 9 }, (_, i) => node("", { left: 0, right: 0, top: i * 11.2 + "%", height: "11.3%", background: i % 2 ? "#0D0B12" : "#15111D" }));
+          const txt = node("", { inset: 0, display: "grid", placeItems: "center", font: "500 clamp(.9rem,2vw,1.2rem) 'JetBrains Mono',ui-monospace,monospace", color: "#7CF5B4" }, "&gt; flutter run --release<span style='animation:blink 1s steps(1) infinite'>_</span>");
+          gsap.timeline({ onComplete: done })
+            .fromTo(bars, { xPercent: (i) => (i % 2 ? 100 : -100) }, { xPercent: 0, duration: .32, ease: "steps(4)", stagger: .025 })
+            .from(txt, { opacity: 0, duration: .1 }, "<.2")
+            .add(mid).to(bars, { xPercent: (i) => (i % 2 ? -100 : 100), duration: .3, ease: "steps(5)", stagger: .02, delay: .25 }).to(txt, { opacity: 0, duration: .1 }, "<");
+        },
+        // panels flicker on and headings type themselves
+        enter: (els) => {
+          gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: .45, ease: "steps(5)", stagger: .05, clearProps: "opacity" });
+          typeOut(els.filter((el) => el.matches(".sec-head")).map((el) => $(".sec-title", el)).filter(Boolean));
+        }
+      },
+      { id: "charcoal", name: "Bold poster", scene: "normal", font: ["Anton", "Space+Grotesk:wght@500;700"],
+        // mustard and charcoal stripes slam across on a diagonal
+        go(mid, done) {
+          const bars = Array.from({ length: 5 }, (_, i) => node("", { left: "-30%", width: "160%", top: i * 22 - 8 + "%", height: "24%", background: i % 2 ? "#1C1C1E" : "#E1B12C", transform: "rotate(-12deg)" }));
+          gsap.timeline({ onComplete: done }).fromTo(bars, { xPercent: -110 }, { xPercent: 0, duration: .45, ease: "power4.in", stagger: .05 })
+            .add(mid).to(bars, { xPercent: 110, duration: .45, ease: "power4.out", stagger: .05 });
+        },
+        // hard, fast slides with a skew, like posters slapped on a wall
+        enter: (els) => gsap.from(els, { x: -140, skewX: -22, opacity: 0, duration: .55, ease: "power4.out", stagger: .045, clearProps: "transform,opacity" })
+      }
     ];
     const loaded = new Set();
-    let n = 0, busy = false, hideT = 0;
+    let n = 0, busy = false, hideT = 0, batch = null;
     const ln = (cls, t) => `<span class="${cls}">${esc(t)}</span>`;
     function loadFont(list) {
       (list || []).forEach((f) => {
@@ -289,22 +352,17 @@
         l.href = "https://fonts.googleapis.com/css2?family=" + f + "&display=swap"; document.head.appendChild(l);
       });
     }
-    function apply(theme) {
-      root.classList.add("theme-anim");
-      if (theme) root.dataset.theme = theme.id; else delete root.dataset.theme;
-      reset.hidden = !theme;
-      setTimeout(() => root.classList.remove("theme-anim"), 700);
-    }
-    function sweep(onMid, onDone) {
-      const els = $$("main h1, main h2, main h3, main p, main li, main .btn, main .device, main .skill, main .facts > div, main .about__photo, main .project, .nav__inner > *")
-        .filter((el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; });
-      if (!canAnimate) { onMid(); onDone(); return; }
-      gsap.timeline({ onComplete: onDone })
-        .fromTo(scan, { opacity: 1, backgroundPosition: "0 100%" }, { backgroundPosition: "0 -100%", duration: .8, ease: "power2.inOut" }, 0)
-        .to(scan, { opacity: 0, duration: .15 }, .7)
-        .add(onMid, .3)
-        .fromTo(els, { opacity: .1, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: .5, ease: "power3.out", clearProps: "filter,opacity",
-          stagger: (i, el) => Math.max(0, el.getBoundingClientRect().top / innerHeight) * .55 }, .3);
+    function apply(mood) {
+      if (mood) root.dataset.theme = mood.id; else delete root.dataset.theme;
+      reset.hidden = !mood;
+      if (scene3d) scene3d.setStyle(mood ? mood.scene : "normal", "#B49BFF");
+      if (batch) { batch.forEach((t) => t.kill()); batch = null; }
+      if (mood && canAnimate) {
+        // the mood's own entrance for anything that scrolls into view later
+        const seen = new WeakSet(inView($$(SEL)));
+        batch = ScrollTrigger.batch(SEL, { start: "top 88%", onEnter: (els) => { const fresh = els.filter((e) => !seen.has(e)); fresh.forEach((e) => seen.add(e)); if (fresh.length) mood.enter(fresh); } });
+      }
+      ScrollTrigger.refresh();
     }
     function say(lines, hold) {
       clearTimeout(hideT);
@@ -313,16 +371,20 @@
     }
     function run() {
       if (busy) return; busy = true;
-      const theme = THEMES[n % THEMES.length]; n++;
-      loadFont(theme.font);
+      const mood = MOODS[n % MOODS.length]; n++;
+      loadFont(mood.font);
       box.classList.add("is-busy");
       const libs = 3 + Math.floor(Math.random() * 9), ms = 180 + Math.floor(Math.random() * 240);
       const head = [ln("dim", "$ flutter run  ·  r"), "Performing hot reload..."];
       say(head);
-      sweep(() => apply(theme), () => {
-        say(head.concat([ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms."), ln("acc", "  theme → " + theme.name) + ln("dim", "  (state kept)")]), 3400);
+      const finish = () => {
+        clear();
+        say(head.concat([ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms."), ln("acc", "  theme → " + mood.name) + ln("dim", "  (state kept)")]), 3400);
         box.classList.remove("is-busy"); busy = false;
-      });
+      };
+      const mid = () => { apply(mood); if (canAnimate) mood.enter(inView($$(SEL))); };
+      if (!canAnimate) { mid(); finish(); return; }
+      mood.go(mid, finish);
     }
     function restart() {
       if (busy || !root.dataset.theme) return; busy = true;
@@ -330,10 +392,13 @@
       const ms = 520 + Math.floor(Math.random() * 300);
       const head = [ln("dim", "$ flutter run  ·  R"), "Performing hot restart..."];
       say(head);
-      sweep(() => apply(null), () => {
-        say(head.concat([ln("ok", "✓ Restarted application in " + ms + "ms."), ln("acc", "  theme → Original")]), 3000);
-        box.classList.remove("is-busy"); busy = false; n = 0;
-      });
+      const done = () => { say(head.concat([ln("ok", "✓ Restarted application in " + ms + "ms."), ln("acc", "  theme → Original")]), 3000); box.classList.remove("is-busy"); busy = false; n = 0; };
+      if (!canAnimate) { apply(null); done(); return; }
+      gsap.timeline({ onComplete: done })
+        .fromTo(scan, { opacity: 1, backgroundPosition: "0 100%" }, { backgroundPosition: "0 -100%", duration: .8, ease: "power2.inOut" }, 0)
+        .to(scan, { opacity: 0, duration: .15 }, .7)
+        .add(() => apply(null), .3)
+        .fromTo(inView($$(SEL)), { opacity: .1, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: .5, ease: "power3.out", stagger: .03, clearProps: "filter,opacity" }, .32);
     }
     btn.addEventListener("click", run);
     reset.addEventListener("click", restart);
