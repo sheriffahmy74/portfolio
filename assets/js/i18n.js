@@ -81,6 +81,7 @@ window.I18N_AR = {
   "tip.store": "منشور على App Store و Google Play",
   "tip.tests": "+746 تست أوتوماتيك",
   "tip.code": "Clean Architecture",
+  "about.cap": "المنصورة، مصر",
   "build.1t": "كله بيبدأ بسطر كود.",
   "build.1s": "Dart وBloc وهيكلة نضيفة، بتتكتب widget ورا widget.",
   "build.2t": "وFlutter بيحوّله لتطبيق حقيقي.",

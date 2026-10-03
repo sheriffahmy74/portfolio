@@ -20,6 +20,11 @@
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 
 <!-- ============ NAV ============ -->
+<div class="bgfx" aria-hidden="true">
+  <i class="bgfx__blob bgfx__blob--a"></i><i class="bgfx__blob bgfx__blob--b"></i><i class="bgfx__blob bgfx__blob--c"></i>
+  <i class="bgfx__dots"></i><i class="bgfx__glow"></i>
+  <i class="bgfx__shape s1"></i><i class="bgfx__shape s2"></i><i class="bgfx__shape s3"></i><i class="bgfx__shape s4"></i><i class="bgfx__shape s5"></i><i class="bgfx__shape s6"></i>
+</div>
 <header class="nav" id="nav">
   <div class="container nav__inner">
     <a class="brand" href="#top" aria-label="Sherif Fahmy, home"><span class="brand__mark">SF</span><span class="brand__name">Sherif Fahmy</span></a>
@@ -74,17 +79,6 @@
     <span>Flutter</span><span>Dart</span><span>Bloc / Cubit</span><span>Clean Architecture</span><span>Supabase</span><span>Firebase</span><span>REST · Dio</span><span>Google Maps</span><span>Paymob</span><span>go_router</span><span>get_it</span><span>GitHub Actions</span>
   </div>
 </div>
-
-<!-- ============ BUILD STORY ============ -->
-<section class="build" id="build" aria-label="From code to app">
-  <div class="build__stage" id="buildStage"><span class="scene-tip" id="buildTip" role="status" aria-live="polite"></span></div>
-  <div class="container build__copy">
-    <p class="build__step is-on"><b data-i18n="build.1t">It starts with a line of code.</b><span data-i18n="build.1s">Dart, Bloc and a clean structure, typed one widget at a time.</span></p>
-    <p class="build__step"><b data-i18n="build.2t">Flutter turns it into a real app.</b><span data-i18n="build.2s">One codebase, shipped to iOS and Android.</span></p>
-    <p class="build__step"><b data-i18n="build.3t">And it all lands in your pocket.</b><span data-i18n="build.3s">My apps and the tools behind them. Drag to tilt the phone, click a tile to flick it.</span></p>
-    <div class="build__bar" aria-hidden="true"><i></i></div>
-  </div>
-</section>
 
 <!-- ============ PROJECTS ============ -->
 <section class="section" id="projects">
@@ -173,14 +167,30 @@
   </div>
 </section>
 
+<!-- ============ BUILD STORY ============ -->
+<section class="build" id="build" aria-label="From code to app">
+  <div class="build__stage" id="buildStage"><span class="scene-tip" id="buildTip" role="status" aria-live="polite"></span></div>
+  <div class="container build__copy">
+    <p class="build__step is-on"><b data-i18n="build.1t">It starts with a line of code.</b><span data-i18n="build.1s">Dart, Bloc and a clean structure, typed one widget at a time.</span></p>
+    <p class="build__step"><b data-i18n="build.2t">Flutter turns it into a real app.</b><span data-i18n="build.2s">One codebase, shipped to iOS and Android.</span></p>
+    <p class="build__step"><b data-i18n="build.3t">And it all lands in your pocket.</b><span data-i18n="build.3s">My apps and the tools behind them. Drag to tilt the phone, click a tile to flick it.</span></p>
+    <div class="build__bar" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
 <!-- ============ ABOUT ============ -->
 <section class="section section--tint" id="about">
   <div class="container about">
-    <div class="about__photo">
-      <svg class="about__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ringPath" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/></defs><text><textPath href="#ringPath" textLength="560" lengthAdjust="spacing">Flutter developer ✦ Mansoura, Egypt ✦ Lamma ✦ Nabdy ✦ Clean code ✦ </textPath></text></svg>
-      <div class="about__circle"><img class="about__img" src="assets/img/me/work-16.webp" alt="Sherif working on his laptop in a café" loading="lazy" width="675" height="900"></div>
-      <span class="about__dot about__dot--a" aria-hidden="true"></span><span class="about__dot about__dot--b" aria-hidden="true"></span>
-    </div>
+    <figure class="about__photo">
+      <div class="about__frame">
+        <div class="about__mat"><img class="about__img" src="assets/img/me/work-16.webp" alt="Sherif working on his laptop in a café" loading="lazy" width="675" height="900"></div>
+      </div>
+      <div class="about__stamp" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><defs><path id="ringPath" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs><text><textPath href="#ringPath" textLength="470" lengthAdjust="spacing">Flutter developer ✦ Mobile apps ✦ Clean code ✦ </textPath></text></svg>
+        <svg class="about__stamp-logo" viewBox="0 0 166 202"><polygon fill="#54C5F8" points="37.7 128.9 9.8 101 100.4 10.4 156.2 10.4"/><polygon fill="#54C5F8" points="156.2 94 100.4 94 79.5 114.9 107.4 142.8"/><polygon fill="#29B6F6" points="79.5 114.9 51.6 142.8 79.5 170.7 107.4 142.8"/><polygon fill="#01579B" points="79.5 170.7 100.4 191.6 156.2 191.6 107.4 142.8"/></svg>
+      </div>
+      <figcaption class="about__cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21Z"/><circle cx="12" cy="10" r="2.4"/></svg><span data-i18n="about.cap">Mansoura, Egypt</span></figcaption>
+    </figure>
     <div class="about__copy">
       <span class="eyebrow" data-i18n="about.k">About me</span>
       <h2 class="sec-title" data-i18n="about.title">I care about code that stays easy to change.</h2>

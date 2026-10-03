@@ -49,11 +49,15 @@
           + `<div class="device device--live" data-depth="1.2"><div class="device__screens">${sc.map((k, i) => img(k, i === 1)).join("")}</div></div>`
           + `<div class="device" data-depth=".6"><div class="device__screens">${img(sc[sc.length - 1], true)}</div></div>`;
       const metrics = p.metrics.length ? `<div class="metrics">${p.metrics.map((m) => `<div><b>${esc(m.v)}</b><span>${esc(m.l[lang])}</span></div>`).join("")}</div>` : "";
-      return `<article class="project">
-        <div class="project__visual" style="background:${p.bg}">${devices}</div>
+      const name = p.name[lang];
+      const split = lang === "ar"
+        ? name.split(" ").map((w) => `<span class="ch"><span>${esc(w)}</span></span>`).join(" ")
+        : [...name].map((c) => c === " " ? " " : `<span class="ch"><span>${esc(c)}</span></span>`).join("");
+      return `<article class="project" data-id="${esc(p.id)}">
+        <div class="project__visual" style="background:${p.bg}"><span class="project__word" aria-hidden="true">${esc(p.name.en)}</span><div class="project__phones">${devices}</div></div>
         <div class="project__body">
           <span class="project__tag">${esc(p.tag[lang])}</span>
-          <h3 class="project__name">${esc(p.name[lang])}</h3>
+          <h3 class="project__name" aria-label="${esc(name)}">${split}</h3>
           <p class="project__desc">${esc(p.desc[lang])}</p>
           <p class="project__label">${L.did[lang]}</p>
           <ul class="project__points">${p.points[lang].map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
@@ -126,8 +130,10 @@
     $$(".device--live .device__screens").forEach((box) => {
       const imgs = $$("img", box);
       const i = imgs.findIndex((x) => x.classList.contains("is-on"));
-      imgs[i].classList.remove("is-on");
-      imgs[(i + 1) % imgs.length].classList.add("is-on");
+      const swap = () => { imgs[i].classList.remove("is-on"); imgs[(i + 1) % imgs.length].classList.add("is-on"); };
+      if (!canAnimate) return swap();
+      // the screen flips like a card to the next one
+      gsap.timeline().to(box, { rotationY: 90, duration: .28, ease: "power2.in", onComplete: swap }).fromTo(box, { rotationY: -90 }, { rotationY: 0, duration: .5, ease: "back.out(1.6)" });
     });
   }, 2600);
 
@@ -168,15 +174,31 @@
   }
 
   // build story: pinned while you scroll through it
-  ScrollTrigger.create({ trigger: ".build", start: "top top", end: () => "+=" + innerHeight * 3, pin: true, scrub: .6, anticipatePin: 1,
+  ScrollTrigger.create({ trigger: ".build", start: "top top", end: () => "+=" + innerHeight * 2.2, pin: true, scrub: .6, anticipatePin: 1,
     onUpdate: (s) => setBuild(s.progress) });
   setBuild(0);
   // pinning adds scroll length; let Lenis know whenever ScrollTrigger re-measures
   if (lenis) { ScrollTrigger.addEventListener("refresh", () => lenis.resize()); ScrollTrigger.refresh(); }
 
-  // about: the portrait opens like a lens as it scrolls in
-  gsap.fromTo(".about__circle", { "--r": "0%" }, { "--r": "50%", ease: "none", scrollTrigger: { trigger: ".about__photo", start: "top 85%", end: "center 55%", scrub: .5 } });
-  gsap.fromTo(".about__img", { "--z": 1.35 }, { "--z": 1, ease: "none", scrollTrigger: { trigger: ".about__photo", start: "top 85%", end: "bottom 40%", scrub: .5 } });
+  // about: the framed portrait swings in, the stamp and caption pop on after it
+  gsap.timeline({ scrollTrigger: { trigger: ".about__photo", start: "top 80%", once: true } })
+    .from(".about__photo", { y: 80, rotation: -10, opacity: 0, duration: 1.2, ease: "expo.out" })
+    .from(".about__img", { scale: 1.25, duration: 1.6, ease: "expo.out" }, 0)
+    .from(".about__stamp", { scale: 0, rotation: -180, duration: .9, ease: "back.out(1.8)" }, .45)
+    .from(".about__cap", { x: -30, opacity: 0, duration: .7, ease: "back.out(2)" }, .6);
+
+  // the living background: colour follows the section, dots light up under the cursor, shapes drift with scroll
+  ["hero", "experience", "skills", "build", "about", "contact"].forEach((id) => {
+    const el = document.getElementById(id); if (!el) return;
+    ScrollTrigger.create({ trigger: el, start: "top 55%", end: "bottom 45%", onEnter: () => mood(id), onEnterBack: () => mood(id) });
+  });
+  const bg = $(".bgfx"), shapes = $$(".bgfx__shape");
+  window.addEventListener("pointermove", (e) => { bg.style.setProperty("--cx", e.clientX + 40 + "px"); bg.style.setProperty("--cy", e.clientY + 40 + "px"); }, { passive: true });
+  gsap.ticker.add(() => {
+    const y = scrollY;
+    bg.style.setProperty("--sy", -(y * .15 % 26) + "px");
+    shapes.forEach((sh, i) => { const k = [.25, -.18, .4, -.3, .55, -.12][i]; sh.style.setProperty("--py", Math.sin(y / 700 + i * 1.3) * 160 + "px"); sh.style.setProperty("--rot", y * k * .3 + "deg"); });
+  });
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -194,23 +216,61 @@
   $$(".sec-head, .minor-title, .about__copy, .contact__inner > *").forEach((el) =>
     gsap.from(el, { y: 36, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%", once: true } }));
   ScrollTrigger.batch(".other, .tl, .skill", { start: "top 90%", once: true, onEnter: (els) => gsap.from(els, { y: 30, opacity: 0, duration: .7, ease: "power3.out", stagger: .08 }) });
+  // background colours for each part of the page (and each project)
+  const MOODS = {
+    hero: ["#54C5F8", "#F5A524", "#8B6FE8"], lamma: ["#E46A86", "#F5A524", "#8E2A3A"], nabdy: ["#8B6FE8", "#54C5F8", "#C084FC"],
+    tasks: ["#54C5F8", "#2F5BEA", "#22C55E"], experience: ["#2F5BEA", "#54C5F8", "#F5A524"], skills: ["#8B6FE8", "#54C5F8", "#22C55E"],
+    build: ["#54C5F8", "#2F5BEA", "#F5A524"], about: ["#8B6FE8", "#F5A524", "#E46A86"], contact: ["#22C55E", "#F5A524", "#2F5BEA"]
+  };
+  function mood(k) { const m = MOODS[k]; if (m) gsap.to(".bgfx", { "--c1": m[0], "--c2": m[1], "--c3": m[2], duration: 1.2, ease: "sine.inOut", overwrite: "auto" }); }
+
+  let projectCtx = null;
   function revealProjects() {
-    $$(".project").forEach((card) => {
-      gsap.from(card, { y: 60, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", once: true } });
-      const devs = $$(".device", card);
-      // phones fan out from a stack
-      gsap.from(devs, { x: (i) => (1 - i) * 90, rotationY: (i) => (i - 1) * 35, scale: .7, opacity: 0, duration: 1.3, ease: "expo.out", stagger: .08,
-        scrollTrigger: { trigger: card, start: "top 78%", once: true } });
-      // idle float
-      devs.forEach((d, i) => gsap.to(d, { y: i % 2 ? -10 : 10, duration: 2.8 + i * .5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * .3 }));
-      // 3D tilt toward the pointer
-      const vis = $(".project__visual", card);
-      vis.addEventListener("pointermove", (e) => {
-        const r = vis.getBoundingClientRect();
-        const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
-        devs.forEach((d) => { const k = +d.dataset.depth || 1; gsap.to(d, { rotationY: nx * 26 * k, rotationX: -ny * 18 * k, z: 40 * k, duration: .6, ease: "power3.out", overwrite: "auto" }); });
+    if (projectCtx) projectCtx.revert();
+    projectCtx = gsap.context(() => {
+      const cards = $$(".project");
+      // on wide screens the cards stack: each one sticks and the next slides over it
+      cards.forEach((c) => { c.style.minHeight = ""; c.style.top = ""; });
+      const hmax = Math.max(...cards.map((c) => c.offsetHeight));
+      const stack = innerWidth > 900 && hmax < innerHeight - 112 - (cards.length - 1) * 14;
+      $("#projectList").classList.toggle("is-stacked", stack);
+      // same height for every card, each one a little lower, like a deck
+      if (stack) cards.forEach((c, i) => { c.style.minHeight = hmax + "px"; c.style.top = 92 + i * 14 + "px"; });
+      cards.forEach((card, idx) => {
+        const devs = $$(".device", card), vis = $(".project__visual", card);
+        const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%", once: true } });
+        tl.from(card, { y: 90, rotationX: 10, transformPerspective: 1400, transformOrigin: "50% 0%", opacity: 0, duration: 1.1, ease: "expo.out" })
+          .from($$(".project__name .ch > span", card), { yPercent: 115, rotation: 8, duration: .8, ease: "back.out(1.6)", stagger: .035 }, .25)
+          .from($$(".project__tag, .project__desc, .project__label", card), { y: 18, opacity: 0, duration: .6, ease: "power3.out", stagger: .06 }, .35)
+          .from($$(".project__points li", card), { x: -24, opacity: 0, duration: .55, ease: "power3.out", stagger: .07 }, .5)
+          .from($$(".metrics > div, .tags li", card), { y: 14, scale: .8, opacity: 0, duration: .5, ease: "back.out(2)", stagger: .03 }, .6)
+          // phones fan out from a stack, flipping in
+          .from(devs, { x: (i) => (1 - i) * 120, y: 80, rotationY: (i) => (i - 1) * 60, rotationZ: (i) => (i - 1) * 14, scale: .6, opacity: 0, duration: 1.4, ease: "expo.out", stagger: .1 }, .1);
+        // metrics count up
+        $$(".metrics b", card).forEach((b) => {
+          const m = b.textContent.match(/^(\d+)(.*)$/); if (!m) return;
+          const o = { v: 0 }, end = +m[1];
+          tl.to(o, { v: end, duration: 1.4, ease: "power3.out", onUpdate: () => { b.textContent = Math.round(o.v) + m[2]; } }, .6);
+        });
+        // idle float
+        devs.forEach((d, i) => gsap.to(d, { y: i % 2 ? -12 : 12, duration: 2.8 + i * .5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.4 + i * .3 }));
+        // giant outlined name slides behind the phones; phones drift at their own depth
+        gsap.fromTo($(".project__word", card), { xPercent: 12 }, { xPercent: -38, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: .6 } });
+        gsap.fromTo($(".project__phones", card), { y: 50 }, { y: -50, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: .6 } });
+        // stacking: the card under the next one shrinks back and dims
+        if (stack && idx < cards.length - 1) {
+          gsap.to(card, { scale: .9, "--dim": .35, ease: "none", scrollTrigger: { trigger: cards[idx + 1], start: "top bottom", end: () => "top " + (92 + (idx + 1) * 14) + "px", scrub: true } });
+        }
+        ScrollTrigger.create({ trigger: card, start: "top 60%", end: "bottom 40%", onEnter: () => mood(card.dataset.id), onEnterBack: () => mood(card.dataset.id) });
+        // 3D tilt toward the pointer + a spotlight that follows it
+        vis.addEventListener("pointermove", (e) => {
+          const r = vis.getBoundingClientRect();
+          const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+          vis.style.setProperty("--mx", (nx + .5) * 100 + "%"); vis.style.setProperty("--my", (ny + .5) * 100 + "%");
+          devs.forEach((d) => { const k = +d.dataset.depth || 1; gsap.to(d, { rotationY: nx * 30 * k, rotationX: -ny * 20 * k, z: 50 * k, duration: .6, ease: "power3.out", overwrite: "auto" }); });
+        });
+        vis.addEventListener("pointerleave", () => devs.forEach((d) => gsap.to(d, { rotationY: 0, rotationX: 0, z: 0, duration: .9, ease: "elastic.out(1, .5)", overwrite: "auto" })));
       });
-      vis.addEventListener("pointerleave", () => devs.forEach((d) => gsap.to(d, { rotationY: 0, rotationX: 0, z: 0, duration: .8, ease: "power3.out", overwrite: "auto" })));
     });
   }
   revealProjects();
@@ -233,14 +293,14 @@
   /* ============================================== helpers (no motion needed) */
   /* small interactions: every card and button answers the pointer */
   function wireTouches() {
-    // about portrait drifts towards the pointer
-    const ph = $(".about__photo"), circ = $(".about__circle");
+    // about portrait: the frame tilts in 3D towards the pointer
+    const ph = $(".about__photo"), fr = $(".about__frame");
     ph.addEventListener("pointermove", (e) => {
-      const r = ph.getBoundingClientRect();
-      circ.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5) * 22 + "px");
-      circ.style.setProperty("--my", ((e.clientY - r.top) / r.height - .5) * 22 + "px");
+      const r = ph.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      ph.classList.add("is-tilting");
+      fr.style.setProperty("--ry", x * 16 + "deg"); fr.style.setProperty("--rx", -y * 12 + "deg");
     });
-    ph.addEventListener("pointerleave", () => { circ.style.setProperty("--mx", "0px"); circ.style.setProperty("--my", "0px"); });
+    ph.addEventListener("pointerleave", () => { ph.classList.remove("is-tilting"); fr.style.setProperty("--rx", "0deg"); fr.style.setProperty("--ry", "0deg"); });
     // skill cards and fact tiles: tilt + a spotlight that follows the cursor
     $$(".skill, .facts > div, .mailcard").forEach((el) => {
       el.addEventListener("pointermove", (e) => {
