@@ -71,8 +71,15 @@ window.I18N_AR = {
   "contact.copy": "انسخ الإيميل",
   "contact.copied": "اتنسخ ✓",
   "contact.cv": "حمّل السي في",
-  "foot.made": "تصميم وتنفيذ شريف. تأثير الدهان شغال مباشرة بـ WebGL.",
-  "hero.hint": "حرّك الماوس على الدهان",
-  "hero.hintTouch": "المس الدهان",
+  "foot.made": "تصميم وتنفيذ شريف. المشهد الثري دي شغال مباشرة بـ WebGL.",
+  "hero.hint": "حرّك الماوس على الأشكال · ودوس عليها",
+  "hero.hintTouch": "المس الأشكال الثري دي",
+  "tip.flutter": "Flutter و Dart",
+  "tip.phone": "لمّة · دوس عشان تقلّب الشاشات",
+  "tip.maps": "Google Maps وتحديد الموقع",
+  "tip.chat": "شات لحظي بـ Supabase",
+  "tip.store": "منشور على App Store و Google Play",
+  "tip.tests": "+746 تست أوتوماتيك",
+  "tip.code": "Clean Architecture",
   "cv.download": "حمّل PDF"
 };

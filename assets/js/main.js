@@ -69,8 +69,10 @@
   applyLang(lang);
   wireCv();
   wireCopy();
+  if (!reduced && matchMedia("(pointer: fine)").matches) wireTouches();
   $("#langToggle").addEventListener("click", () => {
     const next = lang === "ar" ? "en" : "ar";
+    if (scene3d) scene3d.relabel();
     if (!canAnimate) { applyLang(next); return; }
     gsap.to("main", { opacity: 0, duration: .2, onComplete: () => {
       applyLang(next); revealProjects(); ScrollTrigger.refresh();
@@ -78,21 +80,30 @@
     } });
   });
 
-  /* ------------------------------------------ hero + about: liquid paint images */
+  /* ------------------------------------------------- hero: interactive 3D scene */
   const hero = $("#hero");
-  let heroPaint = null, aboutPaint = null;
-  if (!reduced && window.LiquidImage && window.LiquidImage.supported()) {
+  Object.assign(EN, {
+    "tip.flutter": "Flutter & Dart", "tip.phone": "Lamma · click to switch screens", "tip.maps": "Google Maps & geolocation",
+    "tip.chat": "Realtime chat with Supabase", "tip.store": "Shipped to App Store & Google Play", "tip.tests": "746+ automated tests",
+    "tip.code": "Clean Architecture", "hero.hintTouch": "Tap the 3D objects"
+  });
+  let scene3d = null;
+  if (window.HeroScene && window.HeroScene.supported()) {
     try {
-      heroPaint = window.LiquidImage.create($("#liquidStage"), { src: "assets/img/me/hero.webp", c1: "#2547C9", c2: "#54C5F8", c3: "#F5A524", height: .9 });
-      aboutPaint = window.LiquidImage.create($("#aboutStage"), { src: "assets/img/me/work-16.webp", c1: "#8B6FE8", c2: "#F5A524", c3: "#2F5BEA", fit: "splash", mask: true });
-      root.classList.add("has-liquid");
+      const S = window.SCREENS;
+      scene3d = window.HeroScene.create($("#sceneStage"), {
+        photo: "assets/img/me/hero-hd.webp",
+        screens: [S["lamma-en"], S["lamma-search"], S["lamma-outing"], S["lamma-chat"], S["lamma-wallet"]],
+        tip: $("#sceneTip"), reduced,
+        label: (k) => tr("tip." + k)
+      });
+      root.classList.add("has-scene");
       if (matchMedia("(pointer: coarse)").matches) {
         const hint = $(".hero__hint");
         hint.dataset.i18n = "hero.hintTouch";
-        EN["hero.hintTouch"] = "Touch the paint";
-        hint.textContent = lang === "ar" ? window.I18N_AR["hero.hintTouch"] : EN["hero.hintTouch"];
+        hint.textContent = tr("hero.hintTouch");
       }
-    } catch (e) { heroPaint = aboutPaint = null; }
+    } catch (e) { scene3d = null; }
   }
 
   // live screen inside the middle phone of each project
@@ -107,7 +118,7 @@
   }, 2600);
 
   if (!canAnimate) {
-    [heroPaint, aboutPaint].forEach((x) => x && x.ready.then(() => { x.reveal = 1; }));
+    if (scene3d) scene3d.start();
     return;
   }
 
@@ -129,25 +140,17 @@
     }));
   }
 
-  // hero entrance: paint pours in, then the photo fills from the top with drips
+  // hero entrance: copy slides in while the 3D objects fly in from deep space
   gsap.timeline({ defaults: { ease: "power3.out" } })
     .from(".hero__copy > *", { y: 26, opacity: 0, duration: .8, stagger: .08 }, .1)
-    .from(".float-chip", { scale: .6, opacity: 0, duration: .6, stagger: .12, ease: "back.out(2)" }, 2)
-    .from(".hero__hint", { opacity: 0, duration: .6 }, 2.6);
-  if (heroPaint) {
-    const r = { v: 0 };
-    heroPaint.ready.then(() => gsap.to(r, { v: 1, duration: 3, ease: "power1.inOut", delay: .2, onUpdate: () => { heroPaint.reveal = r.v; } }));
-    // scrolling away makes the paint and the photo melt down
-    ScrollTrigger.create({ trigger: hero, start: "top top", end: "bottom top", scrub: .4, onUpdate: (s) => { heroPaint.melt = s.progress; } });
+    .from(".hero__hint", { opacity: 0, duration: .6 }, 2.2);
+  if (scene3d) {
+    gsap.delayedCall(.15, () => scene3d.start());
+    // scrolling away pulls the objects apart and towards you
+    ScrollTrigger.create({ trigger: hero, start: "top top", end: "bottom top", scrub: .4, onUpdate: (s) => { scene3d.exit = s.progress; } });
   } else {
     gsap.from(".hero__photo", { y: 60, opacity: 0, duration: 1.1, ease: "expo.out", delay: .3 });
   }
-  if (aboutPaint) {
-    const r = { v: 0 };
-    ScrollTrigger.create({ trigger: ".about__photo", start: "top 75%", once: true,
-      onEnter: () => aboutPaint.ready.then(() => gsap.to(r, { v: 1, duration: 2.6, ease: "power1.inOut", onUpdate: () => { aboutPaint.reveal = r.v; } })) });
-  }
-  $$(".float-chip").forEach((c, i) => gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.6 + i * .4, repeat: -1, yoyo: true, ease: "sine.inOut" }));
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -202,6 +205,36 @@
   window.addEventListener("load", () => ScrollTrigger.refresh());
 
   /* ============================================== helpers (no motion needed) */
+  /* small interactions: every card and button answers the pointer */
+  function wireTouches() {
+    // about photo: 3D tilt with a moving glare
+    const ph = $(".about__photo"), card = $(".about__card");
+    ph.addEventListener("pointermove", (e) => {
+      const r = ph.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      ph.classList.add("is-tilting");
+      card.style.setProperty("--ry", (x - .5) * 18 + "deg"); card.style.setProperty("--rx", (.5 - y) * 14 + "deg");
+      card.style.setProperty("--gx", x * 100 + "%"); card.style.setProperty("--gy", y * 100 + "%");
+    });
+    ph.addEventListener("pointerleave", () => { ph.classList.remove("is-tilting"); card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+    // skill cards and fact tiles: tilt + a spotlight that follows the cursor
+    $$(".skill, .facts > div, .mailcard").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.style.setProperty("--mx", x * 100 + "%"); el.style.setProperty("--my", y * 100 + "%");
+        el.style.transform = `perspective(700px) rotateX(${(.5 - y) * 7}deg) rotateY(${(x - .5) * 9}deg) translateY(-4px)`;
+      });
+      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+    });
+    // magnetic buttons
+    $$(".btn, .whatsapp, .lang").forEach((b) => {
+      b.addEventListener("pointermove", (e) => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px, ${(e.clientY - r.top - r.height / 2) * .35}px)`;
+      });
+      b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+    });
+  }
+
   function wireCv() {
     const modal = $("#cvModal");
     let last = null;
