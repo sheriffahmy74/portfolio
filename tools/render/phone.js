@@ -1,5 +1,6 @@
-/* A procedurally built 3D phone (no model file): metal frame, glass front, Flutter-blue back,
-   a live screen texture, and four architecture layers that slide apart when `explode` > 0. */
+/* A procedurally built 3D phone (no model file): metal frame, glass front, signal-red back,
+   a screen texture, and three architecture layers that slide apart when `explode` > 0.
+   Used offline by render.html to produce the scroll-driven frame sequence. */
 (function () {
   "use strict";
   if (typeof window.THREE === "undefined") return;
@@ -55,14 +56,15 @@
     g.beginPath(); g.roundRect(4, 4, 504, 1130, r); g.fill();
     g.lineWidth = 6; g.strokeStyle = opts.stroke; g.stroke();
     g.fillStyle = opts.ink;
-    g.font = '400 132px "Anton", Impact, "Arial Narrow", sans-serif';
+    let size = 104;
+    do { g.font = `900 ${size}px "Archivo", "Arial Black", sans-serif`; size -= 4; } while (g.measureText(opts.title).width > 420 && size > 40);
     g.fillText(opts.title, 46, 210);
-    g.font = '500 30px "JetBrains Mono", ui-monospace, monospace';
+    g.font = '500 30px "IBM Plex Mono", ui-monospace, monospace';
     g.globalAlpha = .8;
     g.fillText(opts.sub, 50, 262);
     g.globalAlpha = 1;
     // code lines
-    g.font = '500 25px "JetBrains Mono", ui-monospace, monospace';
+    g.font = '500 25px "IBM Plex Mono", ui-monospace, monospace';
     let y = 380;
     opts.code.forEach((line) => {
       g.fillStyle = opts.ink; g.globalAlpha = .9; g.fillText(line, 50, y); y += 46;
@@ -76,12 +78,13 @@
     return t;
   }
 
-  function create(canvas, screens) {
-    const renderer = new T.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+  function create(canvas, screens, opts) {
+    opts = opts || {};
+    const renderer = new T.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: !!opts.preserve });
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = opts.exposure || 1.05;
 
     const scene = new T.Scene();
     scene.environment = studioEnv(renderer);
@@ -108,11 +111,11 @@
     body.add(new T.Mesh(frameGeo, metal));
 
     // back glass in Flutter blue + camera bump
-    const back = new T.Mesh(flat(PW - .05, PH - .05, R - .025), new T.MeshPhysicalMaterial({ color: 0x0468D7, roughness: .38, metalness: .05, clearcoat: 1, clearcoatRoughness: .12 }));
+    const back = new T.Mesh(flat(PW - .05, PH - .05, R - .025), new T.MeshPhysicalMaterial({ color: 0xFF3B14, roughness: .34, metalness: .05, clearcoat: 1, clearcoatRoughness: .1 }));
     back.position.z = -DEPTH / 2 - .002; back.rotation.y = Math.PI;
     body.add(back);
     const bumpGeo = new T.ExtrudeGeometry(roundedRect(.44, .44, .12), { depth: .018, bevelEnabled: true, bevelThickness: .008, bevelSize: .008, bevelSegments: 3, curveSegments: 12 });
-    const bump = new T.Mesh(bumpGeo, new T.MeshPhysicalMaterial({ color: 0x0356B3, roughness: .25, clearcoat: 1 }));
+    const bump = new T.Mesh(bumpGeo, new T.MeshPhysicalMaterial({ color: 0xD92E0D, roughness: .25, clearcoat: 1 }));
     bump.position.set(PW / 2 - .3, PH / 2 - .3, -DEPTH / 2 - .03);
     body.add(bump);
     const lensGlass = new T.MeshPhysicalMaterial({ color: 0x0a0c10, roughness: .05, metalness: .2, clearcoat: 1 });
@@ -153,11 +156,11 @@
 
     // architecture layers between front and back
     const layerDefs = [
-      { title: "CUBIT", sub: "presentation · state", fill: "rgba(255,200,61,.94)", stroke: "#101418", ink: "#101418",
+      { title: "CUBIT", sub: "02 · presentation", fill: "rgba(242,240,235,.97)", stroke: "#141414", ink: "#141414",
         code: ["class MyBookingsCubit", "  extends Cubit<MyBookingsState>", "", "emit(MyBookingsLoaded(list))"], z: .34 },
-      { title: "REPOSITORY", sub: "domain · contracts", fill: "rgba(255,255,255,.95)", stroke: "#0468D7", ink: "#0B2A55",
+      { title: "REPO", sub: "03 · domain", fill: "rgba(255,59,20,.97)", stroke: "#141414", ink: "#141414",
         code: ["abstract interface class", "  BookingRepository", "", "Future<Either<Failure, T>>"], z: -.34 },
-      { title: "SUPABASE", sub: "data · server", fill: "rgba(220,235,255,.95)", stroke: "#0B2A55", ink: "#0B2A55",
+      { title: "SUPABASE", sub: "04 · data", fill: "rgba(255,255,255,.97)", stroke: "#141414", ink: "#141414",
         code: ["rpc('create_booking_atomic')", "rpc('get_activity_groups')", "", "RLS: auth.uid() = user_id"], z: -.98 }
     ];
     const layers = [];
@@ -204,8 +207,8 @@
     let first = true, vw = 1, vh = 1;
 
     function resize() {
-      vw = window.innerWidth; vh = window.innerHeight;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      vw = opts.width || window.innerWidth; vh = opts.height || window.innerHeight;
+      renderer.setPixelRatio(opts.width ? 1 : Math.min(window.devicePixelRatio || 1, 2));
       renderer.setSize(vw, vh, false);
       camera.aspect = vw / vh; camera.updateProjectionMatrix();
     }
@@ -246,7 +249,9 @@
       renderer.render(scene, camera);
     }
 
-    return { setTarget, setScreen, tick, resize, preload: (keys) => keys.forEach(tex) };
+    function snap(s) { Object.assign(cur, s); Object.assign(tgt, s); first = false; }
+    const ready = (keyName) => tex(keyName).then(() => new Promise((r) => setTimeout(r, 50)));
+    return { setTarget, setScreen, tick, resize, snap, ready, fontsReady: () => buildLayers(), preload: (keys) => keys.forEach(tex) };
   }
 
   window.Phone3D = {
