@@ -85,6 +85,16 @@
       </div>
     </section>
 
+    <section class="sb-sec" id="sb-certs">
+      <div class="sb-wrap">
+        <header class="sb-head"><span class="sb-hand">${e(t(C.certs.k))}</span><h2 class="sb-h2"><span class="sb-labeltape">${e(t(C.certs.title))}</span></h2><p>${e(t(C.certs.sub))}</p></header>
+        <div class="sb-certs">${C.certs.items.map((c, i) => `<a class="sb-cert sb-drop" href="${e(c.href)}" target="_blank" rel="noopener" style="--r:${[-2, 1.5, -1, 2][i % 4]}deg">
+          <i class="sb-tape"></i><span class="sb-seal" style="--c:${c.tone}">${e(c.mark)}</span>
+          <b>${e(c.name)}</b><span>${e(c.issuer)}</span><em>${e(L(c.date))}${c.id ? ` · ${e(L(C.certs.idLabel))} ${e(c.id)}` : ""}</em>
+          <span class="sb-cert__go">${e(L(C.certs.show))} ↗</span></a>`).join("")}</div>
+      </div>
+    </section>
+
     <section class="sb-sec" id="sb-skills">
       <div class="sb-wrap">
         <header class="sb-head"><span class="sb-hand">${e(t(C.skills.k))}</span><h2 class="sb-h2"><span class="sb-labeltape">${e(t(C.skills.title))}</span></h2><p class="sb-hint">${S.lang === "ar" ? "اسحب الورق" : "drag the notes around"} ↯</p></header>

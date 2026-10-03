@@ -30,6 +30,16 @@ window.CONTENT = {
       { date: "2021 – 2025", place: "tl.4.place", t: "tl.4.t", points: ["tl.4.a"] }
     ]
   },
+  certs: {
+    k: "cert.k", title: "cert.title", sub: "cert.sub", show: { en: "Show credential", ar: "اعرض الشهادة" }, idLabel: { en: "Credential ID", ar: "رقم الشهادة" },
+    // href: each certificate's own link (LinkedIn certifications page until the direct links are added)
+    items: [
+      { name: "Certificate of completion: Claude 101", issuer: "Anthropic", date: { en: "Issued May 2026", ar: "صدرت مايو 2026" }, id: "gf4rqxyzq9rn", mark: "A\\", tone: "#191919", href: "https://www.linkedin.com/in/sheriffahmy0/details/certifications/" },
+      { name: "Mobile App Development – Digital Egypt Youth Program", issuer: "National Telecommunication Institute (NTI)", date: { en: "Issued Nov 2025", ar: "صدرت نوفمبر 2025" }, mark: "NTI", tone: "#1D4E89", href: "https://www.linkedin.com/in/sheriffahmy0/details/certifications/" },
+      { name: "NVIDIA DLI Generative AI", issuer: "NVIDIA · ITI", date: { en: "Issued Jan 2026", ar: "صدرت يناير 2026" }, mark: "NV", tone: "#76B900", href: "https://www.linkedin.com/in/sheriffahmy0/details/certifications/" },
+      { name: "Mobile Development Training Camp", issuer: "CAT Reloaded", date: { en: "Issued Aug 2025", ar: "صدرت أغسطس 2025" }, mark: "CAT", tone: "#C8102E", href: "https://www.linkedin.com/in/sheriffahmy0/details/certifications/" }
+    ]
+  },
   skills: {
     k: "sk.k", title: "sk.title",
     groups: [

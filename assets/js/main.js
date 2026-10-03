@@ -31,7 +31,17 @@
       if (v != null) el.textContent = v;
     });
     renderProjects();
+    renderCerts();
     store.set("lang", lang);
+  }
+
+  /* ------------------------------------------------------- certifications */
+  function renderCerts() {
+    const C = window.CONTENT.certs, L = (o) => o[lang] || o.en;
+    $("#certList").innerHTML = C.items.map((c) => `<a class="cert" href="${esc(c.href)}" target="_blank" rel="noopener">
+      <span class="cert__mark" style="background:${c.tone}" aria-hidden="true">${esc(c.mark)}</span>
+      <span class="cert__body"><b>${esc(c.name)}</b><span>${esc(c.issuer)}</span><em>${esc(L(c.date))}${c.id ? ` · ${L(C.idLabel)} ${esc(c.id)}` : ""}</em></span>
+      <span class="cert__go">${L(C.show)} ↗</span></a>`).join("");
   }
 
   /* ----------------------------------------------------------- projects */
