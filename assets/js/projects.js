@@ -1,4 +1,4 @@
-/* Projects shown in the selector. Each one tints the page with `bg` and puts `screens` on the 3D phone. */
+/* Projects shown as cards. `bg` paints the visual panel, `screens` are the phones shown in it (up to 3). */
 window.SCREENS = {
   "lamma-en": "assets/img/lamma/home-english.webp",
   "lamma-search": "assets/img/lamma/search-results.webp",
@@ -19,8 +19,8 @@ window.PROJECTS = [
     id: "lamma",
     name: { en: "Lamma", ar: "لمّة" },
     tag: { en: "Personal product · Flutter + Supabase", ar: "منتج شخصي · Flutter + Supabase" },
-    bg: "#DCEBFF",
-    screens: ["lamma-en", "lamma-search", "lamma-outing", "lamma-chat", "lamma-wallet"],
+    bg: "linear-gradient(160deg, #FDE9E4 0%, #F6D7CF 100%)",
+    screens: ["lamma-search", "lamma-en", "lamma-chat"],
     desc: {
       en: "A group-outings app for Egypt. Pick an outing, book a seat in the group that fits you, pay, and meet your group in a chat before you meet them in person.",
       ar: "تطبيق خروجات جماعية في مصر. بتختار خروجة، وتحجز مكانك في المجموعة اللي تناسبك، وتدفع، وتتعرف على مجموعتك في الشات قبل ما تقابلهم."
@@ -41,7 +41,7 @@ window.PROJECTS = [
     id: "nabdy",
     name: { en: "Nabdy", ar: "نبضي" },
     tag: { en: "Client work · INETWORK Middle East", ar: "شغل لعميل · INETWORK Middle East" },
-    bg: "#EEF3FB",
+    bg: "linear-gradient(160deg, #EFE9F8 0%, #DCD1F0 100%)",
     screens: ["nabdy"],
     desc: {
       en: "A healthcare super-app covering doctors, pharmacies, medical centers and orders. I took it through a full production audit for App Store and Google Play.",
@@ -59,8 +59,8 @@ window.PROJECTS = [
     id: "tasks",
     name: { en: "Task Manager", ar: "Task Manager" },
     tag: { en: "Technical assessment · Electro Pi", ar: "تقييم تقني · Electro Pi" },
-    bg: "#FFF1C9",
-    screens: ["tasks-light", "tasks-detail", "tasks-dark", "tasks-ar"],
+    bg: "linear-gradient(160deg, #EEF2FE 0%, #D9E2FD 100%)",
+    screens: ["tasks-dark", "tasks-light", "tasks-ar"],
     desc: {
       en: "Projects and tasks on a Supabase REST backend, with JWT auth, auto-login, dark mode and a full English/Arabic switch.",
       ar: "مشاريع ومهام على باك إند Supabase REST، فيه تسجيل دخول بـ JWT، ودخول تلقائي، ووضع ليلي، وتبديل كامل بين العربي والإنجليزي."
@@ -77,7 +77,7 @@ window.PROJECTS = [
     id: "links",
     name: { en: "Lamma Links", ar: "لينكات لمّة" },
     tag: { en: "Web · GitHub Pages", ar: "ويب · GitHub Pages" },
-    bg: "#F6F3EC",
+    bg: "linear-gradient(160deg, #FDF3DF 0%, #F8E2B8 100%)",
     screens: ["links-welcome", "links-list"],
     desc: {
       en: "The page behind Lamma's printed QR code. Zero runtime dependencies. The QR stays the same forever while the links behind it can change.",

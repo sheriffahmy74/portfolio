@@ -5,170 +5,208 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sherif Fahmy · Flutter Developer</title>
 <meta name="description" content="Sherif Fahmy — Flutter developer from Egypt. Clean Architecture, Bloc/Cubit, Supabase and Firebase, from first commit to App Store and Google Play.">
-<meta name="theme-color" content="#F2F0EB">
+<meta name="theme-color" content="#FAF8F5">
 <meta property="og:title" content="Sherif Fahmy · Flutter Developer">
-<meta property="og:description" content="Flutter developer. I build mobile apps end to end, from architecture to store release.">
-<meta property="og:image" content="assets/seq/lg/095.webp">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23141414'/%3E%3Ccircle cx='46' cy='46' r='10' fill='%23FF3B14'/%3E%3Cpath d='M14 14h22v8H22v6h12v8H22v14h-8z' fill='%23F2F0EB'/%3E%3C/svg%3E">
+<meta property="og:description" content="I build Flutter apps from the first commit to the App Store.">
+<meta property="og:image" content="assets/img/lamma/home-english.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232F5BEA'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='800' font-size='28' text-anchor='middle' fill='%23fff'%3ESF%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
 
-<!-- 12-column grid, visible on purpose -->
-<div class="cols" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
-<img class="peek" id="peek" alt="" aria-hidden="true">
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <a class="nav__mark" href="#top" aria-label="Sherif Fahmy, home">S/F<i></i></a>
-  <nav class="nav__links mono" aria-label="Sections">
-    <a href="#inside"><span>01</span> <span data-i18n="nav.inside">Inside</span></a>
-    <a href="#work"><span>02</span> <span data-i18n="nav.work">Work</span></a>
-    <a href="#about"><span>03</span> <span data-i18n="nav.about">About</span></a>
-    <a href="#contact"><span>04</span> <span data-i18n="nav.contact">Contact</span></a>
-  </nav>
-  <div class="nav__actions">
-    <button class="lang mono" id="langToggle" type="button" aria-label="Switch language"><span class="lang__en">EN</span><span class="lang__ar">ع</span></button>
-    <a class="pill" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv data-i18n="nav.cv">CV ↓</a>
+  <div class="container nav__inner">
+    <a class="brand" href="#top" aria-label="Sherif Fahmy, home"><span class="brand__mark">SF</span><span class="brand__name">Sherif Fahmy</span></a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="lang" id="langToggle" type="button" aria-label="Switch language"><span class="lang__en">EN</span><span class="lang__ar">ع</span></button>
+      <a class="btn btn--primary btn--sm" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span data-i18n="nav.cv">CV</span></a>
+    </div>
   </div>
 </header>
 
 <main id="top">
 
-<!-- ============ 00 HERO ============ -->
-<section class="hero" data-theme="paper">
-  <h1 class="hero__name" aria-label="Sherif Fahmy"><span class="line"><span class="split" data-split>SHERIF</span></span><span class="line"><span class="split" data-split>FAHMY</span><b class="dot" aria-hidden="true">.</b></span></h1>
-
-  <div class="hero__block" aria-hidden="true"><img src="assets/img/me/hero.webp" alt="" width="424" height="708" fetchpriority="high"></div>
-
-  <dl class="hero__meta mono">
-    <div><dt data-i18n="meta.role">Role</dt><dd data-i18n="meta.role.v">Flutter Developer</dd></div>
-    <div><dt data-i18n="meta.stack">Stack</dt><dd>Flutter · Cubit · Supabase · Firebase</dd></div>
-    <div><dt data-i18n="meta.based">Based</dt><dd data-i18n="meta.based.v">Mansoura, Egypt · open to relocation</dd></div>
-    <div><dt data-i18n="meta.status">Status</dt><dd><span class="live"></span><span data-i18n="meta.status.v">Open to Flutter roles</span></dd></div>
-  </dl>
-
-  <div class="hero__index">
-    <span class="mono label" data-i18n="hero.index">Selected work</span>
-    <a href="#work" data-project="0"><span class="mono">01</span>Lamma</a>
-    <a href="#work" data-project="1"><span class="mono">02</span>Nabdy</a>
-    <a href="#work" data-project="2"><span class="mono">03</span>Task Manager</a>
-  </div>
-
-  <p class="hero__lede" data-i18n="hero.lede">I take Flutter apps from the first commit to the App Store, with code that stays easy to change.</p>
-  <span class="hero__scroll mono" data-i18n="hero.scroll">Scroll ↓</span>
-</section>
-
-<!-- ============ 01 INSIDE (scroll-driven sequence) ============ -->
-<section class="inside" id="inside" data-theme="ink">
-  <div class="inside__pin">
-    <div class="inside__bgword" aria-hidden="true"><span>FLUTTER</span><span>FLUTTER</span></div>
-    <canvas class="inside__canvas" id="seq" aria-label="A phone running Lamma turns around and splits into its architecture layers"></canvas>
-
-    <div class="inside__head">
-      <span class="mono label">01 — <span data-i18n="inside.k">Inside Lamma</span></span>
-      <span class="inside__count" aria-hidden="true"><b id="stepNo">00</b>/04</span>
-    </div>
-
-    <ol class="steps" id="steps">
-      <li class="step is-active" data-from="0"><span class="mono">00</span><h3 data-i18n="s0.t">One codebase. iOS and Android.</h3><p data-i18n="s0.p">Lamma is built in Flutter. Scroll to take it apart.</p></li>
-      <li class="step" data-from=".42"><span class="mono">01 · UI</span><h3 data-i18n="s1.t">Widgets only render state.</h3><p data-i18n="s1.p">Screens listen to a Cubit and rebuild. No business logic in the UI.</p></li>
-      <li class="step" data-from=".54"><span class="mono">02 · Cubit</span><h3 data-i18n="s2.t">One Cubit per screen.</h3><p data-i18n="s2.p">It calls use cases and emits loading, success or failure.</p></li>
-      <li class="step" data-from=".64"><span class="mono">03 · Repository</span><h3 data-i18n="s3.t">The domain doesn't know Supabase.</h3><p data-i18n="s3.p">Interfaces return Either&lt;Failure, T&gt;. Swapping the backend only touches the data layer.</p></li>
-      <li class="step" data-from=".74"><span class="mono">04 · Supabase</span><h3 data-i18n="s4.t">Money and capacity live on the server.</h3><p data-i18n="s4.p">Row-Level Security, atomic RPCs and a verified payment webhook.</p></li>
-    </ol>
-    <div class="inside__bar" aria-hidden="true"><i id="seqBar"></i></div>
-  </div>
-</section>
-
-<!-- ============ 02 WORK (index) ============ -->
-<section class="work" id="work" data-theme="paper">
-  <div class="sec-head">
-    <span class="mono label">02 — <span data-i18n="work.k">Selected work</span></span>
-    <h2 class="h2" data-i18n="work.title">Work</h2>
-  </div>
-  <div class="index mono" aria-hidden="true"><span>No.</span><span data-i18n="work.col.name">Project</span><span data-i18n="work.col.type">Type</span><span data-i18n="work.col.stack">Stack</span></div>
-  <div class="rows" id="rows"></div>
-  <div class="also">
-    <span class="mono label" data-i18n="also.k">Also built</span>
-    <a href="https://github.com/sheriffahmy74/-Bloc-" target="_blank" rel="noopener">Rick &amp; Morty <span class="mono" data-i18n="also.1">Cubit · REST · offline</span></a>
-    <a href="https://lnkd.in/p/e7sqh8fZ" target="_blank" rel="noopener">E-Commerce <span class="mono" data-i18n="also.2">NTI graduation · demo</span></a>
-    <span>Gym App <span class="mono" data-i18n="also.3">workout plans to PDF</span></span>
-  </div>
-</section>
-
-<!-- ============ GALLERY ============ -->
-<section class="gallery" data-theme="paper">
-  <div class="gallery__pin">
-    <div class="gallery__track" id="galleryTrack">
-      <div class="gallery__intro">
-        <span class="mono label" data-i18n="gal.k">Lamma, up close</span>
-        <h2 class="h2" data-i18n="gal.title">From a pitch to a working app.</h2>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <span class="status"><i></i><span data-i18n="hero.status">Available for Flutter roles · open to relocation</span></span>
+      <p class="hero__hi" data-i18n="hero.hi">Hi, I'm Sherif Fahmy</p>
+      <h1 class="hero__title"><span data-i18n="hero.t1">I build Flutter apps</span> <span class="hl" data-i18n="hero.t2">from the first commit</span> <span data-i18n="hero.t3">to the App Store.</span></h1>
+      <p class="hero__sub" data-i18n="hero.sub">Flutter developer focused on Clean Architecture, Bloc/Cubit, Supabase and Firebase. Currently at INETWORK Middle East and building Lamma, a group-outings app for Egypt.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projects"><span data-i18n="hero.cta1">View projects</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        <a class="btn btn--ghost" href="#contact" data-i18n="hero.cta2">Get in touch</a>
       </div>
-      <figure class="g g--photo"><img src="assets/img/me/presenting.webp" alt="Sherif presenting Lamma" loading="lazy" width="1100" height="1467"><figcaption class="mono"><span>A</span><span data-i18n="gal.c0">Presenting Lamma, live demo</span></figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/home.webp" alt="Lamma home in Arabic" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>B</span>Home · RTL</figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/search-filters.webp" alt="Search filters" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>C</span>Filters</figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/booking-summary.webp" alt="Booking summary" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>D</span>Booking</figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/group-chat.webp" alt="Group chat" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>E</span>Group chat</figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/wallet.webp" alt="Wallet" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>F</span>Wallet</figcaption></figure>
-      <figure class="g"><img src="assets/img/lamma/padel-publish.webp" alt="Padel match" loading="lazy" width="540" height="1200"><figcaption class="mono"><span>G</span>Padel</figcaption></figure>
+      <dl class="facts">
+        <div><dt><span data-count="1">1</span><sup>st</sup></dt><dd data-i18n="facts.1">in my CS department</dd></div>
+        <div><dt><span data-count="94">94</span>%</dt><dd data-i18n="facts.2">NTI Flutter track</dd></div>
+        <div><dt><span data-count="746">746</span>+</dt><dd data-i18n="facts.3">tests in Lamma</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__panel"></div>
+      <img class="hero__photo" src="assets/img/me/hero.webp" alt="" width="424" height="708" fetchpriority="high">
+      <div class="device device--hero"><img src="assets/img/lamma/home-english.webp" alt="" width="540" height="1200"></div>
+      <span class="float-chip chip-a">Flutter</span>
+      <span class="float-chip chip-b">Clean Architecture</span>
+      <span class="float-chip chip-c">Supabase</span>
     </div>
   </div>
 </section>
 
-<!-- ============ 03 ABOUT ============ -->
-<section class="about" id="about" data-theme="paper">
-  <div class="sec-head">
-    <span class="mono label">03 — <span data-i18n="about.k">About</span></span>
+<!-- ============ STACK STRIP ============ -->
+<div class="strip" aria-label="Tech stack">
+  <div class="strip__track">
+    <span>Flutter</span><span>Dart</span><span>Bloc / Cubit</span><span>Clean Architecture</span><span>Supabase</span><span>Firebase</span><span>REST · Dio</span><span>Google Maps</span><span>Paymob</span><span>go_router</span><span>get_it</span><span>GitHub Actions</span>
   </div>
-  <p class="about__lead" data-words data-i18n="about.lead">I build mobile apps end to end. I design the architecture, build the UI, wire the backend and take the app through App Store and Google Play review.</p>
+</div>
 
-  <div class="stats">
-    <div class="stat"><b><span data-count="1">1</span><sup>st</sup></b><span data-i18n="stats.rank">In my CS department, Mansoura University</span></div>
-    <div class="stat"><b><span data-count="94">94</span>%</b><span data-i18n="stats.nti">NTI Mobile App Developer track</span></div>
-    <div class="stat"><b><span data-count="746">746</span>+</b><span data-i18n="stats.tests">Automated tests in Lamma</span></div>
-  </div>
+<!-- ============ PROJECTS ============ -->
+<section class="section" id="projects">
+  <div class="container">
+    <header class="sec-head">
+      <span class="eyebrow" data-i18n="proj.k">Projects</span>
+      <h2 class="sec-title" data-i18n="proj.title">Selected work</h2>
+      <p class="sec-sub" data-i18n="proj.sub">Real apps, real users and real store reviews. Each one shows what I built and how.</p>
+    </header>
+    <div class="projects" id="projectList"></div>
 
-  <div class="table">
-    <div class="table__head mono"><span data-i18n="tl.col.when">When</span><span data-i18n="tl.col.what">What</span><span data-i18n="tl.col.where">Where</span></div>
-    <div class="tr"><span class="mono" data-i18n="tl.now">Now</span><b data-i18n="tl.1.t">Flutter Developer</b><span data-i18n="tl.1.p">INETWORK Middle East · New Cairo</span></div>
-    <div class="tr"><span class="mono" data-i18n="tl.now">Now</span><b data-i18n="tl.2.t">Building Lamma</b><span data-i18n="tl.2.p">Group outings for Egypt</span></div>
-    <div class="tr"><span class="mono">2026</span><b data-i18n="tl.3.t">NVIDIA DLI Generative AI</b><span>ITI</span></div>
-    <div class="tr"><span class="mono">2025</span><b data-i18n="tl.4.t">Certified Mobile App Developer · 94%</b><span>NTI</span></div>
-    <div class="tr"><span class="mono">2021–25</span><b data-i18n="tl.5.t">Computer Science · ranked 1st</b><span data-i18n="tl.5.p">Mansoura University</span></div>
-  </div>
-
-  <div class="table table--skills">
-    <div class="table__head mono"><span data-i18n="sk.col.area">Area</span><span data-i18n="sk.col.tools">Tools</span></div>
-    <div class="tr"><b data-i18n="sk.1">Mobile</b><span>Flutter · Dart · Bloc / Cubit · Animations · Localization &amp; RTL</span></div>
-    <div class="tr"><b data-i18n="sk.2">Architecture</b><span>Clean Architecture · MVVM · SOLID · get_it · go_router · fpdart</span></div>
-    <div class="tr"><b data-i18n="sk.3">Backend &amp; data</b><span>Supabase · Firebase · REST with Dio · SQLite · Secure Storage</span></div>
-    <div class="tr"><b data-i18n="sk.4">Quality &amp; release</b><span>bloc_test · mocktail · GitHub Actions · App Store Connect · Play Console</span></div>
+    <h3 class="minor-title" data-i18n="other.title">Other projects</h3>
+    <div class="others">
+      <a class="other" href="https://github.com/sheriffahmy74/-Bloc-" target="_blank" rel="noopener"><b>Rick &amp; Morty</b><span data-i18n="other.1">Character browser with Cubit, REST and offline handling.</span><em>GitHub ↗</em></a>
+      <a class="other" href="https://lnkd.in/p/e7sqh8fZ" target="_blank" rel="noopener"><b>E-Commerce</b><span data-i18n="other.2">NTI graduation project. Full UI and REST API integration.</span><em data-i18n="other.demo">Demo video ↗</em></a>
+      <div class="other"><b>Gym App</b><span data-i18n="other.3">Generates weekly workout plans and exports them to PDF.</span></div>
+    </div>
   </div>
 </section>
 
-<!-- ============ 04 CONTACT ============ -->
-<section class="contact" id="contact" data-theme="red">
-  <div class="sec-head"><span class="mono label">04 — <span data-i18n="contact.k">Contact</span></span></div>
-  <h2 class="contact__title"><span class="line"><span class="split" data-split data-i18n="contact.l1">LET'S BUILD</span></span><span class="line"><span class="split" data-split data-i18n="contact.l2">YOUR NEXT APP.</span></span></h2>
-  <div class="contact__row">
-    <div class="contact__mail">
-      <a class="mail" href="mailto:sfhmy7124@gmail.com" id="mailLink">sfhmy7124@gmail.com</a>
-      <button class="copy mono" type="button" id="copyMail"><span data-i18n="contact.copy">Copy</span></button>
-    </div>
-    <ul class="socials mono">
-      <li><a href="https://www.linkedin.com/in/sheriffahmy0/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-      <li><a href="https://github.com/sheriffahmy74" target="_blank" rel="noopener">GitHub ↗</a></li>
-      <li><a href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv data-i18n="contact.cv">CV (PDF) ↓</a></li>
-    </ul>
+<!-- ============ EXPERIENCE ============ -->
+<section class="section section--tint" id="experience">
+  <div class="container">
+    <header class="sec-head">
+      <span class="eyebrow" data-i18n="exp.k">Experience</span>
+      <h2 class="sec-title" data-i18n="exp.title">Where I've worked and learned</h2>
+    </header>
+    <ol class="timeline">
+      <li class="tl">
+        <div class="tl__meta"><span class="tl__date" data-i18n="tl.now">Present</span><span class="tl__place" data-i18n="tl.1.place">Hybrid · New Cairo</span></div>
+        <div class="tl__card">
+          <h3 data-i18n="tl.1.t">Flutter Developer · INETWORK Middle East</h3>
+          <ul>
+            <li data-i18n="tl.1.a">Took Nabdy, a healthcare super-app, through App Store readiness: iOS Privacy Manifest and Google Maps SDK authorization fixes.</li>
+            <li data-i18n="tl.1.b">Reduced APK/AAB size and upgraded outdated packages.</li>
+            <li data-i18n="tl.1.c">Ran security, dependency and architecture audits, and set up Play Console and Apple Developer for release.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="tl">
+        <div class="tl__meta"><span class="tl__date" data-i18n="tl.now">Present</span><span class="tl__place" data-i18n="tl.2.place">Personal product</span></div>
+        <div class="tl__card">
+          <h3 data-i18n="tl.2.t">Building Lamma</h3>
+          <ul>
+            <li data-i18n="tl.2.a">Designed and built the whole app: 12 features, Clean Architecture, 746+ tests in CI.</li>
+            <li data-i18n="tl.2.b">Supabase backend with RLS, Realtime chat, Edge Functions and Paymob payments.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="tl">
+        <div class="tl__meta"><span class="tl__date">2026 · 2025</span><span class="tl__place">ITI · NTI</span></div>
+        <div class="tl__card">
+          <h3 data-i18n="tl.3.t">Certifications</h3>
+          <ul>
+            <li data-i18n="tl.3.a">NVIDIA DLI Generative AI (ITI): Python, LLMs and RAG.</li>
+            <li data-i18n="tl.3.b">Certified Mobile App Developer (NTI), final score 94%.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="tl">
+        <div class="tl__meta"><span class="tl__date">2021 – 2025</span><span class="tl__place" data-i18n="tl.4.place">Mansoura University</span></div>
+        <div class="tl__card">
+          <h3 data-i18n="tl.4.t">B. Specific Education, Computer Science</h3>
+          <ul><li data-i18n="tl.4.a">Excellent with Honors. Ranked 1st in the department.</li></ul>
+        </div>
+      </li>
+    </ol>
   </div>
-  <footer class="foot mono">
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="section" id="skills">
+  <div class="container">
+    <header class="sec-head">
+      <span class="eyebrow" data-i18n="sk.k">Skills</span>
+      <h2 class="sec-title" data-i18n="sk.title">What I work with</h2>
+    </header>
+    <div class="skills">
+      <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span><h3 data-i18n="sk.1">Mobile</h3><ul class="tags"><li>Flutter</li><li>Dart</li><li>Bloc / Cubit</li><li>Animations</li><li>Localization &amp; RTL</li></ul></div>
+      <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 3 7.5l9 4.5 9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></svg></span><h3 data-i18n="sk.2">Architecture</h3><ul class="tags"><li>Clean Architecture</li><li>MVVM</li><li>SOLID</li><li>get_it</li><li>go_router</li><li>fpdart</li></ul></div>
+      <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6"/><path d="M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg></span><h3 data-i18n="sk.3">Backend &amp; data</h3><ul class="tags"><li>Supabase</li><li>Firebase</li><li>REST · Dio</li><li>SQLite</li><li>Secure Storage</li></ul></div>
+      <div class="skill"><span class="skill__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5"/><path d="M4 17v2.5h16V17"/></svg></span><h3 data-i18n="sk.4">Quality &amp; release</h3><ul class="tags"><li>bloc_test</li><li>mocktail</li><li>GitHub Actions</li><li>App Store Connect</li><li>Play Console</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section section--tint" id="about">
+  <div class="container about">
+    <figure class="about__photo"><img src="assets/img/me/presenting.webp" alt="Sherif presenting Lamma" loading="lazy" width="1100" height="1467"><figcaption data-i18n="about.cap">Presenting Lamma with a live demo</figcaption></figure>
+    <div class="about__copy">
+      <span class="eyebrow" data-i18n="about.k">About me</span>
+      <h2 class="sec-title" data-i18n="about.title">I care about code that stays easy to change.</h2>
+      <p data-i18n="about.p1">I'm a Flutter developer from Mansoura, Egypt. I graduated first in my Computer Science department and have been shipping Flutter apps since.</p>
+      <p data-i18n="about.p2">I like owning the whole path of an app: architecture, UI, backend integration, testing and the store release. My personal project, Lamma, is where I push that the furthest.</p>
+      <div class="about__langs"><span data-i18n="about.lang1">Arabic · native</span><span data-i18n="about.lang2">English · very good</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE: dream flight (scroll-driven sequence) ============ -->
+<section class="finale" id="finale">
+  <div class="finale__pin">
+    <canvas class="finale__canvas" id="finaleCanvas" aria-label="A phone floats above a sunset sea of clouds, a portal of light opens, and the camera dives into the screen"></canvas>
+    <div class="finale__lines">
+      <p class="finale__line is-on" data-from="0" data-to=".3" data-i18n="fin.1">Every app starts as an idea.</p>
+      <p class="finale__line" data-from=".3" data-to=".62" data-i18n="fin.2">Somewhere between a sketch and a store listing…</p>
+      <p class="finale__line" data-from=".62" data-to=".86" data-i18n="fin.3">…it becomes something people hold every day.</p>
+    </div>
+    <div class="finale__flash" id="finaleFlash"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="container contact__inner">
+    <span class="eyebrow" data-i18n="contact.k">Contact</span>
+    <h2 class="contact__title"><span data-i18n="contact.t1">Let's build</span> <span class="hl" data-i18n="contact.t2">your next app.</span></h2>
+    <p class="sec-sub" data-i18n="contact.sub">Open to full-time Flutter roles and freelance projects. I usually reply within a day.</p>
+    <div class="mailcard">
+      <a class="mailcard__mail" href="mailto:sfhmy7124@gmail.com" id="mailLink">sfhmy7124@gmail.com</a>
+      <button class="btn btn--primary" type="button" id="copyMail"><span data-i18n="contact.copy">Copy email</span></button>
+    </div>
+    <div class="contact__links">
+      <a class="btn btn--ghost" href="https://www.linkedin.com/in/sheriffahmy0/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn--ghost" href="https://github.com/sheriffahmy74" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn--ghost" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf" data-cv data-i18n="contact.cv">Download CV</a>
+    </div>
+  </div>
+  <footer class="container foot">
     <span>© 2026 Sherif Fahmy</span>
-    <span data-i18n="foot.made">Designed and built by me. Phone sequence rendered with Three.js, motion by GSAP.</span>
+    <span data-i18n="foot.made">Designed and built by me. The closing scene is rendered with Three.js.</span>
   </footer>
 </section>
 
@@ -179,9 +217,9 @@
   <div class="cv-modal__backdrop" data-close></div>
   <div class="cv-modal__panel">
     <div class="cv-modal__bar">
-      <span class="mono" id="cvTitle">Sherif-Fahmy-CV.pdf</span>
+      <span id="cvTitle">Sherif-Fahmy-CV.pdf</span>
       <div class="cv-modal__actions">
-        <a class="pill" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf"><span data-i18n="cv.download">Download PDF</span></a>
+        <a class="btn btn--primary btn--sm" href="assets/Sherif-Fahmy-CV.pdf" download="Sherif-Fahmy-CV.pdf"><span data-i18n="cv.download">Download PDF</span></a>
         <button class="cv-modal__close" type="button" data-close aria-label="Close">✕</button>
       </div>
     </div>
