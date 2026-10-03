@@ -82,6 +82,7 @@ window.I18N_AR = {
   "tip.tests": "1,302 تست أوتوماتيك",
   "tip.code": "Clean Architecture",
   "hr.btn": "Hot reload",
+  "art.note": "بينزل على المتجرين",
   "hr.reset": "Hot restart",
   "about.cap": "المنصورة، مصر",
   "cv.download": "حمّل PDF"

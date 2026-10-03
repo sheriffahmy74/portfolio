@@ -104,7 +104,7 @@ html[lang="en"] .lang__en, html[lang="ar"] .lang__ar { background: var(--ink); c
   background: radial-gradient(closest-side at 40% 40%, rgba(84, 197, 248, .32), transparent 70%), radial-gradient(closest-side at 70% 70%, rgba(245, 165, 36, .22), transparent 70%), radial-gradient(closest-side at 30% 75%, rgba(139, 111, 232, .2), transparent 70%);
   filter: blur(10px); animation: glow 9s ease-in-out infinite alternate; }
 @keyframes glow { to { transform: scale(1.08) rotate(8deg); } }
-.hero__stage { position: absolute; inset: -6% -10% -2%; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
+.hero__stage { position: absolute; z-index: 1; inset: -6% -10% -2%; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
 .hero__stage canvas { display: block; width: 100%; height: 100%; }
 .hero__photo { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 88%; width: auto; max-width: 100%; object-fit: contain; object-position: bottom; pointer-events: none; }
 html.has-scene .hero__photo { display: none; }
@@ -222,11 +222,7 @@ a.other:hover { border-color: var(--primary); transform: translateY(-2px); }
 .about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
 .about__photo { position: relative; margin: 0; width: min(100%, 380px); margin-inline: auto; display: grid; justify-items: center; }
 .about__pic { position: relative; width: 100%; }
-/* a calm arch, with a fine outline that sits a little outside it */
-.about__img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 55%; border-radius: 999px 999px 26px 26px;
-  box-shadow: 0 30px 60px -34px rgba(14, 27, 44, .45); transition: transform 1.2s var(--ease); }
-.about__pic::after { content: ""; position: absolute; inset: -12px; border-radius: 999px 999px 34px 34px; border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--line)); pointer-events: none; transition: inset .8s var(--ease); }
-.about__photo:hover .about__pic::after { inset: -6px; }
+.about__img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 50%; border-radius: 22px; box-shadow: 0 24px 50px -30px rgba(14, 27, 44, .45); }
 .about__cap { display: inline-flex; align-items: center; gap: 8px; margin-top: 26px; color: var(--muted); font-weight: 600; font-size: .92rem; }
 .about__cap svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
 .about__copy { display: grid; gap: 16px; }
@@ -363,3 +359,88 @@ html[data-theme="charcoal"] { --bg: #1C1C1E; --surface: #242426; --tint: #202022
   --primary: #E1B12C; --primary-dark: #EEC24A; --soft: rgba(225, 177, 44, .12); --on-primary: #1C1C1E; --on-ink: #1C1C1E; --amber: #B88A12;
   --f-display: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif; color-scheme: dark; --shadow: 0 18px 40px -18px rgba(0, 0, 0, .7); }
 html[data-theme="charcoal"] :is(.project, .skill, .facts > div, .mailcard, .tl__card, .btn, .tags li, .lang, .metrics div) { border-radius: 10px !important; }
+
+/* ================= art direction per mood (hero art layer + section treatments) ================= */
+.art { display: none; position: absolute; inset: 0; pointer-events: none; }
+html[data-theme] .art { display: block; }
+.art > * { display: none; position: absolute; }
+:is(.art__note, .art__corner) { z-index: 2; }
+.art__note { align-items: flex-end; gap: 4px; font: 700 1.5rem/1 "Caveat", cursive; color: var(--primary); white-space: nowrap; }
+.art__note svg { width: 70px; height: 36px; }
+.art__corner { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.art__corner--tl { top: 0; left: 0; } .art__corner--tr { top: 0; right: 0; } .art__corner--bl { bottom: 0; left: 0; } .art__corner--br { bottom: 0; right: 0; }
+.art__doodles { inset: 0; width: 100%; height: 100%; color: var(--primary); }
+.art__tape { position: absolute; width: 34%; height: 9%; background: color-mix(in oklab, #E9DFC7 75%, transparent); box-shadow: 0 2px 6px rgba(0, 0, 0, .08); }
+
+/* --- 1. Olive: scrapbook (grid paper, polaroid, tape, doodles, handwriting) --- */
+html[data-theme="olive"] body { background: linear-gradient(rgba(43, 46, 31, .06) 1px, transparent 1px) 0 0 / 26px 26px, linear-gradient(90deg, rgba(43, 46, 31, .06) 1px, transparent 1px) 0 0 / 26px 26px, var(--bg); }
+html[data-theme="olive"] :is(.section--tint) { background: color-mix(in oklab, var(--tint) 70%, transparent); }
+html[data-theme="olive"] :is(.art__polaroid, .art__doodles, .art__note) { display: flex; }
+html[data-theme="olive"] .art__polaroid { left: 50%; top: 5%; width: 66%; height: 82%; transform: translateX(-50%) rotate(-3.5deg); background: #FBF8F0; box-shadow: 0 30px 60px -30px rgba(43, 46, 31, .55);
+  justify-content: center; align-items: flex-end; padding-bottom: 3.5%; font: 700 clamp(1.4rem, 2.4vw, 2rem)/1 "Caveat", cursive; color: var(--ink); }
+html[data-theme="olive"] .art__polaroid::before { content: ""; position: absolute; inset: 5% 5% 15%; background: color-mix(in oklab, var(--primary) 30%, #CFE0E8); }
+html[data-theme="olive"] .art__polaroid span { position: relative; }
+html[data-theme="olive"] .art__tape--a { top: -3%; left: -6%; transform: rotate(-28deg); }
+html[data-theme="olive"] .art__tape--b { top: -2%; right: -8%; transform: rotate(24deg); }
+html[data-theme="olive"] .art__note { left: -10%; top: 46%; flex-direction: column; align-items: flex-start; transform: rotate(-6deg); }
+html[data-theme="olive"] .art__note svg { transform: scaleX(-1) rotate(-20deg); }
+html[data-theme="olive"] .strip { background: var(--ink); color: var(--on-ink); border: 0; position: relative;
+  -webkit-mask: linear-gradient(#000, #000) 0 14px / 100% 100% no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M0 14 L0 8 L8 3 L15 9 L24 2 L31 8 L40 4 L48 10 L57 1 L66 7 L74 3 L83 9 L91 2 L100 8 L109 4 L120 9 L120 14Z'/%3E%3C/svg%3E") 0 0 / 120px 15px repeat-x;
+  mask: linear-gradient(#000, #000) 0 14px / 100% 100% no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M0 14 L0 8 L8 3 L15 9 L24 2 L31 8 L40 4 L48 10 L57 1 L66 7 L74 3 L83 9 L91 2 L100 8 L109 4 L120 9 L120 14Z'/%3E%3C/svg%3E") 0 0 / 120px 15px repeat-x; padding-top: 14px; }
+html[data-theme="olive"] .strip__track { color: color-mix(in oklab, var(--on-ink) 80%, transparent); }
+html[data-theme="olive"] .sec-title { padding-bottom: 10px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 8c30-6 60-6 96-2s70 2 100-4' fill='none' stroke='%2356682B' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 0 100% / 180px 12px no-repeat; }
+html[data-theme="olive"] .eyebrow { font: 700 1.45rem/1 "Caveat", cursive; letter-spacing: 0; text-transform: none; }
+html[data-theme="olive"] :is(.skill, .tl__card) { position: relative; box-shadow: 0 14px 30px -22px rgba(43, 46, 31, .5); }
+html[data-theme="olive"] :is(.skill, .tl__card)::after { content: ""; position: absolute; top: -10px; left: 50%; width: 88px; height: 22px; transform: translateX(-50%) rotate(-3deg); background: color-mix(in oklab, #E9DFC7 80%, transparent); box-shadow: 0 2px 4px rgba(0, 0, 0, .06); }
+html[data-theme="olive"] .skill:nth-child(odd) { rotate: -.8deg; } html[data-theme="olive"] .skill:nth-child(even) { rotate: .8deg; }
+html[data-theme="olive"] .tags li { border-style: dashed; }
+html[data-theme="olive"] .about__pic { padding: 12px 12px 56px; background: #FBF8F0; rotate: -2.5deg; box-shadow: 0 30px 60px -30px rgba(43, 46, 31, .5); }
+html[data-theme="olive"] .about__pic::after { content: ""; position: absolute; top: -12px; left: 50%; width: 110px; height: 26px; transform: translateX(-50%) rotate(3deg); background: color-mix(in oklab, #E9DFC7 80%, transparent); }
+html[data-theme="olive"] .about__img { border-radius: 0; box-shadow: none; }
+
+/* --- 2. Bordeaux: editorial poster (giant word, corner labels, handwritten notes) --- */
+html[data-theme="bordeaux"] :is(.art__big, .art__corner, .art__note) { display: flex; }
+html[data-theme="bordeaux"] .art__big { top: 2%; left: 50%; transform: translateX(-50%); font: 400 clamp(6.5rem, 15vw, 15rem)/.8 "DM Serif Display", Georgia, serif; color: var(--primary); letter-spacing: -.03em; white-space: nowrap; }
+html[data-theme="bordeaux"] .art__note { right: -4%; top: 34%; flex-direction: column-reverse; align-items: flex-start; transform: rotate(-4deg); }
+html[data-theme="bordeaux"] .art__note svg { transform: rotate(150deg); }
+html[data-theme="bordeaux"] .eyebrow { font: 700 1.5rem/1 "Caveat", cursive; letter-spacing: 0; text-transform: none; }
+html[data-theme="bordeaux"] .sec-head { border-top: 1px solid var(--ink); padding-top: 16px; max-width: none; }
+html[data-theme="bordeaux"] .sec-title { font-size: clamp(2.3rem, 5vw, 3.8rem); }
+html[data-theme="bordeaux"] .about__img { border-radius: 4px; box-shadow: none; outline: 1px solid var(--ink); outline-offset: 8px; }
+
+/* --- 3. Amethyst: duotone (violet-tinted photos, giant outline word, vertical type) --- */
+html[data-theme="amethyst"] :is(.art__big, .art__vert) { display: block; }
+html[data-theme="amethyst"] .art__big { top: 6%; left: 50%; transform: translateX(-50%); font: 800 clamp(6rem, 14vw, 13rem)/.85 "Sora", system-ui, sans-serif; color: transparent; -webkit-text-stroke: 2px color-mix(in oklab, var(--primary) 70%, transparent); letter-spacing: -.05em; white-space: nowrap; }
+html[data-theme="amethyst"] .art__vert { right: -9%; top: 6%; z-index: 2; writing-mode: vertical-rl; font: 800 clamp(2rem, 4vw, 3.6rem)/1 "Sora", system-ui, sans-serif; color: var(--ink); letter-spacing: -.02em; }
+html[data-theme="amethyst"] :is(.hero__stage canvas, .device img, .about__img, .hero__photo) { filter: grayscale(1) contrast(1.15) sepia(.55) hue-rotate(215deg) saturate(2.4) brightness(.95); }
+html[data-theme="amethyst"] .hero__glow { opacity: 1; filter: blur(30px) saturate(1.4); }
+html[data-theme="amethyst"] .sec-title { font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -.04em; }
+
+/* --- 4. Terracotta: orbit (a ring of app screens and photos circling the portrait) --- */
+html[data-theme="terracotta"] .art { perspective: 1000px; }
+html[data-theme="terracotta"] .art__ring { display: block; left: 50%; top: 24%; width: 0; height: 0; transform-style: preserve-3d; animation: orbit 22s linear infinite; }
+.art__ring i { position: absolute; width: clamp(56px, 7vw, 84px); aspect-ratio: .68; left: 0; top: 0; translate: -50% -50%; border-radius: 10px; overflow: hidden; background: var(--surface);
+  transform: rotateY(calc(var(--i) * 45deg)) translateZ(clamp(150px, 19vw, 230px)); box-shadow: 0 10px 24px -10px rgba(43, 29, 22, .5); border: 2px solid var(--surface); }
+.art__ring img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@keyframes orbit { from { transform: rotateX(-12deg) rotateY(0); } to { transform: rotateX(-12deg) rotateY(360deg); } }
+html[data-theme="terracotta"] .art__note { display: flex; left: 0; bottom: 8%; flex-direction: column; align-items: flex-start; transform: rotate(-5deg); }
+html[data-theme="terracotta"] .art__note svg { transform: scaleX(-1) rotate(-15deg); }
+html[data-theme="terracotta"] .about__img { border-radius: 200px 200px 24px 24px; }
+
+/* --- 5. Charcoal: bold poster (diagonal band, giant condensed type, stamped labels) --- */
+html[data-theme="charcoal"] :is(.art__band, .art__big, .art__doodles) { display: block; }
+html[data-theme="charcoal"] .art__band { left: -8%; right: -30%; top: 40%; height: 26%; background: var(--primary); transform: rotate(-14deg); }
+html[data-theme="charcoal"] .art__big { left: 50%; top: 47%; transform: translateX(-50%) rotate(-14deg); font: 400 clamp(5rem, 10vw, 9.5rem)/.9 "Anton", Impact, sans-serif; text-transform: uppercase; color: var(--on-primary); letter-spacing: .02em; white-space: nowrap; }
+html[data-theme="charcoal"] .art__doodles { color: var(--primary); }
+html[data-theme="charcoal"] :is(h1, .sec-title, .project__name, .contact__title) { font-family: "Anton", "IBM Plex Sans Arabic", Impact, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .01em; }
+html[data-theme="charcoal"] .hero__title { font-size: clamp(2.5rem, 5vw, 4.3rem); line-height: 1; }
+html[data-theme="charcoal"] .hl { background: var(--primary); color: var(--on-primary); padding-inline: .08em; }
+html[data-theme="charcoal"] .tags li { text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; border: 1.5px solid color-mix(in oklab, var(--primary) 60%, transparent); }
+html[data-theme="charcoal"] .about__img { border-radius: 4px; rotate: 2deg; box-shadow: -14px 14px 0 var(--primary); }
+@media (prefers-reduced-motion: reduce) { .art__ring { animation: none !important; } }
+@media (max-width: 900px) {
+  html[data-theme] .art__note { font-size: 1.25rem; }
+  html[data-theme="olive"] .art__note { left: 0; top: auto; bottom: 6%; }
+  html[data-theme="bordeaux"] .art__note { right: 0; }
+  html[data-theme="amethyst"] .art__vert { right: 0; font-size: 1.7rem; }
+}

@@ -273,19 +273,21 @@
   function wireHotReload() {
     const box = $("#hotReload"), btn = $("#hrBtn"), reset = $("#hrReset"), term = $("#hrTerm"), scan = $(".hr-scan");
     const THEMES = [
-      { id: "olive", name: "Olive & sand", font: "Fraunces:opsz,wght@9..144,600;9..144,700" },
-      { id: "bordeaux", name: "Bordeaux", font: "DM+Serif+Display:ital@0;1" },
-      { id: "amethyst", name: "Amethyst night", font: "Sora:wght@600;700;800" },
-      { id: "terracotta", name: "Terracotta", font: "Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800" },
-      { id: "charcoal", name: "Charcoal & mustard", font: "Space+Grotesk:wght@500;700" }
+      { id: "olive", name: "Scrapbook · olive & sand", font: ["Fraunces:opsz,wght@9..144,600;9..144,700", "Caveat:wght@700"] },
+      { id: "bordeaux", name: "Editorial poster · bordeaux", font: ["DM+Serif+Display:ital@0;1", "Caveat:wght@700"] },
+      { id: "amethyst", name: "Duotone · amethyst night", font: ["Sora:wght@600;700;800"] },
+      { id: "terracotta", name: "Orbit · terracotta", font: ["Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800", "Caveat:wght@700"] },
+      { id: "charcoal", name: "Bold poster · charcoal & mustard", font: ["Anton", "Space+Grotesk:wght@500;700"] }
     ];
     const loaded = new Set();
     let n = 0, busy = false, hideT = 0;
     const ln = (cls, t) => `<span class="${cls}">${esc(t)}</span>`;
-    function loadFont(f) {
-      if (!f || loaded.has(f)) return; loaded.add(f);
-      const l = document.createElement("link"); l.rel = "stylesheet";
-      l.href = "https://fonts.googleapis.com/css2?family=" + f + "&display=swap"; document.head.appendChild(l);
+    function loadFont(list) {
+      (list || []).forEach((f) => {
+        if (loaded.has(f)) return; loaded.add(f);
+        const l = document.createElement("link"); l.rel = "stylesheet";
+        l.href = "https://fonts.googleapis.com/css2?family=" + f + "&display=swap"; document.head.appendChild(l);
+      });
     }
     function apply(theme) {
       root.classList.add("theme-anim");
