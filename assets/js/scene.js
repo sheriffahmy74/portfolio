@@ -340,7 +340,7 @@
         // spring home
         it.vel.addScaledVector(it.off, -38 * dt).multiplyScalar(Math.exp(-dt * 5));
         it.off.addScaledVector(it.vel, dt);
-        const bob = reduced ? 0 : Math.sin(time * 1.1 * bobSpeed + it.phase) * (it.small ? .12 : .08) * bobAmp;
+        const bob = reduced ? 0 : Math.sin(time * 1.1 + it.phase) * (it.small ? .12 : .08);
         it.mesh.position.set(
           it.from.x + (it.base.x * (1 + exit * .9) - it.from.x) * e + it.off.x,
           it.from.y + (it.base.y * (1 + exit * .6) - it.from.y) * e + it.off.y + bob,
@@ -401,28 +401,7 @@
     camera.position.set(0, .15, 14);
     requestAnimationFrame(frame);
 
-    // material styles for the hot-reload moods: glossy (default), toon (cartoon) or wire (terminal)
-    let bobAmp = 1, bobSpeed = 1;
-    const steps = new T.DataTexture(new Uint8Array([90, 90, 90, 255, 170, 170, 170, 255, 255, 255, 255, 255]), 3, 1);
-    steps.minFilter = steps.magFilter = T.NearestFilter; steps.needsUpdate = true;
-    function setStyle(mode, wireColor) {
-      bobAmp = mode === "toon" ? 2.6 : 1; bobSpeed = mode === "toon" ? 1.8 : mode === "wire" ? .6 : 1;
-      items.forEach((it) => it.mesh.traverse((o) => {
-        if (!o.isMesh) return;
-        const orig = o.userData.orig || (o.userData.orig = o.material);
-        const one = (m) => {
-          if (mode === "toon" && m.color && !m.map) return new T.MeshToonMaterial({ color: m.color, gradientMap: steps });
-          if (mode === "wire") return new T.MeshBasicMaterial({ color: wireColor || "#B49BFF", wireframe: true, transparent: true, opacity: .85 });
-          return m;
-        };
-        if (mode === "normal") { o.material = orig; return; }
-        const key = "m_" + mode;
-        o.material = o.userData[key] || (o.userData[key] = Array.isArray(orig) ? orig.map(one) : one(orig));
-      }));
-    }
-
     return {
-      setStyle,
       start() { if (introT < 0) introT = 0; },
       set exit(v) { exit = v; }, get exit() { return exit; },
       relabel() { if (tipEl) tipEl.dataset.key = ""; },
