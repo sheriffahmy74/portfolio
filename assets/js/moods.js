@@ -1,15 +1,11 @@
-/* Hot reload: each press swaps the whole portfolio for a different website (its own layout, components,
-   type and motion), built from the same content in the same order (content.js + projects.js).
-   r = next site, R or the restart button = back to the original. Each site lives in moods/<id>.js + .css
-   and is loaded the first time it is needed. */
+/* Hot reload: swaps the whole portfolio for the Scrapbook edition (its own layout, components, type and
+   motion), built from the same content in the same order (content.js + projects.js). Pressing r again
+   replays it; R or the restart button goes back to the original. The site lives in moods/scrap.js + .css
+   and is loaded the first time it is needed; more editions can be added to ORDER. */
 (function () {
   "use strict";
   const ORDER = [
-    { id: "scrap", name: "Scrapbook", fonts: ["Fraunces:opsz,wght@9..144,600;9..144,800", "Caveat:wght@600;700", "Kalam:wght@400;700"] },
-    { id: "toon", name: "Comic book", fonts: ["Luckiest+Guy", "Nunito:wght@500;700;800;900"] },
-    { id: "mag", name: "Magazine", fonts: ["Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700", "Libre+Franklin:wght@400;500;700"] },
-    { id: "ide", name: "IDE", fonts: ["JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400"] },
-    { id: "poster", name: "Poster", fonts: ["Anton", "Archivo:wght@400;500;700;900"] }
+    { id: "scrap", name: "Scrapbook", fonts: ["Fraunces:opsz,wght@9..144,600;9..144,800", "Caveat:wght@600;700", "Kalam:wght@400;700"] }
   ];
   window.MOOD_SITES = window.MOOD_SITES || {};
 

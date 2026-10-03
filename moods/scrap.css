@@ -176,3 +176,4 @@ html.mood-scrap body { background: #EFE8D8; }
   .sb-stamps span { width: 80px; height: 80px; }
 }
 .sb-lead mark { background: none; color: var(--wheat); text-decoration: underline wavy color-mix(in oklab, var(--wheat) 70%, transparent); text-underline-offset: 6px; }
+@media (max-width: 600px) { .sb-doodle--c { bottom: auto; top: 12%; right: 6%; } .sb-sticker { right: -6px; } }
