@@ -205,26 +205,28 @@
       // same height for every card, each one a little lower, like a deck
       if (stack) cards.forEach((c, i) => { c.style.minHeight = hmax + "px"; c.style.top = 92 + i * 14 + "px"; });
       cards.forEach((card, idx) => {
-        const devs = $$(".device", card), vis = $(".project__visual", card);
+        const devs = $$(".device", card), vis = $(".project__visual", card), one = devs.length === 1;
+        const pose = (i) => one ? { y: 0, r: 0 } : [{ y: 16, r: -5 }, { y: -12, r: 0 }, { y: 16, r: 5 }][i] || { y: 0, r: 0 };
+        gsap.set(devs, { y: (i) => pose(i).y, rotation: (i) => pose(i).r });
         const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%", once: true } });
         tl.from(card, { y: 90, rotationX: 10, transformPerspective: 1400, transformOrigin: "50% 0%", opacity: 0, duration: 1.1, ease: "expo.out" })
           .from($$(".project__name .ch > span", card), { yPercent: 115, rotation: 8, duration: .8, ease: "back.out(1.6)", stagger: .035 }, .25)
           .from($$(".project__tag, .project__desc, .project__label", card), { y: 18, opacity: 0, duration: .6, ease: "power3.out", stagger: .06 }, .35)
           .from($$(".project__points li", card), { x: -24, opacity: 0, duration: .55, ease: "power3.out", stagger: .07 }, .5)
           .from($$(".metrics > div, .tags li", card), { y: 14, scale: .8, opacity: 0, duration: .5, ease: "back.out(2)", stagger: .03 }, .6)
-          // phones fan out from a stack, flipping in
-          .from(devs, { x: (i) => (1 - i) * 120, y: 80, rotationY: (i) => (i - 1) * 60, rotationZ: (i) => (i - 1) * 14, scale: .6, opacity: 0, duration: 1.4, ease: "expo.out", stagger: .1 }, .1);
+          // phones rise from below and fan out to their places (sides a little lower and tilted)
+          .fromTo(devs, { y: 110, x: (i) => (one ? 0 : (1 - i) * 70), rotation: 0, scale: .82, opacity: 0 },
+            { y: (i) => pose(i).y, x: 0, rotation: (i) => pose(i).r, scale: 1, opacity: 1, duration: 1.15, ease: "power3.out", stagger: .12 }, .15);
         // metrics count up
         $$(".metrics b", card).forEach((b) => {
           const m = b.textContent.replace(/,/g, "").match(/^(\d+)(.*)$/); if (!m) return;
           const o = { v: 0 }, end = +m[1];
           tl.to(o, { v: end, duration: 1.4, ease: "power3.out", onUpdate: () => { b.textContent = Math.round(o.v).toLocaleString("en-US") + m[2]; } }, .6);
         });
-        // idle float
-        devs.forEach((d, i) => gsap.to(d, { y: i % 2 ? -12 : 12, duration: 2.8 + i * .5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.4 + i * .3 }));
-        // giant outlined name slides behind the phones; phones drift at their own depth
+        // gentle idle float (on yPercent, so it never fights the resting position)
+        devs.forEach((d, i) => gsap.fromTo(d, { yPercent: 0 }, { yPercent: i % 2 ? -2.2 : 2.2, duration: 2.6 + i * .4, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.5 + i * .25 }));
+        // giant outlined name slides behind the phones
         gsap.fromTo($(".project__word", card), { xPercent: 12 }, { xPercent: -38, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: .6 } });
-        gsap.fromTo($(".project__phones", card), { y: 50 }, { y: -50, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: .6 } });
         // stacking: the card under the next one shrinks back and dims
         if (stack && idx < cards.length - 1) {
           gsap.to(card, { scale: .9, "--dim": .35, ease: "none", scrollTrigger: { trigger: cards[idx + 1], start: "top bottom", end: () => "top " + (92 + (idx + 1) * 14) + "px", scrub: true } });

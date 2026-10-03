@@ -143,7 +143,7 @@ html.has-scene .hero__hint { display: inline-flex; }
 .project:nth-child(even) .project__visual { order: 2; }
 .project__visual { position: relative; display: grid; place-items: center; padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 32px); min-width: 0; overflow: hidden; isolation: isolate; }
 .project__visual::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 40%), color-mix(in srgb, var(--surface) 70%, transparent), transparent 60%); transition: opacity .4s; }
-.project__phones { position: sticky; top: calc(50vh - 200px); width: 100%; display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 16px); perspective: 1100px; will-change: transform; }
+.project__phones { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 16px); perspective: 1100px; will-change: transform; }
 .project__word { position: absolute; top: 50%; left: 0; z-index: -1; transform: translateY(-50%); white-space: nowrap; font-size: clamp(5rem, 13vw, 11rem); font-weight: 900; letter-spacing: -.05em; line-height: 1; color: transparent; -webkit-text-stroke: 2px color-mix(in srgb, var(--ink) 10%, transparent); pointer-events: none; direction: ltr; }
 .project__name .ch { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
 .project__name .ch > span { display: inline-block; }
