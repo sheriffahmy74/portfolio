@@ -61,7 +61,7 @@
     <div class="hero__visual">
       <div class="hero__glow" aria-hidden="true"></div>
       <div class="hero__stage" id="sceneStage"></div>
-      <img class="hero__photo" id="heroPhoto" src="assets/img/me/hero-hd.webp" alt="Sherif Fahmy" width="1280" height="1480" fetchpriority="high">
+      <img class="hero__photo" id="heroPhoto" src="assets/img/me/hero-suit.webp" alt="Sherif Fahmy" width="910" height="1537" fetchpriority="high">
       <span class="scene-tip" id="sceneTip" role="status" aria-live="polite"></span>
       <span class="hero__hint" data-i18n="hero.hint">Hover the 3D objects · click them</span>
     </div>
@@ -74,6 +74,17 @@
     <span>Flutter</span><span>Dart</span><span>Bloc / Cubit</span><span>Clean Architecture</span><span>Supabase</span><span>Firebase</span><span>REST · Dio</span><span>Google Maps</span><span>Paymob</span><span>go_router</span><span>get_it</span><span>GitHub Actions</span>
   </div>
 </div>
+
+<!-- ============ BUILD STORY ============ -->
+<section class="build" id="build" aria-label="From code to app">
+  <div class="build__stage" id="buildStage"><span class="scene-tip" id="buildTip" role="status" aria-live="polite"></span></div>
+  <div class="container build__copy">
+    <p class="build__step is-on"><b data-i18n="build.1t">It starts with a line of code.</b><span data-i18n="build.1s">Dart, Bloc and a clean structure, typed one widget at a time.</span></p>
+    <p class="build__step"><b data-i18n="build.2t">Flutter turns it into a real app.</b><span data-i18n="build.2s">One codebase, shipped to iOS and Android.</span></p>
+    <p class="build__step"><b data-i18n="build.3t">And it all lands in your pocket.</b><span data-i18n="build.3s">My apps and the tools behind them. Drag to tilt the phone, click a tile to flick it.</span></p>
+    <div class="build__bar" aria-hidden="true"><i></i></div>
+  </div>
+</section>
 
 <!-- ============ PROJECTS ============ -->
 <section class="section" id="projects">
@@ -166,7 +177,9 @@
 <section class="section section--tint" id="about">
   <div class="container about">
     <div class="about__photo">
-      <div class="about__card"><img class="about__img" src="assets/img/me/work-16.webp" alt="Sherif working on his laptop in a café" loading="lazy" width="675" height="900"></div>
+      <svg class="about__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ringPath" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/></defs><text><textPath href="#ringPath" textLength="560" lengthAdjust="spacing">Flutter developer ✦ Mansoura, Egypt ✦ Lamma ✦ Nabdy ✦ Clean code ✦ </textPath></text></svg>
+      <div class="about__circle"><img class="about__img" src="assets/img/me/work-16.webp" alt="Sherif working on his laptop in a café" loading="lazy" width="675" height="900"></div>
+      <span class="about__dot about__dot--a" aria-hidden="true"></span><span class="about__dot about__dot--b" aria-hidden="true"></span>
     </div>
     <div class="about__copy">
       <span class="eyebrow" data-i18n="about.k">About me</span>
@@ -229,7 +242,9 @@
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/projects.js"></script>
 <script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/cannon.min.js"></script>
 <script src="assets/js/scene.js"></script>
+<script src="assets/js/build.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

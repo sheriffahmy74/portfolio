@@ -175,7 +175,7 @@
     const photoMat = new T.MeshBasicMaterial({ transparent: true, toneMapped: false, opacity: 0, alphaTest: .02 });
     const photo = new T.Mesh(new T.PlaneGeometry(1, 1), photoMat);
     world.add(photo);
-    let photoH = 4.9, photoReady = false;
+    let photoH = 5.5, photoReady = false;
     new T.TextureLoader().load(opts.photo, (t) => {
       t.colorSpace = T.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
       photoMat.map = t; photoMat.needsUpdate = true;
@@ -183,7 +183,7 @@
       photo.scale.set(photoH * ar, photoH, 1);
       photoReady = true;
     });
-    const photoBase = new T.Vector3(.15, -.35, 0);
+    const photoBase = new T.Vector3(.1, -.2, 0);
     photo.position.copy(photoBase);
 
     // objects: [mesh, base position, base rotation, scale, label key, click action]

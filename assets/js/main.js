@@ -92,7 +92,7 @@
     try {
       const S = window.SCREENS;
       scene3d = window.HeroScene.create($("#sceneStage"), {
-        photo: "assets/img/me/hero-hd.webp",
+        photo: "assets/img/me/hero-suit.webp",
         screens: [S["lamma-en"], S["lamma-search"], S["lamma-outing"], S["lamma-chat"], S["lamma-wallet"]],
         tip: $("#sceneTip"), reduced,
         label: (k) => tr("tip." + k)
@@ -104,6 +104,20 @@
         hint.textContent = tr("hero.hintTouch");
       }
     } catch (e) { scene3d = null; }
+  }
+
+  /* ------------------------------------------- build story: code → phone → apps */
+  let build3d = null;
+  if (window.BuildScene && window.BuildScene.supported()) {
+    try { build3d = window.BuildScene.create($("#buildStage"), { tip: $("#buildTip") }); root.classList.add("has-build"); }
+    catch (e) { build3d = null; }
+  }
+  const steps = $$(".build__step");
+  function setBuild(p) {
+    if (build3d) build3d.progress = p;
+    const k = p < .3 ? 0 : p < .5 ? 1 : 2;
+    steps.forEach((s, i) => s.classList.toggle("is-on", i === k));
+    $(".build").style.setProperty("--p", p.toFixed(3));
   }
 
   // live screen inside the middle phone of each project
@@ -119,6 +133,7 @@
 
   if (!canAnimate) {
     if (scene3d) scene3d.start();
+    setBuild(1);
     return;
   }
 
@@ -151,6 +166,17 @@
   } else {
     gsap.from(".hero__photo", { y: 60, opacity: 0, duration: 1.1, ease: "expo.out", delay: .3 });
   }
+
+  // build story: pinned while you scroll through it
+  ScrollTrigger.create({ trigger: ".build", start: "top top", end: () => "+=" + innerHeight * 3, pin: true, scrub: .6, anticipatePin: 1,
+    onUpdate: (s) => setBuild(s.progress) });
+  setBuild(0);
+  // pinning adds scroll length; let Lenis know whenever ScrollTrigger re-measures
+  if (lenis) { ScrollTrigger.addEventListener("refresh", () => lenis.resize()); ScrollTrigger.refresh(); }
+
+  // about: the portrait opens like a lens as it scrolls in
+  gsap.fromTo(".about__circle", { "--r": "0%" }, { "--r": "50%", ease: "none", scrollTrigger: { trigger: ".about__photo", start: "top 85%", end: "center 55%", scrub: .5 } });
+  gsap.fromTo(".about__img", { "--z": 1.35 }, { "--z": 1, ease: "none", scrollTrigger: { trigger: ".about__photo", start: "top 85%", end: "bottom 40%", scrub: .5 } });
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -207,15 +233,14 @@
   /* ============================================== helpers (no motion needed) */
   /* small interactions: every card and button answers the pointer */
   function wireTouches() {
-    // about photo: 3D tilt with a moving glare
-    const ph = $(".about__photo"), card = $(".about__card");
+    // about portrait drifts towards the pointer
+    const ph = $(".about__photo"), circ = $(".about__circle");
     ph.addEventListener("pointermove", (e) => {
-      const r = ph.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      ph.classList.add("is-tilting");
-      card.style.setProperty("--ry", (x - .5) * 18 + "deg"); card.style.setProperty("--rx", (.5 - y) * 14 + "deg");
-      card.style.setProperty("--gx", x * 100 + "%"); card.style.setProperty("--gy", y * 100 + "%");
+      const r = ph.getBoundingClientRect();
+      circ.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5) * 22 + "px");
+      circ.style.setProperty("--my", ((e.clientY - r.top) / r.height - .5) * 22 + "px");
     });
-    ph.addEventListener("pointerleave", () => { ph.classList.remove("is-tilting"); card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+    ph.addEventListener("pointerleave", () => { circ.style.setProperty("--mx", "0px"); circ.style.setProperty("--my", "0px"); });
     // skill cards and fact tiles: tilt + a spotlight that follows the cursor
     $$(".skill, .facts > div, .mailcard").forEach((el) => {
       el.addEventListener("pointermove", (e) => {

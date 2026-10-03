@@ -2,7 +2,7 @@
 
 Personal portfolio for Sherif Fahmy, Flutter developer and founder of Lamma.
 
-Static, readable portfolio (warm white, navy, cobalt, amber). The hero is a live, interactive 3D scene (Three.js): a sharp cut-out photo stands in real 3D space among glossy objects that each stand for a skill (the Flutter logo, a phone running Lamma, a map pin, a chat bubble, a store star, a tests badge, a code tag). The camera follows the pointer, objects dodge the cursor and spring back, hovering explains each one, and clicking spins it with a confetti pop (the phone switches screens, the Flutter logo breaks apart and snaps back). Cards, tags, buttons and the About photo tilt and react to the pointer too. It renders live, so it stays sharp at every screen size. Project screenshots fan out in 3D, float, tilt with the pointer and cycle through screens. Motion with GSAP + ScrollTrigger, smooth scrolling with Lenis, all vendored in `assets/vendor/`; no build step.
+Static, readable portfolio (warm white, navy, cobalt, amber). The hero is a live, interactive 3D scene (Three.js): a sharp cut-out photo stands in real 3D space among glossy objects that each stand for a skill (the Flutter logo, a phone running Lamma, a map pin, a chat bubble, a store star, a tests badge, a code tag). The camera follows the pointer, objects dodge the cursor and spring back, hovering explains each one, and clicking spins it with a confetti pop (the phone switches screens, the Flutter logo breaks apart and snaps back). Right after it, a pinned scroll story (`build.js`, Three.js + cannon-es physics): a laptop types real Flutter code, a phone flies out of the screen, its top opens and my apps and tools rain into it and pile up; drag to tilt the phone, click a tile to flick it. The About portrait opens like a lens with a spinning text ring. Cards, tags and buttons react to the pointer too. It renders live, so it stays sharp at every screen size. Project screenshots fan out in 3D, float, tilt with the pointer and cycle through screens. Motion with GSAP + ScrollTrigger, smooth scrolling with Lenis, all vendored in `assets/vendor/`; no build step.
 
 ## Run locally
 
@@ -19,9 +19,10 @@ assets/css/main.css     design tokens + styles
 assets/js/i18n.js       Arabic strings
 assets/js/projects.js   project cards (text, panel colour, screens, links)
 assets/js/scene.js      the interactive 3D hero (WebGL)
+assets/js/build.js      the code → phone → apps physics story (WebGL)
 assets/js/main.js       hero motion, project cards, reveals, language toggle, CV viewer
 assets/img/             app screenshots (webp, 540px wide)
-assets/vendor/          gsap, ScrollTrigger, lenis, three
+assets/vendor/          gsap, ScrollTrigger, lenis, three, cannon-es (physics)
 assets/Sherif-Fahmy-CV.pdf
 ```
 
@@ -30,7 +31,7 @@ assets/Sherif-Fahmy-CV.pdf
 - **Text:** English is in `index.html`; every element with `data-i18n="key"` has its Arabic in `assets/js/i18n.js` under the same key.
 - **Colors:** the tokens at the top of `assets/css/main.css` (`--primary`, `--amber`, `--ink`, …). All text pairs pass WCAG AA.
 - **Projects:** edit `assets/js/projects.js`.
-- **Photos:** the hero uses `assets/img/me/hero-hd.webp` (a transparent cut-out) and About uses `assets/img/me/work-16.webp`. Swap those images to change them. The 3D objects and their positions are listed in `scene.js`; their hover labels are the `tip.*` strings.
+- **Photos:** the hero uses `assets/img/me/hero-suit.webp` (a transparent cut-out) and About uses `assets/img/me/work-16.webp`. Swap those images to change them. The 3D objects and their positions are listed in `scene.js`; their hover labels are the `tip.*` strings.
 - **CV:** edit `cv/cv.html`, run `node cv/build.mjs` to rebuild `assets/Sherif-Fahmy-CV.pdf`, then refresh the on-page preview image:
   `pdftoppm -r 150 -png -singlefile assets/Sherif-Fahmy-CV.pdf /tmp/cv && convert /tmp/cv.png -quality 85 assets/img/cv-preview.webp`
 

@@ -81,5 +81,11 @@ window.I18N_AR = {
   "tip.store": "منشور على App Store و Google Play",
   "tip.tests": "+746 تست أوتوماتيك",
   "tip.code": "Clean Architecture",
+  "build.1t": "كله بيبدأ بسطر كود.",
+  "build.1s": "Dart وBloc وهيكلة نضيفة، بتتكتب widget ورا widget.",
+  "build.2t": "وFlutter بيحوّله لتطبيق حقيقي.",
+  "build.2s": "كود واحد، بيتنشر على iOS وAndroid.",
+  "build.3t": "وفي الآخر كله بيقع في جيبك.",
+  "build.3s": "تطبيقاتي والأدوات اللي وراها. اسحب عشان تميّل الموبايل، ودوس على أي مربع عشان تنطّه.",
   "cv.download": "حمّل PDF"
 };
