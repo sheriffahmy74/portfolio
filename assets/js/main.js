@@ -162,12 +162,8 @@
   // keep Lenis in step whenever ScrollTrigger re-measures the page
   if (lenis) { ScrollTrigger.addEventListener("refresh", () => lenis.resize()); ScrollTrigger.refresh(); }
 
-  // about: the framed portrait swings in, the stamp and caption pop on after it
-  gsap.timeline({ scrollTrigger: { trigger: ".about__photo", start: "top 80%", once: true } })
-    .from(".about__photo", { y: 80, rotation: -10, opacity: 0, duration: 1.2, ease: "expo.out" })
-    .from(".about__img", { scale: 1.25, duration: 1.6, ease: "expo.out" }, 0)
-    .from(".about__stamp", { scale: 0, rotation: -180, duration: .9, ease: "back.out(1.8)" }, .45)
-    .from(".about__cap", { x: -30, opacity: 0, duration: .7, ease: "back.out(2)" }, .6);
+  // about: a quiet fade-up for the portrait
+  gsap.from(".about__photo", { y: 40, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: ".about__photo", start: "top 82%", once: true } });
 
   // counters
   $$("[data-count]").forEach((el) => {
@@ -253,14 +249,6 @@
   /* ============================================== helpers (no motion needed) */
   /* small interactions: every card and button answers the pointer */
   function wireTouches() {
-    // about portrait: the frame tilts in 3D towards the pointer
-    const ph = $(".about__photo"), fr = $(".about__frame");
-    ph.addEventListener("pointermove", (e) => {
-      const r = ph.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      ph.classList.add("is-tilting");
-      fr.style.setProperty("--ry", x * 16 + "deg"); fr.style.setProperty("--rx", -y * 12 + "deg");
-    });
-    ph.addEventListener("pointerleave", () => { ph.classList.remove("is-tilting"); fr.style.setProperty("--rx", "0deg"); fr.style.setProperty("--ry", "0deg"); });
     // skill cards and fact tiles: tilt + a spotlight that follows the cursor
     $$(".skill, .facts > div, .mailcard").forEach((el) => {
       el.addEventListener("pointermove", (e) => {
@@ -280,48 +268,78 @@
     });
   }
 
-  /* hot reload: press r and the page re-renders like a Flutter app, with a new accent colour each time */
+  /* hot reload: press r and the portfolio re-renders as a different site (a new theme each time);
+     hot restart (R or the restart button) brings back the original */
   function wireHotReload() {
-    const box = $("#hotReload"), btn = $("#hrBtn"), term = $("#hrTerm"), scan = $(".hr-scan");
-    const ACCENTS = [
-      { name: "cobalt", c: "#2F5BEA", d: "#2547C9", s: "#EEF2FE" },
-      { name: "violet", c: "#6D3FE0", d: "#5A2FC4", s: "#F1ECFE" },
-      { name: "teal", c: "#0E7C74", d: "#0A665F", s: "#E6F5F3" },
-      { name: "berry", c: "#C0265A", d: "#A21E4B", s: "#FCE8EF" }
+    const box = $("#hotReload"), btn = $("#hrBtn"), reset = $("#hrReset"), term = $("#hrTerm"), scan = $(".hr-scan");
+    const THEMES = [
+      { id: "midnight", name: "Midnight" },
+      { id: "editorial", name: "Editorial", font: "Fraunces:opsz,wght@9..144,600;9..144,800" },
+      { id: "brutal", name: "Neo-brutal", font: "Space+Grotesk:wght@500;700" },
+      { id: "mint", name: "Material mint" },
+      { id: "neon", name: "Synthwave", font: "Space+Grotesk:wght@500;700" }
     ];
+    const loaded = new Set();
     let n = 0, busy = false, hideT = 0;
     const ln = (cls, t) => `<span class="${cls}">${esc(t)}</span>`;
-    function run() {
-      if (busy) return; busy = true; n++;
-      box.classList.add("is-busy");
-      const acc = ACCENTS[n % ACCENTS.length];
-      const libs = 3 + Math.floor(Math.random() * 9), ms = 180 + Math.floor(Math.random() * 240);
-      clearTimeout(hideT);
-      term.innerHTML = ln("dim", "$ flutter run  ·  r") + "\n" + "Performing hot reload...";
-      term.classList.add("is-on");
-      // the page re-renders top to bottom behind a scan line
-      const els = $$("main h1, main h2, main h3, main p, main li, main .btn, main .device, main .skill, main .facts > div, main .about__frame, .nav__inner > *")
+    function loadFont(f) {
+      if (!f || loaded.has(f)) return; loaded.add(f);
+      const l = document.createElement("link"); l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=" + f + "&display=swap"; document.head.appendChild(l);
+    }
+    function apply(theme) {
+      root.classList.add("theme-anim");
+      if (theme) root.dataset.theme = theme.id; else delete root.dataset.theme;
+      reset.hidden = !theme;
+      setTimeout(() => root.classList.remove("theme-anim"), 700);
+    }
+    function sweep(onMid, onDone) {
+      const els = $$("main h1, main h2, main h3, main p, main li, main .btn, main .device, main .skill, main .facts > div, main .about__photo, main .project, .nav__inner > *")
         .filter((el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; });
-      const done = () => {
-        root.style.setProperty("--primary", acc.c); root.style.setProperty("--primary-dark", acc.d); root.style.setProperty("--soft", acc.s);
-        term.innerHTML = ln("dim", "$ flutter run  ·  r") + "\n" + "Performing hot reload...\n" +
-          ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms.") + "\n" + ln("acc", "  accentColor → " + acc.name) + ln("dim", "  (state kept)");
+      if (!canAnimate) { onMid(); onDone(); return; }
+      gsap.timeline({ onComplete: onDone })
+        .fromTo(scan, { opacity: 1, backgroundPosition: "0 100%" }, { backgroundPosition: "0 -100%", duration: .8, ease: "power2.inOut" }, 0)
+        .to(scan, { opacity: 0, duration: .15 }, .7)
+        .add(onMid, .3)
+        .fromTo(els, { opacity: .1, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: .5, ease: "power3.out", clearProps: "filter,opacity",
+          stagger: (i, el) => Math.max(0, el.getBoundingClientRect().top / innerHeight) * .55 }, .3);
+    }
+    function say(lines, hold) {
+      clearTimeout(hideT);
+      term.innerHTML = lines.join("\n"); term.classList.add("is-on");
+      if (hold) hideT = setTimeout(() => term.classList.remove("is-on"), hold);
+    }
+    function run() {
+      if (busy) return; busy = true;
+      const theme = THEMES[n % THEMES.length]; n++;
+      loadFont(theme.font);
+      box.classList.add("is-busy");
+      const libs = 3 + Math.floor(Math.random() * 9), ms = 180 + Math.floor(Math.random() * 240);
+      const head = [ln("dim", "$ flutter run  ·  r"), "Performing hot reload..."];
+      say(head);
+      sweep(() => apply(theme), () => {
+        say(head.concat([ln("ok", "✓ Reloaded " + libs + " of 1,302 libraries in " + ms + "ms."), ln("acc", "  theme → " + theme.name) + ln("dim", "  (state kept)")]), 3400);
         box.classList.remove("is-busy"); busy = false;
-        hideT = setTimeout(() => term.classList.remove("is-on"), 3200);
-      };
-      if (!canAnimate) { done(); return; }
-      gsap.timeline({ onComplete: done })
-        .fromTo(scan, { opacity: 1, backgroundPosition: "0 100%" }, { backgroundPosition: "0 -100%", duration: .75, ease: "power2.inOut" }, 0)
-        .to(scan, { opacity: 0, duration: .15 }, .65)
-        .fromTo(els, { opacity: .15, filter: "blur(6px)", y: 6 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: .45, ease: "power3.out", clearProps: "filter",
-          stagger: (i, el) => Math.max(0, el.getBoundingClientRect().top / innerHeight) * .6 }, .05);
+      });
+    }
+    function restart() {
+      if (busy || !root.dataset.theme) return; busy = true;
+      box.classList.add("is-busy");
+      const ms = 520 + Math.floor(Math.random() * 300);
+      const head = [ln("dim", "$ flutter run  ·  R"), "Performing hot restart..."];
+      say(head);
+      sweep(() => apply(null), () => {
+        say(head.concat([ln("ok", "✓ Restarted application in " + ms + "ms."), ln("acc", "  theme → Original")]), 3000);
+        box.classList.remove("is-busy"); busy = false; n = 0;
+      });
     }
     btn.addEventListener("click", run);
+    reset.addEventListener("click", restart);
     window.addEventListener("keydown", (e) => {
-      if (e.key !== "r" || e.metaKey || e.ctrlKey || e.altKey) return;
+      if ((e.key !== "r" && e.key !== "R") || e.metaKey || e.ctrlKey || e.altKey) return;
       if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable) return;
       if (!$("#cvModal").hidden) return;
-      run();
+      e.key === "R" ? restart() : run();
     });
     // a little nudge the first time, so people find it
     setTimeout(() => {

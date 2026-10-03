@@ -25,20 +25,20 @@ window.PROJECTS = [
     },
     points: {
       en: [
-        "Built the whole Supabase backend: Postgres schema, Row-Level Security, RPCs and 177 versioned SQL migrations",
-        "Wrote 7 Edge Functions for payments, webhooks and push; a booking is confirmed only by the HMAC-verified Paymob webhook",
-        "Atomic booking under a row lock, so the last seat is never sold twice; refunds, waiting lists and cancellation rules run on the server",
-        "Paymob cards, mobile wallets and InstaPay, plus an in-app wallet with refunds and withdrawals",
-        "Realtime group chat with voice notes, images, replies, mentions and reactions",
-        "14 feature modules in Clean Architecture, Arabic-first RTL, 1,302 tests with CI on every PR"
+        "Whole Supabase backend: Postgres schema, Row-Level Security, RPCs and 177 SQL migrations",
+        "7 Edge Functions for payments, webhooks and push; bookings confirm only via the HMAC-verified Paymob webhook",
+        "Atomic booking under a row lock, so the last seat is never sold twice; refunds and waiting lists run server-side",
+        "Paymob cards, mobile wallets and InstaPay, plus an in-app wallet",
+        "Realtime group chat with voice notes, images, mentions and reactions",
+        "14 Clean Architecture modules, Arabic-first RTL, 1,302 tests in CI"
       ],
       ar: [
-        "بنيت الباك إند كله على Supabase: سكيما Postgres وRow-Level Security وRPCs و177 SQL migration متتبّعين",
-        "كتبت 7 Edge Functions للدفع والـ webhooks والإشعارات، والحجز مبيتأكدش غير من webhook Paymob موثّق بـ HMAC",
-        "الحجز ذرّي جوه row lock فآخر مكان مستحيل يتباع مرتين، والاسترداد وقوائم الانتظار وقواعد الإلغاء كلها على السيرفر",
-        "دفع بكروت Paymob والمحافظ الإلكترونية وInstaPay، ومحفظة جوه التطبيق فيها استرداد وسحب",
-        "شات جماعي لحظي فيه رسايل صوتية وصور وردود ومنشن وريأكشنز",
-        "14 موديول بـ Clean Architecture، عربي أولًا RTL، و1,302 تست مع CI على كل PR"
+        "الباك إند كله على Supabase: سكيما Postgres وRow-Level Security وRPCs و177 SQL migration",
+        "7 Edge Functions للدفع والـ webhooks والإشعارات، والحجز مبيتأكدش غير من webhook Paymob موثّق بـ HMAC",
+        "حجز ذرّي جوه row lock فآخر مكان مستحيل يتباع مرتين، والاسترداد وقوائم الانتظار على السيرفر",
+        "دفع بكروت Paymob والمحافظ الإلكترونية وInstaPay، ومحفظة جوه التطبيق",
+        "شات جماعي لحظي فيه رسايل صوتية وصور ومنشن وريأكشنز",
+        "14 موديول Clean Architecture، عربي أولًا RTL، و1,302 تست في CI"
       ]
     },
     metrics: [
